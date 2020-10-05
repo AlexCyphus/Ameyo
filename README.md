@@ -1,1 +1,1 @@
-## React based habit and goal tracking chrome extension. 
+## React based habit and goal tracking Chrome extension. 
