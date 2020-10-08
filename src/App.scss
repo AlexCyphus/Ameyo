@@ -1,0 +1,106 @@
+#root {
+  height: 100vh;
+}
+
+p {margin-bottom: 0 !important;}
+
+body {
+  font-family: 'Inconsolata', monospace !important;
+  background: black !important;
+  letter-spacing: 0.5px;
+}
+
+.item-row {
+  border: 1px black solid;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.outer-column {
+  height: 77vh;
+  margin: 0;
+  padding: 0 50px;
+  background-color: #ececec;
+  color: black;
+  border-radius: 7px;
+  box-shadow: 0px 50px 50px rgba(0, 0, 0, 0.25);
+  padding: 15px 20px;
+  width: 100%;
+}
+
+.add-item {
+  height: 60px;
+  width: calc(100% - 47px);
+  top: calc(77vh);
+  position: absolute;
+  border-radius: 5px;
+  border: 1px black solid;
+  background-color: white;
+}
+
+.column-header {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  padding-bottom: 20px;
+}
+
+.checkbox {
+  border: 1px solid black;
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.item-checkbox {
+  margin: 15px;
+}
+
+.item-name {
+  padding: 10px 0 10px 0;
+  display: flex;
+  -ms-align-items: center;
+  align-items: center;
+}
+
+.outer-footer {
+  color: white;
+  width: 100vw;
+  position: fixed;
+  height: 70px;
+  left: 0;
+  top: calc(100vh - 70px);
+  border-top: 1px white solid;
+}
+
+.footer-item {
+  margin: auto;
+}
+
+.columns {
+  height: calc(100vh - 70px);
+}
+
+.item-p {
+  padding-right: 15px;
+}
+
+.items {
+  height: 67vh;
+  overflow-y: auto;
+}
+
+.inner-container {
+  width: 100%;
+  display: flex;
+  margin: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.blue {
+  background-repeat: blue !important;
+}

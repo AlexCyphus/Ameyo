@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import './App.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import Column from "./Column.js"
 
@@ -12,14 +13,8 @@ export default class App extends Component {
       minutesLeft: 60 - new Date().getMinutes(),
       hoursLeft: 24 - new Date().getHours(),
       date: new Date(),
-      col1Items: [
-        {title: '30 minutes of German flashcards. 30 minutes of German flashcards.', completed: true},
-        {title: '30 minutes of German flashcards. 30 minutes of German flashcards.', completed: true}
-      ],
-      col2Items: [
-        {title: '30 minutes of German flashcards. 30 minutes of German flashcards.', completed: true},
-        {title: '30 minutes of German flashcards. 30 minutes of German flashcards.', completed: true}
-      ],
+      col1Items: [],
+      col2Items: [],
       col1: '',
       col2: '',
     }
@@ -29,13 +24,22 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const storage = window.localStorage;
-    localStorage.setItem('breakfast', 'cereal'); // this is a {key: value}
+    let col1Items = []
+    let col2Items = []
+    if (JSON.parse(localStorage.getItem('col1Items'))){col1Items = JSON.parse(localStorage.getItem('col1Items'))}
+    else {localStorage.setItem('col1Items', '[]')}
+    if (JSON.parse(localStorage.getItem('col2Items'))){col2Items = JSON.parse(localStorage.getItem('col2Items'))}
+    else {localStorage.setItem('col2Items', '[]')}
+
+    this.setState({
+      col1Items: col1Items,
+      col2Items: col2Items
+    })
+
     this.intervalID = setInterval(() => this.tick(), 1000);
   };
 
   componentWillUnmount() {
-    clearInterval(this.intervalID);
   }
 
   // makes the clock work
@@ -51,10 +55,20 @@ export default class App extends Component {
   submitItem(e){
     e.preventDefault();
     var value = this.state.[e.target.id];
-    var state = e.target.id + "Items"
+    var stateKey = e.target.id + "Items"
     var obj = {title: value, completed: false, }
-    this.setState({[state]: [...this.state.[state], obj]})
-    this.setState({[e.target.id]: ''});
+    this.setState(
+      {
+        [stateKey]: [...this.state.[stateKey], obj],
+        [e.target.id]: ''
+      }, () => {
+        localStorage.setItem('col1Items', JSON.stringify(this.state.col1Items))
+        localStorage.setItem('col2Items', JSON.stringify(this.state.col2Items))
+      }
+    )
+
+
+
   }
 
   checkItem(){
