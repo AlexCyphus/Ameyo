@@ -24,60 +24,59 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    // local storage blanks
     let col1Items = []
     let col2Items = []
+
+    // check to see if column has saved content
     if (JSON.parse(localStorage.getItem('col1Items'))){col1Items = JSON.parse(localStorage.getItem('col1Items'))}
     else {localStorage.setItem('col1Items', '[]')}
     if (JSON.parse(localStorage.getItem('col2Items'))){col2Items = JSON.parse(localStorage.getItem('col2Items'))}
     else {localStorage.setItem('col2Items', '[]')}
 
-    this.setState({
-      col1Items: col1Items,
-      col2Items: col2Items
-    })
+    // if localStorage then save to state
+    this.setState({col1Items: col1Items,col2Items: col2Items})
 
+    // update date once a second
     this.intervalID = setInterval(() => this.tick(), 1000);
   };
 
-  componentWillUnmount() {
-  }
-
-  // makes the clock work
+  // create new date
   tick() {this.setState({date: new Date()});}
 
-  componentDidUpdate(){
-  }
+  // update state when form data changed
+  itemInputChange(e){this.setState({[e.target.id]: e.target.value})}
 
-  itemInputChange(e){
-    this.setState({[e.target.id]: e.target.value})
-  }
 
   submitItem(e){
+    // dont let page refresh on submit
     e.preventDefault();
-    var value = this.state.[e.target.id];
-    var stateKey = e.target.id + "Items"
-    var obj = {title: value, completed: false, }
+
+    var value = this.state.[e.target.id]; // the value of the input
+    var stateKey = e.target.id + "Items" // the name of the column + "Items" => state name
+    var obj = {title: value, completed: false, } // formatting the object
+
+    // set state of submitted item
     this.setState(
       {
-        [stateKey]: [...this.state.[stateKey], obj],
-        [e.target.id]: ''
+        [stateKey]: [...this.state.[stateKey], obj], // set specific column state to previous state + new object
+        [e.target.id]: '' // clear the value
       }, () => {
-        localStorage.setItem('col1Items', JSON.stringify(this.state.col1Items))
+        localStorage.setItem('col1Items', JSON.stringify(this.state.col1Items)) // once state saved -> save state to localstorage
         localStorage.setItem('col2Items', JSON.stringify(this.state.col2Items))
       }
     )
-
-
-
   }
 
-  checkItem(){
-
-  }
+  checkItem(){}
 
   deleteItem(){}
 
+  // used for testing
+  componentDidUpdate(){}
+
   render() {
+    // set up for the countdown
     let minutesLeft = 59 - this.state.date.getMinutes();
     let hoursLeft = 23 - this.state.date.getHours();
 

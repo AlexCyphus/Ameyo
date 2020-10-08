@@ -9,7 +9,7 @@ export default function Column({items, action, title, checkItem, itemInputChange
     <p className="column-header text-center">{title}</p>
       <div className="outer-column">
         <div className="items">
-          {items.length > 0 ? items.map((item, index) => {
+          {items.map((item, index) => {
               return ([
                 <div className="item-row d-flex" key={index}>
                   <div className="item-checkbox d-flex">
@@ -19,7 +19,7 @@ export default function Column({items, action, title, checkItem, itemInputChange
                 </div>
               ])
             }
-          ) : null}
+          )}
         </div>
         <form className="w-100" onSubmit={submitItem} id={'col' + colNum}>
           <div className="add-item d-flex">
