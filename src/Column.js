@@ -1,43 +1,31 @@
-import React from 'react';
 
-let cons = console.log('hi')
+import React, { useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './App.css';
 
-let i = 0
-
-export default function Column({items, action, title, checkItem}) {
+export default function Column({items, action, title, checkItem, itemInputChange, colNum, submitItem, inputVal}) {
   return ([
     <div className="col-3 p-1">
     <p className="column-header text-center">{title}</p>
       <div className="outer-column">
         <div className="items">
-          {items.map((item) => {
-            i++
-            if (item.completed) {
+          {items.map((item, index) => {
               return ([
-                <div className="item-row d-flex" key={i}>
+                <div className="item-row d-flex" key={index}>
                   <div className="item-checkbox d-flex">
                     <div className="checkbox m-auto"></div>
                   </div>
-                  <div className="item-name"><p className="item-p"  key={item.key}>{item.title}</p></div>
+                  <div className="item-name"><p className="item-p" key={item.key}>{item.title}</p></div>
                 </div>
               ])
             }
-            else {
-              return ([
-                <div className="item-row d-flex" key={i}>
-                  <div className="item-checkbox d-flex">
-                    <div className="checkbox m-auto"></div>
-                  </div>
-                  <div className="item-name"><p className="item-p"  key={item.key}>{item.title}</p></div>
-                </div>
-              ])
-            }
-          }
-        )}
+          )}
         </div>
-        <div className="add-item d-flex">
-          <p className="m-auto">{action}</p>
-        </div>
+        <form className="w-100" onSubmit={submitItem} id={'col' + colNum}>
+          <div className="add-item d-flex">
+            <input className="w-100 text-center" type="text" placeholder={action} onChange={itemInputChange} id={'col' + colNum} value={inputVal}/>
+          </div>
+        </form>
       </div>
     </div>
   ])
