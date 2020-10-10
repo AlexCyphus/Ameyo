@@ -24,9 +24,9 @@ export default class App extends Component {
   componentDidMount() {
 
     // load initial data (not for production)
-    // localStorage.setItem('items', JSON.stringify(this.state.items))
-    // localStorage.setItem('columns', JSON.stringify(this.state.columns))
-    // localStorage.setItem('columnOrder', JSON.stringify(this.state.columnOrder))
+    localStorage.setItem('items', JSON.stringify(this.state.items))
+    localStorage.setItem('columns', JSON.stringify(this.state.columns))
+    localStorage.setItem('columnOrder', JSON.stringify(this.state.columnOrder))
 
     // local storage blanks
     let items;
@@ -120,18 +120,40 @@ export default class App extends Component {
 
   // used for testing
   componentDidUpdate(){
-    console.log(this.state)
   }
 
   onDragEnd = result => {
+    console.log('nOW')
     const { destination, source, draggableId } = result;
-    // was it dropped somewhere?
-    if (!destination){return}
+    const start = this.state.columns[source.droppableId];
+
+    // was it dropped in a column?
+    if (!destination){
+      // remove item from items array
+      let newItems = this.state.items
+      delete newItems[draggableId]
+
+      // remove item from column -> itemIds array
+      let newColumn = this.state.columns[source.droppableId]
+      newColumn.itemIds.splice(source.index, 1)
+
+      // update state
+      const newState = {
+        ...this.state,
+        columns: {
+          ...this.state.columns,
+          [source.droppableId]: newColumn
+        },
+        items: newItems
+      }
+
+      this.setState(newState)
+      return
+    }
 
     // did anything move?
     if (destination.droppableId === source.droppableId && destination.index === source.index) {return}
 
-    const start = this.state.columns[source.droppableId];
     const finish = this.state.columns[destination.droppableId]
 
     if (start === finish) {
@@ -202,7 +224,8 @@ export default class App extends Component {
           {this.state.columnOrder.map((columnId) => {
             const column = this.state.columns[columnId];
             const items = column.itemIds.map(itemId => this.state.items[itemId])
-            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title="Daily Habits" action="+ Add daily habit" checkItem={this.checkItem} inputs={this.state.inputs}/>
+            console.log('items',items)
+            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title={this.state.columns[columnId].title} checkItem={this.checkItem} inputs={this.state.inputs}/>
           })}
           </div>
           <div className="outer-footer d-flex text-center">
