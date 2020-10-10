@@ -17,10 +17,12 @@ export default class App extends Component {
       col2Items: [],
       col1: '',
       col2: '',
+      latestKey: 0,
     }
     this.checkItem = this.checkItem.bind(this)
     this.itemInputChange = this.itemInputChange.bind(this)
     this.submitItem = this.submitItem.bind(this)
+    this.checkItem = this.checkItem.bind(this)
   }
 
   componentDidMount() {
@@ -47,20 +49,21 @@ export default class App extends Component {
   // update state when form data changed
   itemInputChange(e){this.setState({[e.target.id]: e.target.value})}
 
-
   submitItem(e){
     // dont let page refresh on submit
     e.preventDefault();
 
+    var uniqueHash = this.state.[e.target.id].split("")[0] + new Date().getTime()
     var value = this.state.[e.target.id]; // the value of the input
     var stateKey = e.target.id + "Items" // the name of the column + "Items" => state name
-    var obj = {title: value, completed: false, } // formatting the object
+    var obj = {title: value, completed: "item-incomplete", id: uniqueHash} // formatting the object
 
     // set state of submitted item
     this.setState(
       {
         [stateKey]: [...this.state.[stateKey], obj], // set specific column state to previous state + new object
-        [e.target.id]: '' // clear the value
+        [e.target.id]: '', // clear the value
+        id: uniqueHash
       }, () => {
         localStorage.setItem('col1Items', JSON.stringify(this.state.col1Items)) // once state saved -> save state to localstorage
         localStorage.setItem('col2Items', JSON.stringify(this.state.col2Items))
@@ -68,7 +71,11 @@ export default class App extends Component {
     )
   }
 
-  checkItem(){}
+  checkItem(e){
+    e.stopPropagation()
+    console.log(e.target)
+
+  }
 
   deleteItem(){}
 
@@ -87,7 +94,7 @@ export default class App extends Component {
     return (
     <div className="d-flex columns d-flex">
       <div className="inner-container justify-content-center">
-        <Column items={this.state.col1Items} itemInputChange={this.itemInputChange} submitItem={this.submitItem} title="Daily Habits" action="+ Add daily habit" checkItem={this.checkItem} key={1} colNum={1} inputVal={this.state.col1}/>
+        <Column checkItem={this.checkItem} items={this.state.col1Items} itemInputChange={this.itemInputChange} submitItem={this.submitItem} title="Daily Habits" action="+ Add daily habit" checkItem={this.checkItem} key={1} colNum={1} inputVal={this.state.col1}/>
         <Column items={this.state.col2Items} itemInputChange={this.itemInputChange} submitItem={this.submitItem} title="To-Dos" action="+ Add a to-do" checkItem={this.checkItem} key={2} colNum={2} inputVal={this.state.col2}/>
       </div>
       <div className="outer-footer d-flex text-center">

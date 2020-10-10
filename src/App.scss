@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&display=swap');
+
 #root {
   height: 100vh;
 }
@@ -103,4 +105,25 @@ body {
 
 .blue {
   background-repeat: blue !important;
+}
+
+.item-complete {
+  background-color: black;
+  color: white;
+  .checkbox {
+    border: 1px white solid;
+    .checkbox-cross {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 25px;
+      font-style: italic;
+      font-weight: 400;
+      text-align: center;
+      height: 30px;
+      width: 30px;
+      vertical-align: center;
+      bottom: 7px;
+      right: 1px;
+      position: relative;
+    }
+  }
 }
