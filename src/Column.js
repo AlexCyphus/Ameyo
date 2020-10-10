@@ -1,36 +1,30 @@
 
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import './App.css';
+import Item from './Item'
 
-
-
-export default function Column({items, action, title, checkItem, itemInputChange, colNum, submitItem, inputVal}) {
-  return ([
-    <div className="col-3 p-1">
-    <p className="column-header text-center">{title}</p>
-      <div className="outer-column">
-        <div className="items">
-          {items.map((item, index) => {
-              return ([
-                <div className={"item-row d-flex " + item.completed} key={index} onClick={checkItem} id={item.id}>
-                  <div className="item-checkbox d-flex">
-                    <div className="checkbox m-auto">
-                      {item.completed == "item-complete" ? <p className="checkbox-cross">x</p> : null}
-                    </div>
-                  </div>
-                  <div className="item-name"><p className="item-p" key={item.key}>{item.title}</p></div>
-                </div>
-              ])
-            }
+export default class Column extends React.Component {
+  render() {
+    return ([
+      <div className="col-3 p-1">
+      <p className="column-header text-center">{this.props.title}</p>
+        <div className="outer-column">
+          <Droppable droppableId={this.props.column.id}>
+          {(provided, snapshot) => (
+            <div className="items" ref={provided.innerRef} {...provided.droppableProps}>
+              {this.props.items.map((item, index) => <Item key={item.id} item={item} index={index}/>)}
+              {provided.placeholder}
+            </div>
           )}
+          </Droppable>
+          <form className="w-100" onSubmit={this.props.addItem} id={this.props.column.id}>
+            <div className="add-item d-flex">
+              <input className="w-100 text-center" type="text" placeholder={this.props.action} onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
+            </div>
+          </form>
         </div>
-        <form className="w-100" onSubmit={submitItem} id={'col' + colNum}>
-          <div className="add-item d-flex">
-            <input className="w-100 text-center" type="text" placeholder={action} onChange={itemInputChange} id={'col' + colNum} value={inputVal}/>
-          </div>
-        </form>
       </div>
-    </div>
-  ])
+    ])
+  }
 }

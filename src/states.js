@@ -1,4 +1,4 @@
-const initialData = {
+const states = {
   items: {
     'item-1': {id: 'item-1', content: 'Take out the garbage'},
     'item-2': {id: 'item-2', content: 'Watch tv'},
@@ -23,8 +23,15 @@ const initialData = {
       itemIds: [] // maintains order
     }
   },
-
-  columnOrder: ['column-1', 'column-2', 'column-3']
+  columnOrder: ['column-1', 'column-2', 'column-3'],
+  inputs: {
+    'column-1': '',
+    'column-2': '',
+    'column-3': ''
+  },
+  minutesLeft: 60 - new Date().getMinutes(),
+  hoursLeft: 24 - new Date().getHours(),
+  date: new Date(),
 }
 
-export default initialData
+export default states
