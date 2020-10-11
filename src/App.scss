@@ -107,12 +107,24 @@ body {
   background-repeat: blue !important;
 }
 
-.item-complete {
+.deletion-box {
+  background-color: red;
+  color: white;
+  p {
+    font-weight: bold;
+    //position: absolute;
+    margin-top: 17px;
+    width: 100%;
+    vertical-align: middle;
+  }
+}
+
+.checked {
   background-color: black;
   color: white;
   .checkbox {
-    border: 1px white solid;
-    .checkbox-cross {
+    border: 1px solid white;
+    p {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 25px;
       font-style: italic;
@@ -125,17 +137,5 @@ body {
       right: 1px;
       position: relative;
     }
-  }
-}
-
-.deletion-box {
-  background-color: red;
-  color: white;
-  p {
-    font-weight: bold;
-    //position: absolute;
-    margin-top: 17px;
-    width: 100%;
-    vertical-align: middle;
   }
 }

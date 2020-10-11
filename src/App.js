@@ -24,9 +24,9 @@ export default class App extends Component {
   componentDidMount() {
 
     // load initial data (not for production)
-    localStorage.setItem('items', JSON.stringify(this.state.items))
-    localStorage.setItem('columns', JSON.stringify(this.state.columns))
-    localStorage.setItem('columnOrder', JSON.stringify(this.state.columnOrder))
+    // localStorage.setItem('items', JSON.stringify(this.state.items))
+    // localStorage.setItem('columns', JSON.stringify(this.state.columns))
+    // localStorage.setItem('columnOrder', JSON.stringify(this.state.columnOrder))
 
     // local storage blanks
     let items;
@@ -90,7 +90,7 @@ export default class App extends Component {
       ...this.state,
       items: {
         ...this.state.items,
-        [itemId]: {id: itemId, content: value}
+        [itemId]: {id: itemId, content: value, checked: "unchecked"}
       },
       columns: {
         ...this.state.columns,
@@ -106,12 +106,28 @@ export default class App extends Component {
     }
 
     // update state
-    this.setState(newState)
+    this.setState(newState, () => {
+      localStorage.setItem('columns', JSON.stringify(this.state.columns))
+      localStorage.setItem('items', JSON.stringify(this.state.items))
+    })
+
   }
 
   checkItem(e){
-    e.stopPropagation()
-
+    let newChecked = '';
+    if (this.state.items[e.target.id].checked == "unchecked"){newChecked = "checked"}
+    else {newChecked = "unchecked"}
+    const newState = {
+      ...this.state,
+      items: {
+        ...this.state.items,
+        [e.target.id]: {
+          ...this.state.items[e.target.id],
+          checked: newChecked
+        }
+      }
+    }
+    this.setState(newState, () => {localStorage.setItem('items', JSON.stringify(this.state.items))})
   }
 
   // used for testing
@@ -145,10 +161,12 @@ export default class App extends Component {
             items: newItems
           }
 
-          this.setState(newState)
+          this.setState(newState, () => {
+            localStorage.setItem('columns', JSON.stringify(this.state.columns))
+            localStorage.setItem('items', JSON.stringify(this.state.items))
+          })
           return
         }
-        console.log(destination.droppableId, source.droppableId)
 
         // did anything move?
         if (destination.droppableId === source.droppableId && destination.index === source.index) {return}
@@ -174,7 +192,9 @@ export default class App extends Component {
             }
           }
 
-          this.setState(newState)
+          this.setState(newState, () => {
+            localStorage.setItem('columns', JSON.stringify(this.state.columns))
+          })
           return
         }
 
@@ -201,7 +221,7 @@ export default class App extends Component {
           }
         }
 
-        this.setState(newState)
+        this.setState(newState, () => {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
         return
       }
     )
@@ -231,7 +251,7 @@ export default class App extends Component {
           })}
           </div>
           <div className="outer-footer d-flex text-center">
-            <div className="col footer-item">⚙️ Settings ⚙</div>
+            <div className="col footer-item">⚙️ Settings ⚙️</div>
             <div className="col-auto footer-item"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
             <div className="col footer-item">📈 Statistics 📈</div>
           </div>

@@ -13,7 +13,7 @@ export default class Column extends React.Component {
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
             <div className="items" ref={provided.innerRef} {...provided.droppableProps}>
-              {this.props.items.map((item, index) => <Item key={item.id} item={item} index={index}/>)}
+              {this.props.items.map((item, index) => <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked}/>)}
               {provided.placeholder}
             </div>
           )}
@@ -30,9 +30,11 @@ export default class Column extends React.Component {
             )}
             </Droppable>
           :
-          <div className="add-item d-flex">
-            <input className="w-100 h-100 text-center" type="text" placeholder="Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
-          </div>
+          <form onSubmit={this.props.addItem} id={this.props.column.id}>
+            <div className="add-item d-flex">
+              <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
+            </div>
+          </form>
           }
 
         </div>
