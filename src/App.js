@@ -105,10 +105,8 @@ export default class App extends Component {
       }
     }
 
-    //return console.log(newState)
-
     // update state
-    this.setState(newState, () => console.log(this.state))
+    this.setState(newState)
   }
 
   checkItem(e){
@@ -116,96 +114,101 @@ export default class App extends Component {
 
   }
 
-  deleteItem(){}
-
   // used for testing
   componentDidUpdate(){
   }
 
   onDragEnd = result => {
-    console.log('nOW')
     const { destination, source, draggableId } = result;
     const start = this.state.columns[source.droppableId];
-
     // was it dropped in a column?
-    if (!destination){
-      // remove item from items array
-      let newItems = this.state.items
-      delete newItems[draggableId]
+    this.setState({deletable: false},
+      () => {
+        if (!destination){return}
 
-      // remove item from column -> itemIds array
-      let newColumn = this.state.columns[source.droppableId]
-      newColumn.itemIds.splice(source.index, 1)
+        if (destination.droppableId.split('-')[0] == 'deletable'){
+          // remove item from items array
+          let newItems = this.state.items
+          delete newItems[draggableId]
 
-      // update state
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [source.droppableId]: newColumn
-        },
-        items: newItems
-      }
+          // remove item from column -> itemIds array
+          let newColumn = this.state.columns[source.droppableId]
+          newColumn.itemIds.splice(source.index, 1)
 
-      this.setState(newState)
-      return
-    }
+          // update state
+          const newState = {
+            ...this.state,
+            columns: {
+              ...this.state.columns,
+              [source.droppableId]: newColumn
+            },
+            items: newItems
+          }
 
-    // did anything move?
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {return}
-
-    const finish = this.state.columns[destination.droppableId]
-
-    if (start === finish) {
-      const column = start
-      const newTaskIds = Array.from(column.itemIds)
-      console.log(newTaskIds)
-      newTaskIds.splice(source.index, 1); // remove the one that was moved
-      console.log(newTaskIds)
-      newTaskIds.splice(destination.index, 0, draggableId) // remove nothing add a new one
-
-      const newColumn = {
-        ...column,
-        itemIds: newTaskIds
-      };
-
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [newColumn.id]: newColumn,
+          this.setState(newState)
+          return
         }
+        console.log(destination.droppableId, source.droppableId)
+
+        // did anything move?
+        if (destination.droppableId === source.droppableId && destination.index === source.index) {return}
+
+        const finish = this.state.columns[destination.droppableId]
+
+        if (start === finish) {
+          const column = start
+          const newTaskIds = Array.from(column.itemIds)
+          newTaskIds.splice(source.index, 1); // remove the one that was moved
+          newTaskIds.splice(destination.index, 0, draggableId) // remove nothing add a new one
+
+          const newColumn = {
+            ...column,
+            itemIds: newTaskIds
+          };
+
+          const newState = {
+            ...this.state,
+            columns: {
+              ...this.state.columns,
+              [newColumn.id]: newColumn,
+            }
+          }
+
+          this.setState(newState)
+          return
+        }
+
+        const startTaskIds = Array.from(start.itemIds);
+        startTaskIds.splice(source.index, 1); // remove where it came from
+        const newStart = {
+          ...start,
+          itemIds: startTaskIds
+        }
+
+        const finishTaskIds = Array.from(finish.itemIds);
+        finishTaskIds.splice(destination.index, 0, draggableId)
+        const newFinish = {
+          ...finish,
+          itemIds: finishTaskIds
+        }
+
+        const newState = {
+          ...this.state,
+          columns: {
+            ...this.state.columns,
+            [newStart.id]: newStart,
+            [newFinish.id]: newFinish
+          }
+        }
+
+        this.setState(newState)
+        return
       }
+    )
+  }
 
-      this.setState(newState)
-      return
-    }
-
-    const startTaskIds = Array.from(start.itemIds);
-    startTaskIds.splice(source.index, 1); // remove where it came from
-    const newStart = {
-      ...start,
-      itemIds: startTaskIds
-    }
-
-    const finishTaskIds = Array.from(finish.itemIds);
-    finishTaskIds.splice(destination.index, 0, draggableId)
-    const newFinish = {
-      ...finish,
-      itemIds: finishTaskIds
-    }
-
-    const newState = {
-      ...this.state,
-      columns: {
-        ...this.state.columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish
-      }
-    }
-
-    this.setState(newState)
-    return
+  onDragStart = () => {
+    this.setState({deletable: true})
   }
 
   render() {
@@ -218,14 +221,13 @@ export default class App extends Component {
     if (minutesLeft > 1) {plurals[1] = 's'}
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
         <div className="d-flex columns d-flex">
           <div className="inner-container justify-content-center">
           {this.state.columnOrder.map((columnId) => {
             const column = this.state.columns[columnId];
             const items = column.itemIds.map(itemId => this.state.items[itemId])
-            console.log('items',items)
-            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title={this.state.columns[columnId].title} checkItem={this.checkItem} inputs={this.state.inputs}/>
+            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title={this.state.columns[columnId].title} checkItem={this.checkItem} inputs={this.state.inputs} deletable={this.state.deletable}/>
           })}
           </div>
           <div className="outer-footer d-flex text-center">

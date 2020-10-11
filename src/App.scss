@@ -127,3 +127,15 @@ body {
     }
   }
 }
+
+.deletion-box {
+  background-color: red;
+  color: white;
+  p {
+    font-weight: bold;
+    //position: absolute;
+    margin-top: 17px;
+    width: 100%;
+    vertical-align: middle;
+  }
+}

@@ -32,6 +32,7 @@ const states = {
   minutesLeft: 60 - new Date().getMinutes(),
   hoursLeft: 24 - new Date().getHours(),
   date: new Date(),
+  deletable: false
 }
 
 export default states
