@@ -22,12 +22,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-
-    // load initial data (not for production)
-    // localStorage.setItem('items', JSON.stringify(this.state.items))
-    // localStorage.setItem('columns', JSON.stringify(this.state.columns))
-    // localStorage.setItem('columnOrder', JSON.stringify(this.state.columnOrder))
-
     // local storage blanks
     let items;
     let columns;
@@ -48,11 +42,97 @@ export default class App extends Component {
     }
 
     // update date once a second
-    //this.intervalID = setInterval(() => this.tick(), 1000);
+    this.intervalID = setInterval(() => this.tick(), 5000);
   };
 
-  // create new date
-  tick() {this.setState({date: new Date()});}
+  // create new date state also moving ticket logic
+  tick() {
+    console.log('tick')
+    let newDate = new Date()
+
+    // if stored date isn't todays date
+    if (this.state.date.getDate() != newDate.getDate()){
+
+      // if the date is one day in the future
+      if (((newDate - this.state.date)/86400000) >= 1 && ((newDate - this.state.date)/86400000) < 2){
+
+      // uncheck all the items in habits
+      for (var itemArr in this.state.columns['column-1'].itemIds){
+          let item = this.state.columns['column-1'].itemIds[itemArr]
+          if (this.state.items[item].checked == 'checked'){
+            // should refactor this so doesn't setState each time
+            const newState = {
+              ...this.state,
+              items: {
+                ...this.state.items,
+                [item]: {id: item, content: this.state.items[item].content, checked: 'unchecked'}
+              }
+            }
+            this.setState(newState)
+          }
+        //}
+
+        // move today to yesterday
+
+        // remove yesterday
+
+      //}
+
+      // if date more than one day in the future
+
+        // uncheck all the items in habits
+
+        // clear done and clear yesterday
+
+    }
+
+      // are the cards in today completed and more than a day old?
+      var newCol2 = JSON.parse(JSON.stringify(this.state.columns['column-2'].itemIds));
+      var newCol3 = JSON.parse(JSON.stringify(this.state.columns['column-3'].itemIds));
+
+      for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
+        console.log(x)
+        let itemId = this.state.columns['column-2'].itemIds[x]
+        let checked = this.state.items[itemId].checked
+
+        if (checked == 'checked'){
+          console.log(itemId, " is checked")
+          newCol2.splice(newCol2.indexOf(itemId), 1)
+          newCol3.push(itemId)
+        }
+      }
+
+      for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
+        console.log(x)
+        let itemId = this.state.columns['column-3'].itemIds[x]
+        let checked = this.state.items[itemId].checked
+
+        if (checked == 'checked'){
+          console.log(itemId, " is checked")
+          newCol3.splice(newCol3.indexOf(itemId), 1)
+        }
+      }
+
+
+      this.setState({
+        ...this.state,
+        columns: {
+          ...this.state.columns,
+          'column-2': {
+            ...this.state.columns['column-2'],
+            itemIds: newCol2
+          },
+          'column-3': {
+            ...this.state.columns['column-3'],
+            itemIds: newCol3
+          }
+        }
+      })
+      console.log(newCol2, newCol3)
+    }
+  }
+}
+
 
   // update state when form data changed
   itemInputChange(e){
@@ -81,6 +161,9 @@ export default class App extends Component {
       }
     }
 
+    // format date object
+    const todaysDate = new Date()
+    let dateArray = [todaysDate.getMonth() + 1, todaysDate.getDate()]
     let newObj = this.state.columns[columnId].itemIds
 
     newObj.push(itemId)
@@ -90,7 +173,7 @@ export default class App extends Component {
       ...this.state,
       items: {
         ...this.state.items,
-        [itemId]: {id: itemId, content: value, checked: "unchecked"}
+        [itemId]: {id: itemId, content: value, checked: "unchecked", date: dateArray}
       },
       columns: {
         ...this.state.columns,
@@ -110,7 +193,6 @@ export default class App extends Component {
       localStorage.setItem('columns', JSON.stringify(this.state.columns))
       localStorage.setItem('items', JSON.stringify(this.state.items))
     })
-
   }
 
   checkItem(e){
@@ -132,6 +214,13 @@ export default class App extends Component {
 
   // used for testing
   componentDidUpdate(){
+  }
+
+  updateItems(){
+
+
+
+
   }
 
   onDragEnd = result => {

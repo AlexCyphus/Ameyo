@@ -1,6 +1,6 @@
 const states = {
   items: {
-    // 'item-1': {id: 'item-1', content: '30 minutes of French', checked: 'unchecked'},
+    // 'item-1': {id: 'item-1', content: '30 minutes of French', checked: 'unchecked', date},
     // 'item-2': {id: 'item-2', content: 'Meditate', checked: 'checked'},
     // 'item-3': {id: 'item-3', content: 'Exercise', checked: 'unchecked'},
     // 'item-4': {id: 'item-4', content: 'Program', checked: 'checked'},
