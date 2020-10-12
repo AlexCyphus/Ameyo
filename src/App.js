@@ -43,7 +43,7 @@ export default class App extends Component {
     }
 
     // update date once a second
-    this.intervalID = setInterval(() => this.tick(), 1000);
+    this.intervalID = setInterval(() => this.tick(), 10000);
   };
 
   // create new date state also moving ticket logic
@@ -66,6 +66,7 @@ export default class App extends Component {
   }
 
   tick() {
+    console.log('tick')
     let oldDate;
     let newDate = new Date()
 
@@ -81,11 +82,10 @@ export default class App extends Component {
     if (newDate.getDate() != oldDate.getDate()){
       var newCol2 = JSON.parse(JSON.stringify(this.state.columns['column-2'].itemIds));
       var newCol3 = JSON.parse(JSON.stringify(this.state.columns['column-3'].itemIds));
-
-
+      console.log('different day', ((newDate - oldDate)/86400000))
       // if the date is one day in the future
-      if (((newDate - oldDate)/86400000) >= 1 && ((newDate - oldDate)/86400000) < 2){
-
+      if (((newDate - oldDate)/86400000) < 2){
+        console.log('one day', ((newDate - oldDate)/86400000))
         // uncheck all the items in habits
         this.uncheckHabits()
 
@@ -128,9 +128,11 @@ export default class App extends Component {
         }, () =>
           {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
       }
-
       // if more than one day has passed
-      else {
+
+      else if (((newDate - oldDate)/86400000) > 2) {
+        console.log('more than 2 days')
+        this.uncheckHabits()
         // delete all checked items from yesterday and today
         for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
           console.log(x)
