@@ -43,7 +43,7 @@ export default class App extends Component {
     }
 
     // update date once a second
-    this.intervalID = setInterval(() => this.tick(), 5000);
+    this.intervalID = setInterval(() => this.tick(), 1000);
   };
 
   // create new date state also moving ticket logic
@@ -60,21 +60,28 @@ export default class App extends Component {
             [item]: {id: item, content: this.state.items[item].content, checked: 'unchecked'}
           }
         }
-        this.setState(newState)
+        this.setState(newState, () => {localStorage.setItem('items', this.state.items)})
       }
     }
   }
 
   tick() {
-    console.log('tick')
-    let oldDate = new Date(localStorage.getItem('date'))
+    let oldDate;
     let newDate = new Date()
+
+    // if old date in memory
+    if(localStorage.getItem('date')){
+      oldDate = new Date(localStorage.getItem('date'))
+    }
+
+    // otherwise create a new date
+    else {oldDate = new Date()}
 
     // if a day has passed
     if (newDate.getDate() != oldDate.getDate()){
-
       var newCol2 = JSON.parse(JSON.stringify(this.state.columns['column-2'].itemIds));
       var newCol3 = JSON.parse(JSON.stringify(this.state.columns['column-3'].itemIds));
+
 
       // if the date is one day in the future
       if (((newDate - oldDate)/86400000) >= 1 && ((newDate - oldDate)/86400000) < 2){
@@ -98,7 +105,6 @@ export default class App extends Component {
           console.log(x)
           let itemId = this.state.columns['column-3'].itemIds[x]
           let checked = this.state.items[itemId].checked
-
           if (checked == 'checked'){
             console.log(itemId, " is checked")
             newCol3.splice(newCol3.indexOf(itemId), 1)
@@ -119,15 +125,12 @@ export default class App extends Component {
               itemIds: newCol3
             }
           }
-        })
-        console.log(newCol2, newCol3)
+        }, () =>
+          {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
       }
 
       // if more than one day has passed
       else {
-        // uncheck habits
-        this.uncheckHabits()
-
         // delete all checked items from yesterday and today
         for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
           console.log(x)
@@ -135,13 +138,11 @@ export default class App extends Component {
           let checked = this.state.items[itemId].checked
 
           if (checked == 'checked'){
-            console.log(itemId, " is checked")
             newCol2.splice(newCol2.indexOf(itemId), 1)
           }
         }
 
         for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
-          console.log(x)
           let itemId = this.state.columns['column-3'].itemIds[x]
           let checked = this.state.items[itemId].checked
 
@@ -163,11 +164,12 @@ export default class App extends Component {
               itemIds: newCol3
             }
           }
-        })
+        }, () => {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
       }
     }
 
     localStorage.setItem('date', newDate)
+    this.setState({date: newDate})
   }
 
 
@@ -358,7 +360,7 @@ export default class App extends Component {
   }
 
   render() {
-    // set up for the countdown
+    // set up for the countdown (this isn't working)
     let minutesLeft = 59 - this.state.date.getMinutes();
     let hoursLeft = 23 - this.state.date.getHours();
 
