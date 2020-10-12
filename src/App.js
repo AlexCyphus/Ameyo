@@ -19,6 +19,7 @@ export default class App extends Component {
     this.itemInputChange = this.itemInputChange.bind(this)
     this.addItem = this.addItem.bind(this)
     this.checkItem = this.checkItem.bind(this)
+    this.uncheckHabits = this.uncheckHabits.bind(this)
   }
 
   componentDidMount() {
@@ -46,92 +47,128 @@ export default class App extends Component {
   };
 
   // create new date state also moving ticket logic
+
+  uncheckHabits() {
+    for (var itemArr in this.state.columns['column-1'].itemIds){
+      let item = this.state.columns['column-1'].itemIds[itemArr]
+      if (this.state.items[item].checked == 'checked'){
+        // should refactor this so doesn't setState each time
+        const newState = {
+          ...this.state,
+          items: {
+            ...this.state.items,
+            [item]: {id: item, content: this.state.items[item].content, checked: 'unchecked'}
+          }
+        }
+        this.setState(newState)
+      }
+    }
+  }
+
   tick() {
     console.log('tick')
+    let oldDate = new Date(localStorage.getItem('date'))
     let newDate = new Date()
 
-    // if stored date isn't todays date
-    if (this.state.date.getDate() != newDate.getDate()){
+    // if a day has passed
+    if (newDate.getDate() != oldDate.getDate()){
 
-      // if the date is one day in the future
-      if (((newDate - this.state.date)/86400000) >= 1 && ((newDate - this.state.date)/86400000) < 2){
-
-      // uncheck all the items in habits
-      for (var itemArr in this.state.columns['column-1'].itemIds){
-          let item = this.state.columns['column-1'].itemIds[itemArr]
-          if (this.state.items[item].checked == 'checked'){
-            // should refactor this so doesn't setState each time
-            const newState = {
-              ...this.state,
-              items: {
-                ...this.state.items,
-                [item]: {id: item, content: this.state.items[item].content, checked: 'unchecked'}
-              }
-            }
-            this.setState(newState)
-          }
-        //}
-
-        // move today to yesterday
-
-        // remove yesterday
-
-      //}
-
-      // if date more than one day in the future
-
-        // uncheck all the items in habits
-
-        // clear done and clear yesterday
-
-    }
-
-      // are the cards in today completed and more than a day old?
       var newCol2 = JSON.parse(JSON.stringify(this.state.columns['column-2'].itemIds));
       var newCol3 = JSON.parse(JSON.stringify(this.state.columns['column-3'].itemIds));
 
-      for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
-        console.log(x)
-        let itemId = this.state.columns['column-2'].itemIds[x]
-        let checked = this.state.items[itemId].checked
+      // if the date is one day in the future
+      if (((newDate - oldDate)/86400000) >= 1 && ((newDate - oldDate)/86400000) < 2){
 
-        if (checked == 'checked'){
-          console.log(itemId, " is checked")
-          newCol2.splice(newCol2.indexOf(itemId), 1)
-          newCol3.push(itemId)
-        }
-      }
+        // uncheck all the items in habits
+        this.uncheckHabits()
 
-      for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
-        console.log(x)
-        let itemId = this.state.columns['column-3'].itemIds[x]
-        let checked = this.state.items[itemId].checked
+        for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
+          console.log(x)
+          let itemId = this.state.columns['column-2'].itemIds[x]
+          let checked = this.state.items[itemId].checked
 
-        if (checked == 'checked'){
-          console.log(itemId, " is checked")
-          newCol3.splice(newCol3.indexOf(itemId), 1)
-        }
-      }
-
-
-      this.setState({
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          'column-2': {
-            ...this.state.columns['column-2'],
-            itemIds: newCol2
-          },
-          'column-3': {
-            ...this.state.columns['column-3'],
-            itemIds: newCol3
+          if (checked == 'checked'){
+            console.log(itemId, " is checked")
+            newCol2.splice(newCol2.indexOf(itemId), 1)
+            newCol3.push(itemId)
           }
         }
-      })
-      console.log(newCol2, newCol3)
+
+        for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
+          console.log(x)
+          let itemId = this.state.columns['column-3'].itemIds[x]
+          let checked = this.state.items[itemId].checked
+
+          if (checked == 'checked'){
+            console.log(itemId, " is checked")
+            newCol3.splice(newCol3.indexOf(itemId), 1)
+          }
+        }
+
+
+        this.setState({
+          ...this.state,
+          columns: {
+            ...this.state.columns,
+            'column-2': {
+              ...this.state.columns['column-2'],
+              itemIds: newCol2
+            },
+            'column-3': {
+              ...this.state.columns['column-3'],
+              itemIds: newCol3
+            }
+          }
+        })
+        console.log(newCol2, newCol3)
+      }
+
+      // if more than one day has passed
+      else {
+        // uncheck habits
+        this.uncheckHabits()
+
+        // delete all checked items from yesterday and today
+        for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
+          console.log(x)
+          let itemId = this.state.columns['column-2'].itemIds[x]
+          let checked = this.state.items[itemId].checked
+
+          if (checked == 'checked'){
+            console.log(itemId, " is checked")
+            newCol2.splice(newCol2.indexOf(itemId), 1)
+          }
+        }
+
+        for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
+          console.log(x)
+          let itemId = this.state.columns['column-3'].itemIds[x]
+          let checked = this.state.items[itemId].checked
+
+          if (checked == 'checked'){
+            newCol3.splice(newCol3.indexOf(itemId), 1)
+          }
+        }
+
+        this.setState({
+          ...this.state,
+          columns: {
+            ...this.state.columns,
+            'column-2': {
+              ...this.state.columns['column-2'],
+              itemIds: newCol2
+            },
+            'column-3': {
+              ...this.state.columns['column-3'],
+              itemIds: newCol3
+            }
+          }
+        })
+      }
     }
+
+    localStorage.setItem('date', newDate)
   }
-}
 
 
   // update state when form data changed
