@@ -22,6 +22,8 @@ export default class App extends Component {
     this.uncheckHabits = this.uncheckHabits.bind(this)
   }
 
+  // adding column to item would allow for easier searching
+
   componentDidMount() {
     // local storage blanks
     let items, columns, columnOrder;
@@ -99,7 +101,6 @@ export default class App extends Component {
 
         // Move "yesterdays" to history and delete item
         for (var itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
-          console.log(itemIndex)
           let itemId = this.state.columns['yesterday'].itemIds[itemIndex]
           if (this.state.items[itemId].checked == 'checked'){
             let itemLocation = yesterdayItemIds.indexOf(itemId);
@@ -237,19 +238,28 @@ export default class App extends Component {
   }
 
   checkItem(e){
-    let newChecked = '';
-    if (this.state.items[e.target.id].checked == "unchecked"){newChecked = "checked"}
-    else {newChecked = "unchecked"}
-    const newState = {
-      ...this.state,
-      items: {
-        ...this.state.items,
-        [e.target.id]: {
-          ...this.state.items[e.target.id],
-          checked: newChecked
-        }
+    const newState = {...this.state}
+    
+    // find the column its in 
+    let column = ''
+    let itemId = e.target.id
+
+    for (var col in this.state.columns){
+      if(this.state.columns[col].itemIds.includes(itemId)){
+        column = col
+        break
       }
     }
+
+    if (this.state.items[itemId].checked == "unchecked"){
+      newState.items[itemId].checked = "checked"
+      let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
+      newState.columns[column].itemIds.splice(itemLocation, 1)
+      newState.columns[column].itemIds.push(itemId);
+    }
+
+    else {newState.items[itemId].checked = "unchecked"}
+
     this.setState(newState, () => {localStorage.setItem('items', JSON.stringify(this.state.items))})
   }
 
