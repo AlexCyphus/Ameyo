@@ -24,132 +24,129 @@ export default class App extends Component {
 
   componentDidMount() {
     // local storage blanks
-    let items;
-    let columns;
-    let columnOrder;
+    let items, columns, columnOrder;
 
-    // is there content in local storage?
+   // if items already in local storage
     if (JSON.parse(localStorage.getItem('items'))){
       items = JSON.parse(localStorage.getItem('items'))
       this.setState({items: items})
     }
+
+    // if columns already in local storage
     if (JSON.parse(localStorage.getItem('columns'))){
       columns = JSON.parse(localStorage.getItem('columns'))
       this.setState({columns: columns})
     }
+
+    // if column order already in storage (currently not)
     if (JSON.parse(localStorage.getItem('columnOrder'))){
       columnOrder = JSON.parse(localStorage.getItem('columnOrder'))
       this.setState({columnOrder: columnOrder})
     }
 
-    // update date once a second
-    this.intervalID = setInterval(() => this.tick(), 10000);
+    // update clock + time logic once in a while 
+    this.intervalID = setInterval(() => this.checkTime(), 5000);
   };
 
-  // create new date state also moving ticket logic
-
+  // for each checked habit - uncheck them
   uncheckHabits() {
-    for (var itemArr in this.state.columns['column-1'].itemIds){
-      let item = this.state.columns['column-1'].itemIds[itemArr]
-      if (this.state.items[item].checked == 'checked'){
-        // should refactor this so doesn't setState each time
-        const newState = {
-          ...this.state,
-          items: {
-            ...this.state.items,
-            [item]: {id: item, content: this.state.items[item].content, checked: 'unchecked'}
-          }
-        }
-        this.setState(newState, () => {localStorage.setItem('items', this.state.items)})
-      }
+    const newState = {...this.state}
+    
+    for (var itemId in this.state.columns['habits'].itemIds){
+      // get all habits from column
+      let habit = this.state.columns['habits'].itemIds[itemId]
+      
+      // if item "checked" change newState at habit
+      if (this.state.items[habit].checked == 'checked'){newState.items[habit].checked = 'unchecked'}
     }
+    this.setState(newState, () => {localStorage.setItem('items', JSON.stringify(this.state.items))})
   }
 
-  tick() {
-    console.log('tick')
+  // this whole thing should still be refactored
+  checkTime() {
+    console.log('checkTime')
     let oldDate;
-    let newDate = new Date()
+    let newDate = new Date();
 
-    // if old date in memory
-    if(localStorage.getItem('date')){
-      oldDate = new Date(localStorage.getItem('date'))
-    }
+    // if old date in memory set to newDate
+    if(localStorage.getItem('date')){oldDate = new Date(localStorage.getItem('date'))}
 
-    // otherwise create a new date
+    // otherwise create a newDate
     else {oldDate = new Date()}
 
-    // if a day has passed
+    // if the days aren't the same
     if (newDate.getDate() != oldDate.getDate()){
-      var newCol2 = JSON.parse(JSON.stringify(this.state.columns['column-2'].itemIds));
-      var newCol3 = JSON.parse(JSON.stringify(this.state.columns['column-3'].itemIds));
-      console.log('different day', ((newDate - oldDate)/86400000))
-      // if the date is one day in the future
+      var todayItemIds = JSON.parse(JSON.stringify(this.state.columns['today'].itemIds));
+      var yesterdayItemIds = JSON.parse(JSON.stringify(this.state.columns['yesterday'].itemIds));
+      let history = JSON.parse(JSON.stringify(this.state.history));
+      
+      // if the different date is < 48 hours past the previous date
       if (((newDate - oldDate)/86400000) < 2){
-        console.log('one day', ((newDate - oldDate)/86400000))
         // uncheck all the items in habits
         this.uncheckHabits()
 
-        for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
-          console.log(x)
-          let itemId = this.state.columns['column-2'].itemIds[x]
-          let checked = this.state.items[itemId].checked
+        let newState = {...this.state,}
 
-          if (checked == 'checked'){
-            console.log(itemId, " is checked")
-            newCol2.splice(newCol2.indexOf(itemId), 1)
-            newCol3.push(itemId)
+        // Move "todays" to "yesterday"
+        for (var itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
+          let itemId = this.state.columns['today'].itemIds[itemIndex]
+
+          if (this.state.items[itemId].checked == 'checked'){
+            todayItemIds.splice(todayItemIds.indexOf(itemId), 1)
+            yesterdayItemIds.push(itemId)
           }
         }
 
-        for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
-          console.log(x)
-          let itemId = this.state.columns['column-3'].itemIds[x]
-          let checked = this.state.items[itemId].checked
-          if (checked == 'checked'){
-            console.log(itemId, " is checked")
-            newCol3.splice(newCol3.indexOf(itemId), 1)
+        // Move "yesterdays" to history and delete item
+        for (var itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
+          console.log(itemIndex)
+          let itemId = this.state.columns['yesterday'].itemIds[itemIndex]
+          if (this.state.items[itemId].checked == 'checked'){
+            let itemLocation = yesterdayItemIds.indexOf(itemId);
+            history.push([this.state.items[yesterdayItemIds[itemLocation]].content, newDate]);
+            delete this.state.items[itemId]
+            yesterdayItemIds.splice(itemLocation, 1)
           }
         }
 
+        newState.columns.today.itemIds = todayItemIds;
+        newState.columns.yesterday.itemIds = yesterdayItemIds;
+        newState.history = history;
 
-        this.setState({
-          ...this.state,
-          columns: {
-            ...this.state.columns,
-            'column-2': {
-              ...this.state.columns['column-2'],
-              itemIds: newCol2
-            },
-            'column-3': {
-              ...this.state.columns['column-3'],
-              itemIds: newCol3
-            }
-          }
-        }, () =>
-          {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
+        this.setState(newState, () => {
+          localStorage.setItem('columns', JSON.stringify(this.state.columns))
+          localStorage.setItem('history', JSON.stringify(this.state.history))
+        });
       }
+      
       // if more than one day has passed
-
       else if (((newDate - oldDate)/86400000) > 2) {
-        console.log('more than 2 days')
         this.uncheckHabits()
-        // delete all checked items from yesterday and today
-        for (var x = 0; x < this.state.columns['column-2'].itemIds.length; x++){
-          console.log(x)
-          let itemId = this.state.columns['column-2'].itemIds[x]
+
+        // delete all checked items from today
+        for (var itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
+          let itemId = this.state.columns['today'].itemIds[itemIndex]
           let checked = this.state.items[itemId].checked
 
+
+          // if item is checked remove it from today
           if (checked == 'checked'){
-            newCol2.splice(newCol2.indexOf(itemId), 1)
+            let itemLocation = todayItemIds.indexOf(itemId);
+            history.push([this.state.items[todayItemIds[itemLocation]].content, newDate]);
+            todayItemIds.splice(todayItemIds.indexOf(itemId), 1)
+            delete this.state.items[itemId]
           }
         }
 
-        for (var x = 0; x < this.state.columns['column-3'].itemIds.length; x++){
-          let itemId = this.state.columns['column-3'].itemIds[x]
+        for (var itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
+          let itemId = this.state.columns['yesterday'].itemIds[itemIndex]
           let checked = this.state.items[itemId].checked
 
           if (checked == 'checked'){
-            newCol3.splice(newCol3.indexOf(itemId), 1)
+            let itemLocation = yesterdayItemIds.indexOf(itemId);
+            history.push([this.state.items[yesterdayItemIds[itemLocation]].content, newDate]);
+            yesterdayItemIds.splice(yesterdayItemIds.indexOf(itemId), 1)
+            delete this.state.items[itemId]
           }
         }
 
@@ -157,23 +154,26 @@ export default class App extends Component {
           ...this.state,
           columns: {
             ...this.state.columns,
-            'column-2': {
-              ...this.state.columns['column-2'],
-              itemIds: newCol2
+            'today': {
+              ...this.state.columns['today'],
+              itemIds: todayItemIds
             },
-            'column-3': {
-              ...this.state.columns['column-3'],
-              itemIds: newCol3
+            'yesterday': {
+              ...this.state.columns['yesterday'],
+              itemIds: yesterdayItemIds
             }
-          }
-        }, () => {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
+          },
+          history: history
+        }, () => {
+          localStorage.setItem('columns', JSON.stringify(this.state.columns));
+          localStorage.setItem('history', JSON.stringify(this.state.history))
+        })
       }
     }
 
     localStorage.setItem('date', newDate)
     this.setState({date: newDate})
   }
-
 
   // update state when form data changed
   itemInputChange(e){

@@ -1,33 +1,30 @@
 const states = {
   items: {
     // 'item-1': {id: 'item-1', content: '30 minutes of French', checked: 'unchecked', date},
-    // 'item-2': {id: 'item-2', content: 'Meditate', checked: 'checked'},
-    // 'item-3': {id: 'item-3', content: 'Exercise', checked: 'unchecked'},
-    // 'item-4': {id: 'item-4', content: 'Program', checked: 'checked'},
-    // 'item-5': {id: "item-1", content: "should uncheck", checked: "unchecked", date: [10, 12]},
   },
   columns: {
-    'column-1': {
-      id: 'column-1',
+    'habits': {
+      id: 'habits',
       title: 'Habits',
-      itemIds: []//'item-1', 'item-2', 'item-3', 'item-4'] // maintains order
+      itemIds: [] //'item-1', 'item-2', 'item-3', 'item-4'] // maintains order
     },
-    'column-2': {
-      id: 'column-2',
+    'today': {
+      id: 'today',
       title: 'Today',
-      itemIds: []//'item-5'] // maintains order
+      itemIds: []
     },
-    'column-3': {
-      id: 'column-3',
+    'yesterday': {
+      id: 'yesterday',
       title: 'Yesterday',
-      itemIds: [] // maintains order
+      itemIds: []
     }
   },
-  columnOrder: ['column-1', 'column-2', 'column-3'],
+  history: [], // [["item-10","2020-10-13T07:30:50.711Z"],["item-9","2020-10-13T07:31:05.711Z"],["item-12","2020-10-13T07:31:05.711Z"],["item-13","2020-10-13T07:31:05.711Z"]],
+  columnOrder: ['habits', 'today', 'yesterday'],
   inputs: {
-    'column-1': '',
-    'column-2': '',
-    'column-3': ''
+    'habits': '',
+    'today': '',
+    'yesterday': ''
   },
   minutesLeft: 60 - new Date().getMinutes(),
   hoursLeft: 24 - new Date().getHours(),
