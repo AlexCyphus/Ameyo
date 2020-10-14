@@ -9,12 +9,14 @@ export default class Item extends React.Component {
       <Draggable draggableId={itemId} index={this.props.index} id={itemId}>
         {(provided, snapshot) => (
           <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} id={itemId}>
-          <div className="item-checkbox d-flex" id={itemId}>
+          {this.props.type == 'none' ? 
+            <div className="item-checkbox d-flex" id={itemId}>
             <div className="checkbox m-auto" id={itemId}>
               {checkedClass === 'checked' ? <p id={itemId}>x</p> : null}
             </div>
           </div>
-          <div className="item-name" id={itemId}><p className="item-p" id={itemId}>{this.props.item.content}</p></div>
+          : null}
+          <div className={"item-name"} id={itemId}><p className={"item-p " + (this.props.type != 'none' ? 'px-4' : '')} id={itemId}>{this.props.item.content}</p></div>
           </div>
         )}
       </Draggable>

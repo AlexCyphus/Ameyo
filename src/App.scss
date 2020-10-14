@@ -80,6 +80,9 @@ body {
   left: 0;
   top: calc(100vh - 70px);
   border-top: 1px white solid;
+  p {
+   font-size: 18px; 
+  }
 }
 
 .footer-item {

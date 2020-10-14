@@ -17,14 +17,21 @@ const states = {
       id: 'yesterday',
       title: 'Yesterday',
       itemIds: []
+    },
+    'backlog': {
+      id: 'backlog',
+      title: 'Backlog',
+      itemIds: [],
+      type: 'backlog'
     }
   },
   history: [], // [["item-10","2020-10-13T07:30:50.711Z"],["item-9","2020-10-13T07:31:05.711Z"],["item-12","2020-10-13T07:31:05.711Z"],["item-13","2020-10-13T07:31:05.711Z"]],
-  columnOrder: ['habits', 'today', 'yesterday'],
+  columnOrder: ['habits', 'today', 'backlog', 'yesterday'],
   inputs: {
     'habits': '',
     'today': '',
-    'yesterday': ''
+    'yesterday': '',
+    'backlog': ''
   },
   minutesLeft: 60 - new Date().getMinutes(),
   hoursLeft: 24 - new Date().getHours(),

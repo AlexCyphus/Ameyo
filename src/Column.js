@@ -6,14 +6,17 @@ import Item from './Item'
 
 export default class Column extends React.Component {
   render() {
+    console.log(this.props.column.id)
     return ([
-      <div className="col-3 p-1">
+      <div className="col-2 p-1">
       <p className="column-header text-center">{this.props.title}</p>
         <div className="outer-column">
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
             <div className="items" ref={provided.innerRef} {...provided.droppableProps}>
-              {this.props.items.map((item, index) => <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked}/>)}
+              {this.props.items.map((item, index) => 
+                <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked} type={this.props.type}/>
+              )}
               {provided.placeholder}
             </div>
           )}

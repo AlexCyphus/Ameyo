@@ -27,6 +27,8 @@ export default class App extends Component {
   componentDidMount() {
     // local storage blanks
     let items, columns, columnOrder;
+    this.setState(states)
+    console.log(this.state)
 
    // if items already in local storage
     if (JSON.parse(localStorage.getItem('items'))){
@@ -87,7 +89,7 @@ export default class App extends Component {
         // uncheck all the items in habits
         this.uncheckHabits()
 
-        let newState = {...this.state,}
+        let newState = {...this.state}
 
         // Move "todays" to "yesterday"
         for (var itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
@@ -105,7 +107,7 @@ export default class App extends Component {
           if (this.state.items[itemId].checked == 'checked'){
             let itemLocation = yesterdayItemIds.indexOf(itemId);
             history.push([this.state.items[yesterdayItemIds[itemLocation]].content, newDate]);
-            delete this.state.items[itemId]
+            delete newState.items[itemId]
             yesterdayItemIds.splice(itemLocation, 1)
           }
         }
@@ -117,6 +119,7 @@ export default class App extends Component {
         this.setState(newState, () => {
           localStorage.setItem('columns', JSON.stringify(this.state.columns))
           localStorage.setItem('history', JSON.stringify(this.state.history))
+          localStorage.setItem('items', JSON.stringify(this.state.items))
         });
       }
       
@@ -208,7 +211,7 @@ export default class App extends Component {
     let dateArray = [todaysDate.getMonth() + 1, todaysDate.getDate()]
     let newObj = this.state.columns[columnId].itemIds
 
-    newObj.push(itemId)
+    newObj.unshift(itemId)
 
     // format input for items
     const newState = {
@@ -250,17 +253,23 @@ export default class App extends Component {
         break
       }
     }
-
+    
     if (this.state.items[itemId].checked == "unchecked"){
-      newState.items[itemId].checked = "checked"
-      let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
-      newState.columns[column].itemIds.splice(itemLocation, 1)
-      newState.columns[column].itemIds.push(itemId);
+      if (column != 'backlog'){
+        newState.items[itemId].checked = "checked"
+        let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
+        newState.columns[column].itemIds.splice(itemLocation, 1)
+        newState.columns[column].itemIds.push(itemId);
+      }
     }
+    
 
     else {newState.items[itemId].checked = "unchecked"}
 
-    this.setState(newState, () => {localStorage.setItem('items', JSON.stringify(this.state.items))})
+    this.setState(newState, () => {
+      localStorage.setItem('items', JSON.stringify(this.state.items))
+      localStorage.setItem('columns', JSON.stringify(this.state.columns))
+    })
   }
 
   // used for testing
@@ -387,13 +396,15 @@ export default class App extends Component {
           {this.state.columnOrder.map((columnId) => {
             const column = this.state.columns[columnId];
             const items = column.itemIds.map(itemId => this.state.items[itemId])
-            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title={this.state.columns[columnId].title} checkItem={this.checkItem} inputs={this.state.inputs} deletable={this.state.deletable}/>
+            let type;
+            this.state.columns[columnId].type ? type=this.state.columns[columnId].type : type='none';
+            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title={this.state.columns[columnId].title} checkItem={this.checkItem} inputs={this.state.inputs} deletable={this.state.deletable} type={type}/>
           })}
           </div>
           <div className="outer-footer d-flex text-center">
-            <div className="col footer-item">⚙️ Settings ⚙️</div>
+            <div className="col footer-item"><p>⚙️ Settings ⚙️</p></div>
             <div className="col-auto footer-item"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
-            <div className="col footer-item">📈 Statistics 📈</div>
+            <div className="col footer-item"><p>📈 Statistics 📈</p></div>
           </div>
         </div>
       </DragDropContext>
