@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 
@@ -23,7 +22,9 @@ p {
 body {
   font-family: 'Inconsolata', monospace !important;
   
-  background-image: url("https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1970&q=80");
+  background-image: url("https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1992&q=80");
+  
+  background-size: cover;
   //background: black !important;
   letter-spacing: 0.5px;
 }
@@ -39,26 +40,29 @@ body {
 }
 
 .outer-column {
-  height: 86vh;
+  height: fit-content;
+  //min-height: 300px;
   margin: 0;
-  padding: 0 50px;
-  background-color: #ececec;
+  background-color: #ececece7;
   color: black;
   border-radius: 7px;
   box-shadow: 0px 50px 50px rgba(0, 0, 0, 0.25);
-  padding: 15px 20px;
-  padding-top: 0px;
+  padding: 7px 10px;
+  
+  
+  // padding-bottom: 50px;
   width: 100%;
+  
 }
 
 .add-item {
   height: 40px;
-  width: calc(100% - 47px);
-  top: calc(80.5vh);
-  position: absolute;
+  width: calc(100%) !important;
   border-radius: $border-radius;
   border: lightgrey 0.5px solid;
   background-color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
 
   input {
     border: none;
@@ -84,12 +88,12 @@ body {
 
 .column-header {
   font-size: 25px;
-  
   color: black;
-  padding-top: 5px;
+  padding-top: 0px;
+  padding-bottom: 8px;
 
   span {
-    font-size: 20px;
+    font-size: 15px;
   }
 }
 
@@ -102,11 +106,15 @@ body {
   margin-top: -3px; 
 }
 
-@media (max-width: 947px) {
+@media (max-width: 1155px) {
   .column-header {
-    font-size: 20px;
+    font-size: 17px;
     padding-bottom: 10px;
     padding-top: 10px;
+
+    span {
+      font-size: 10px
+    }
   }
 
   .column-header-descriptor {
@@ -146,7 +154,7 @@ body {
   left: 0;
   top: calc(100vh - 70px);
   border-top: 1px white solid;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.738);
   p {
    font-size: 18px; 
   }
@@ -154,6 +162,14 @@ body {
 
 .footer-item {
   margin: auto;
+}
+
+@media (max-width: 790px){
+  .outer-footer {
+    p {
+      font-size: 13px;
+    }
+  }
 }
 
 .columns {
@@ -165,7 +181,9 @@ body {
 }
 
 .items {
-  height: calc(77vh - 61px);
+  max-height: calc(77vh - 65px);
+  //min-height: 200px;
+  height: fit-content;
   border-radius: $border-radius;
   overflow-y: auto;
 }
@@ -174,8 +192,18 @@ body {
   width: 100%;
   display: flex;
   margin: auto;
+  //margin-top: 40px;
   margin-left: 50px;
   margin-right: 50px;
+  margin-top: 35px;
+  justify-content: center;
+}
+
+@media (max-width: 1050px){
+  .inner-container {
+    justify-content: start;
+    margin-left: 10px;
+  }
 }
 
 .checked {
@@ -233,4 +261,9 @@ body {
 
 .clickable {
   @include clickable
+}
+
+.col-3 {
+  min-width: 250px;
+  margin: 0 3px;
 }

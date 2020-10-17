@@ -391,7 +391,7 @@ export default class App extends Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
         <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen}/>
-        <div className="d-flex columns d-flex">
+        <div className="d-flex columns">
           <div className="inner-container">
           {this.state.columnOrder.map((columnId) => {
             const column = this.state.columns[columnId];
