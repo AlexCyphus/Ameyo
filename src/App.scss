@@ -1,4 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+
+$border-radius: 5px;
+@mixin clickable {
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 #root {
   height: 100vh;
@@ -12,20 +22,23 @@ p {
 
 body {
   font-family: 'Inconsolata', monospace !important;
-  background: black !important;
+  background-image: url("https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1970&q=80");
+  //background: black !important;
   letter-spacing: 0.5px;
 }
 
 .item-row {
-  border: 1px black solid;
   margin: auto;
-  margin-top: 10px;
-  border-radius: 5px;
+  margin-bottom: 10px;
+  border-radius: $border-radius;
   background-color: white;
+  box-shadow: 0px 2px 2px grey;
+  border: lightgrey 0.5px solid;
+  border-bottom: 0;
 }
 
 .outer-column {
-  height: 78vh;
+  height: 86vh;
   margin: 0;
   padding: 0 50px;
   background-color: #ececec;
@@ -33,32 +46,80 @@ body {
   border-radius: 7px;
   box-shadow: 0px 50px 50px rgba(0, 0, 0, 0.25);
   padding: 15px 20px;
+  padding-top: 0px;
   width: 100%;
 }
 
 .add-item {
-  height: 60px;
+  height: 40px;
   width: calc(100% - 47px);
-  top: calc(77vh);
+  top: calc(80.5vh);
   position: absolute;
-  border-radius: 5px;
-  border: 1px black solid;
+  border-radius: $border-radius;
+  border: lightgrey 0.5px solid;
   background-color: white;
+
+  input {
+    border: none;
+    background: none;
+    text-align: left !important;
+    padding-left: 15px;
+  }
+}
+
+.deletion-box {
+  background-color: red;
+  color: white;
+  border-radius: $border-radius;
+
+  p {
+    font-weight: bold;
+    //position: absolute;
+    margin-top: 9px;
+    width: 100%;
+    vertical-align: middle;
+  }
 }
 
 .column-header {
-  font-size: 30px;
-  font-weight: bold;
-  color: white;
+  font-size: 25px;
+  font-weight: bolder;;
+  color: black;
+  padding-top: 5px;
+}
+
+.column-header-descriptor {
+  font-size: 11.5px;
+  color: black;
   padding-bottom: 10px;
+  font-style: italic;
+  font-weight: lighter;
+  margin-top: -3px; 
+}
+
+@media (max-width: 947px) {
+  .column-header {
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .column-header-descriptor {
+    display: none;
+  }
+}
+
+@media (max-width: 750px) {
+  .column-header {
+    font-size: 14px;
+  }
 }
 
 .checkbox {
   border: 1px solid black;
   height: 25px;
   width: 25px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: $border-radius;
 }
 
 .item-checkbox {
@@ -80,6 +141,7 @@ body {
   left: 0;
   top: calc(100vh - 70px);
   border-top: 1px white solid;
+  background-color: black;
   p {
    font-size: 18px; 
   }
@@ -98,7 +160,8 @@ body {
 }
 
 .items {
-  height: calc(77vh - 85px);
+  height: calc(77vh - 61px);
+  border-radius: $border-radius;
   overflow-y: auto;
 }
 
@@ -108,22 +171,6 @@ body {
   margin: auto;
   margin-left: 50px;
   margin-right: 50px;
-}
-
-.blue {
-  background-repeat: blue !important;
-}
-
-.deletion-box {
-  background-color: red;
-  color: white;
-  p {
-    font-weight: bold;
-    //position: absolute;
-    margin-top: 17px;
-    width: 100%;
-    vertical-align: middle;
-  }
 }
 
 .checked {
@@ -140,9 +187,43 @@ body {
       height: 30px;
       width: 30px;
       vertical-align: center;
-      bottom: 8px;
-      right: 2.5px;
+      bottom: 8.5px;
+      right: 3px;
       position: relative;
     }
   }
+}
+
+.col-3 {
+  max-width: 300px !important;
+}
+
+// popups //
+
+.fullscreen-popup {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: black;
+  z-index: 5;
+  
+  .coming-soon {
+    color: white;
+    font-size: 5vw;
+  }
+
+  .close-popup {
+    color: white;
+    font-size: 100px;
+    font-style: italic;
+    left: 100px;
+    position: absolute;
+    font-family: 'IBM Plex Mono', monospace;
+
+    @include clickable;
+  }
+}
+
+.clickable {
+  @include clickable
 }

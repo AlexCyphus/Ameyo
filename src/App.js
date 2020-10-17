@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Column from "./Column.js"
 import { DragDropContext } from 'react-beautiful-dnd';
 import states from './states';
+import Settings from './Settings';
 
 // credits //
 // https://github.com/plibither8/markdown-new-tab/blob/master/src/manifest.json
@@ -20,6 +21,8 @@ export default class App extends Component {
     this.addItem = this.addItem.bind(this)
     this.checkItem = this.checkItem.bind(this)
     this.uncheckHabits = this.uncheckHabits.bind(this)
+    this.settingsOpen = this.settingsOpen.bind(this)
+    this.settingsClose = this.settingsClose.bind(this)
   }
 
   // adding column to item would allow for easier searching
@@ -28,7 +31,6 @@ export default class App extends Component {
     // local storage blanks
     let items, columns, columnOrder;
     this.setState(states)
-    console.log(this.state)
 
    // if items already in local storage
     if (JSON.parse(localStorage.getItem('items'))){
@@ -196,42 +198,36 @@ export default class App extends Component {
 
     // find the first unused itemId
     let itemId;
-    let itemIdNum;
     let itemsLen = Object.keys(this.state.items).length + 1
+    const newState = {...this.state}
+    const localColumns = localStorage.getItem('columns')
+    const localItems = localStorage.getItem('items')
+
+    if (localColumns){
+      newState.columns = JSON.parse(localColumns)
+    }
+
+    if (localItems){
+      newState.items = JSON.parse(localItems)
+    }
+
+    
+    // i think this is where the bug is coming from but idk why 
     for (var x = 1; x < itemsLen + 1; x++){
       let searchVal = "item-" + x;
-      if (!this.state.items[searchVal]){
-        itemId = "item-" + x;
-        itemIdNum = x - 1;
-      }
+      if (!this.state.items[searchVal]){itemId = "item-" + x}
     }
 
     // format date object
     const todaysDate = new Date()
     let dateArray = [todaysDate.getMonth() + 1, todaysDate.getDate()]
-    let newObj = this.state.columns[columnId].itemIds
+    let columnsItemIds = this.state.columns[columnId].itemIds
 
-    newObj.unshift(itemId)
+    columnsItemIds.unshift(itemId)
 
-    // format input for items
-    const newState = {
-      ...this.state,
-      items: {
-        ...this.state.items,
-        [itemId]: {id: itemId, content: value, checked: "unchecked", date: dateArray}
-      },
-      columns: {
-        ...this.state.columns,
-        [columnId]: {
-          ...this.state.columns[columnId],
-          itemIds: newObj
-        }
-      },
-      inputs: {
-        ...this.state.inputs,
-        [columnId]: ''
-      }
-    }
+    newState.items[itemId] = {id: itemId, content: value, checked: "unchecked", date: dateArray}
+    newState.columns[columnId].itemIds = columnsItemIds
+    newState.inputs[columnId] = ''
 
     // update state
     this.setState(newState, () => {
@@ -273,15 +269,7 @@ export default class App extends Component {
   }
 
   // used for testing
-  componentDidUpdate(){
-  }
-
-  updateItems(){
-
-
-
-
-  }
+  componentDidUpdate(){}
 
   onDragEnd = result => {
     const { destination, source, draggableId } = result;
@@ -380,6 +368,14 @@ export default class App extends Component {
     this.setState({deletable: true})
   }
 
+  settingsOpen(){
+    this.setState({settings:true},
+      () => {console.log(this.state.settings)})
+
+  }
+
+  settingsClose(){this.setState({settings:false})}
+
   render() {
     // set up for the countdown (this isn't working)
     let minutesLeft = 59 - this.state.date.getMinutes();
@@ -391,6 +387,7 @@ export default class App extends Component {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
+        <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen}/>
         <div className="d-flex columns d-flex">
           <div className="inner-container justify-content-center">
           {this.state.columnOrder.map((columnId) => {
@@ -398,18 +395,27 @@ export default class App extends Component {
             const items = column.itemIds.map(itemId => this.state.items[itemId])
             let type;
             this.state.columns[columnId].type ? type=this.state.columns[columnId].type : type='none';
-            return <Column key={column.id} column={column} items={items} checkItem={this.checkItem} itemInputChange={this.itemInputChange} addItem={this.addItem} title={this.state.columns[columnId].title} checkItem={this.checkItem} inputs={this.state.inputs} deletable={this.state.deletable} type={type}/>
+            return <Column 
+                      key={column.id}
+                      column={column} 
+                      items={items} 
+                      checkItem={this.checkItem} 
+                      itemInputChange={this.itemInputChange} 
+                      addItem={this.addItem} 
+                      title={this.state.columns[columnId].title} 
+                      inputs={this.state.inputs} 
+                      deletable={this.state.deletable} 
+                      type={type} description={this.state.columns[columnId].description}
+                    />
           })}
           </div>
           <div className="outer-footer d-flex text-center">
-            <div className="col footer-item"><p>⚙️ Settings ⚙️</p></div>
+            <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings ⚙️</p></div>
             <div className="col-auto footer-item"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
-            <div className="col footer-item"><p>📈 Statistics 📈</p></div>
+            <div className="col footer-item clickable" onClick={this.settingsOpen}><p>📈 Statistics 📈</p></div>
           </div>
         </div>
       </DragDropContext>
     );
   }
 }
-  //   <Column items={this.state.col2Items} itemInputChange={this.itemInputChange} addItem={this.addItem} title="To-Dos" action="+ Add a to-do" checkItem={this.checkItem} key={2} colNum={2} inputVal={this.state.col2}/>
-  // </div>

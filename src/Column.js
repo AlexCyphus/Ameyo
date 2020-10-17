@@ -6,11 +6,11 @@ import Item from './Item'
 
 export default class Column extends React.Component {
   render() {
-    console.log(this.props.column.id)
     return ([
-      <div className="col-2 p-1">
-      <p className="column-header text-center">{this.props.title}</p>
+      <div className="col-3 p-1">
         <div className="outer-column">
+          <p className="column-header text-center">{this.props.title.toLowerCase()}</p>
+          <p className="column-header-descriptor text-center">({this.props.description.toLowerCase()})</p>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
             <div className="items" ref={provided.innerRef} {...provided.droppableProps}>

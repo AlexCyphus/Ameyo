@@ -6,22 +6,26 @@ const states = {
     'habits': {
       id: 'habits',
       title: 'Habits',
-      itemIds: [] //'item-1', 'item-2', 'item-3', 'item-4'] // maintains order
+      itemIds: [],
+      description: 'Daily tasks' //'item-1', 'item-2', 'item-3', 'item-4'] // maintains order
     },
     'today': {
       id: 'today',
       title: 'Today',
-      itemIds: []
+      itemIds: [],
+      description: 'Tasks to do today'
     },
     'yesterday': {
       id: 'yesterday',
       title: 'Yesterday',
-      itemIds: []
+      itemIds: [],
+      description: 'Tasks completed yesterday'
     },
     'backlog': {
       id: 'backlog',
       title: 'Backlog',
       itemIds: [],
+      description: "Future tasks", 
       type: 'backlog'
     }
   },
@@ -36,7 +40,9 @@ const states = {
   minutesLeft: 60 - new Date().getMinutes(),
   hoursLeft: 24 - new Date().getHours(),
   date: new Date(),
-  deletable: false
+  deletable: false,
+  settings: true,
+  statistics: false
 }
 
 export default states
