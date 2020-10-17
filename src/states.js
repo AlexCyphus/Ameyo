@@ -6,24 +6,28 @@ const states = {
     'habits': {
       id: 'habits',
       title: 'Habits',
+      emoji: "⏰",
       itemIds: [],
       description: 'Daily tasks' //'item-1', 'item-2', 'item-3', 'item-4'] // maintains order
     },
     'today': {
       id: 'today',
       title: 'Today',
+      emoji: "🗓",
       itemIds: [],
       description: 'Tasks to do today'
     },
     'yesterday': {
       id: 'yesterday',
       title: 'Yesterday',
+      emoji: "🔙",
       itemIds: [],
       description: 'Tasks completed yesterday'
     },
     'backlog': {
       id: 'backlog',
       title: 'Backlog',
+      emoji: "📚",
       itemIds: [],
       description: "Future tasks", 
       type: 'backlog'

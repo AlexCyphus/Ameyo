@@ -392,7 +392,7 @@ export default class App extends Component {
       <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
         <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen}/>
         <div className="d-flex columns d-flex">
-          <div className="inner-container justify-content-center">
+          <div className="inner-container">
           {this.state.columnOrder.map((columnId) => {
             const column = this.state.columns[columnId];
             const items = column.itemIds.map(itemId => this.state.items[itemId])
@@ -408,7 +408,9 @@ export default class App extends Component {
                       title={this.state.columns[columnId].title} 
                       inputs={this.state.inputs} 
                       deletable={this.state.deletable} 
-                      type={type} description={this.state.columns[columnId].description}
+                      type={type} 
+                      description={this.state.columns[columnId].description}
+                      emoji={this.state.columns[columnId].emoji}
                     />
           })}
           </div>

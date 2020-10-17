@@ -22,6 +22,7 @@ p {
 
 body {
   font-family: 'Inconsolata', monospace !important;
+  
   background-image: url("https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1970&q=80");
   //background: black !important;
   letter-spacing: 0.5px;
@@ -83,9 +84,13 @@ body {
 
 .column-header {
   font-size: 25px;
-  font-weight: bolder;;
+  
   color: black;
   padding-top: 5px;
+
+  span {
+    font-size: 20px;
+  }
 }
 
 .column-header-descriptor {

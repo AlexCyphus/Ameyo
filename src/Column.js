@@ -9,7 +9,7 @@ export default class Column extends React.Component {
     return ([
       <div className="col-3 p-1">
         <div className="outer-column">
-          <p className="column-header text-center">{this.props.title.toLowerCase()}</p>
+          <p className="column-header text-center"><span>{this.props.emoji}</span> {this.props.title.toLowerCase()} <span>{this.props.emoji}</span></p>
           <p className="column-header-descriptor text-center">({this.props.description.toLowerCase()})</p>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
