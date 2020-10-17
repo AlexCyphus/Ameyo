@@ -25,33 +25,35 @@ export default class App extends Component {
     this.settingsClose = this.settingsClose.bind(this)
   }
 
+  queryLocalStorage(_callback = false){
+    console.log(this.state, 'state 1')
+    const newState = {...this.state}
+
+    if (JSON.parse(localStorage.getItem('items'))){newState.items = JSON.parse(localStorage.getItem('items'))}
+
+    // if columns already in local storage
+    if (JSON.parse(localStorage.getItem('columns'))){newState.columns = JSON.parse(localStorage.getItem('columns'))}
+
+    // if column order already in storage (currently not)
+    if (JSON.parse(localStorage.getItem('columnOrder'))){newState.columnOrder = JSON.parse(localStorage.getItem('columnOrder'))}
+
+    this.setState(newState, () => {
+      if (_callback) {_callback()};
+      console.log(this.state, 'state 2')
+    })
+  }
+
   // adding column to item would allow for easier searching
 
   componentDidMount() {
     // local storage blanks
-    let items, columns, columnOrder;
     this.setState(states)
 
    // if items already in local storage
-    if (JSON.parse(localStorage.getItem('items'))){
-      items = JSON.parse(localStorage.getItem('items'))
-      this.setState({items: items})
-    }
-
-    // if columns already in local storage
-    if (JSON.parse(localStorage.getItem('columns'))){
-      columns = JSON.parse(localStorage.getItem('columns'))
-      this.setState({columns: columns})
-    }
-
-    // if column order already in storage (currently not)
-    if (JSON.parse(localStorage.getItem('columnOrder'))){
-      columnOrder = JSON.parse(localStorage.getItem('columnOrder'))
-      this.setState({columnOrder: columnOrder})
-    }
+    this.queryLocalStorage()
 
     // update clock + time logic once in a while 
-    this.intervalID = setInterval(() => this.checkTime(), 5000);
+    this.intervalID = setInterval(() => this.checkTime(), 30000);
   };
 
   // for each checked habit - uncheck them
@@ -71,9 +73,9 @@ export default class App extends Component {
   // this whole thing should still be refactored
   checkTime() {
     console.log('checkTime')
+    this.queryLocalStorage()
     let oldDate;
     let newDate = new Date();
-
     // if old date in memory set to newDate
     if(localStorage.getItem('date')){oldDate = new Date(localStorage.getItem('date'))}
 
@@ -194,46 +196,43 @@ export default class App extends Component {
     // dont let page refresh on submit
     e.preventDefault();
     var columnId = e.target.id;
-    var value = this.state.inputs[columnId]; // the value of the input
 
-    // find the first unused itemId
-    let itemId;
-    let itemsLen = Object.keys(this.state.items).length + 1
-    const newState = {...this.state}
-    const localColumns = localStorage.getItem('columns')
-    const localItems = localStorage.getItem('items')
+    this.queryLocalStorage(() => {
+      
+      var value = this.state.inputs[columnId]; // the value of the input
 
-    if (localColumns){
-      newState.columns = JSON.parse(localColumns)
-    }
+      // find the first unused itemId
+      let itemId;
+      let itemsLen = Object.keys(this.state.items).length + 1
+      const newState = {...this.state}
+      
+      // i think this is where the bug is coming from but idk why 
+      for (var x = 1; x < itemsLen + 1; x++){
+        let searchVal = "item-" + x;
+        if (!this.state.items[searchVal]){itemId = "item-" + x}
+      }
 
-    if (localItems){
-      newState.items = JSON.parse(localItems)
-    }
+      // format date object
+      const todaysDate = new Date()
+      let dateArray = [todaysDate.getMonth() + 1, todaysDate.getDate()]
+      let columnsItemIds = this.state.columns[columnId].itemIds
 
+      columnsItemIds.unshift(itemId)
+
+      newState.items[itemId] = {id: itemId, content: value, checked: "unchecked", date: dateArray}
+      newState.columns[columnId].itemIds = columnsItemIds
+      newState.inputs[columnId] = ''
+
+      
+      this.setState(newState, () => {
+        localStorage.setItem('columns', JSON.stringify(this.state.columns))
+        localStorage.setItem('items', JSON.stringify(this.state.items))
+      }) 
+    })
     
-    // i think this is where the bug is coming from but idk why 
-    for (var x = 1; x < itemsLen + 1; x++){
-      let searchVal = "item-" + x;
-      if (!this.state.items[searchVal]){itemId = "item-" + x}
-    }
-
-    // format date object
-    const todaysDate = new Date()
-    let dateArray = [todaysDate.getMonth() + 1, todaysDate.getDate()]
-    let columnsItemIds = this.state.columns[columnId].itemIds
-
-    columnsItemIds.unshift(itemId)
-
-    newState.items[itemId] = {id: itemId, content: value, checked: "unchecked", date: dateArray}
-    newState.columns[columnId].itemIds = columnsItemIds
-    newState.inputs[columnId] = ''
 
     // update state
-    this.setState(newState, () => {
-      localStorage.setItem('columns', JSON.stringify(this.state.columns))
-      localStorage.setItem('items', JSON.stringify(this.state.items))
-    })
+
   }
 
   checkItem(e){
@@ -298,10 +297,14 @@ export default class App extends Component {
             items: newItems
           }
 
-          this.setState(newState, () => {
-            localStorage.setItem('columns', JSON.stringify(this.state.columns))
-            localStorage.setItem('items', JSON.stringify(this.state.items))
-          })
+          const setStateAndStorage = () => {
+            this.setState(newState, () => {
+              localStorage.setItem('columns', JSON.stringify(this.state.columns))
+              localStorage.setItem('items', JSON.stringify(this.state.items))
+            }) 
+          }
+
+          this.queryLocalStorage(setStateAndStorage)
           return
         }
 

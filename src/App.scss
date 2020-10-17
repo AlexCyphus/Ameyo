@@ -210,13 +210,15 @@ body {
   .coming-soon {
     color: white;
     font-size: 5vw;
+    font-style: italic;
   }
 
   .close-popup {
     color: white;
-    font-size: 100px;
+    font-size: 60px;
     font-style: italic;
-    left: 100px;
+    left: 50px;
+    top: 10px;
     position: absolute;
     font-family: 'IBM Plex Mono', monospace;
 
