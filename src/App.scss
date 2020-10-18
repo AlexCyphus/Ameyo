@@ -182,6 +182,7 @@ body {
 
 .items {
   max-height: calc(77vh - 65px);
+  min-height: 45px;
   //min-height: 200px;
   height: fit-content;
   border-radius: $border-radius;

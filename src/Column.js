@@ -10,7 +10,6 @@ export default class Column extends React.Component {
       <div className="col-3 p-1">
         <div className="outer-column">
           <p className="column-header text-center"><span>{this.props.emoji}</span> {this.props.title.toLowerCase()} <span>{this.props.emoji}</span></p>
-          
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
             <div className="items" ref={provided.innerRef} {...provided.droppableProps}>
@@ -33,7 +32,7 @@ export default class Column extends React.Component {
             )}
             </Droppable>
           :
-          <form onSubmit={this.props.addItem} id={this.props.column.id}>
+          <form onSubmit={this.props.addItem} id={this.props.column.id} autocomplete="off">
             <div className="add-item d-flex">
               <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
             </div>
