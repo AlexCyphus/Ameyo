@@ -26,7 +26,6 @@ export default class App extends Component {
   }
 
   queryLocalStorage(_callback = false){
-    console.log(this.state, 'state 1')
     const newState = {...this.state}
 
     if (JSON.parse(localStorage.getItem('items'))){newState.items = JSON.parse(localStorage.getItem('items'))}
@@ -39,7 +38,6 @@ export default class App extends Component {
 
     this.setState(newState, () => {
       if (_callback) {_callback()};
-      console.log(this.state, 'state 2')
     })
   }
 
@@ -371,11 +369,7 @@ export default class App extends Component {
     this.setState({deletable: true})
   }
 
-  settingsOpen(){
-    this.setState({settings:true},
-      () => {console.log(this.state.settings)})
-
-  }
+  settingsOpen(){this.setState({settings:true})}
 
   settingsClose(){this.setState({settings:false})}
 
