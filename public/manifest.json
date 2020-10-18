@@ -1,6 +1,6 @@
 {
-  "name": "Hábito",
-  "version": "1.0",
+  "name": "Ameyo",
+  "version": "0.0.1",
   "manifest_version": 2,
   "description": "👨‍💻 Keep track of your 🌄 daily habits, 🆙 standups, and ⏰ future tasks. Think Trello but focused on 💪 daily self improvement.",
   "chrome_url_overrides": {
