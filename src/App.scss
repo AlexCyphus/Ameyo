@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 
+// Override Sass min()
+@function min($numbers...) {
+  @return m#{i}n(#{$numbers});
+}
+
 $border-radius: 5px;
 @mixin clickable {
   &:hover {
@@ -151,9 +156,9 @@ body {
   color: white;
   width: 100vw;
   position: fixed;
-  height: 70px;
+  height: 50px;
   left: 0;
-  top: calc(100vh - 70px);
+  top: calc(100vh - 50px);
   border-top: 1px white solid;
   background-color: rgba(0, 0, 0, 0.738);
   p {
@@ -198,10 +203,9 @@ body {
   width: 100%;
   display: flex;
   margin: auto;
-  //margin-top: 40px;
   margin-left: 50px;
   margin-right: 50px;
-  margin-top: 35px;
+  margin-top: min(4vh, 35px);
   justify-content: center;
 }
 
