@@ -272,7 +272,10 @@ export default class App extends Component {
     const { destination, source, draggableId } = result;
     const start = this.state.columns[source.droppableId];
     // was it dropped in a column?
-    this.setState({deletable: false},
+    this.setState({
+      deletable: false,
+      hover: false
+    },
       () => {
         if (!destination){return}
 
@@ -366,7 +369,11 @@ export default class App extends Component {
   }
 
   onDragStart = () => {
-    this.setState({deletable: true})
+    this.setState({
+      deletable: true,
+      hover: true
+    })
+    // Add extra space to empty columns
   }
 
   settingsOpen(){this.setState({settings:true})}
@@ -405,6 +412,7 @@ export default class App extends Component {
                       type={type} 
                       description={this.state.columns[columnId].description}
                       emoji={this.state.columns[columnId].emoji}
+                      hover={this.state.hover}
                     />
           })}
           </div>

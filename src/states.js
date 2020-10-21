@@ -46,7 +46,8 @@ const states = {
   date: new Date(),
   deletable: false,
   settings: false,
-  statistics: false
+  statistics: false,
+  hover: false
 }
 
 export default states

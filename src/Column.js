@@ -6,13 +6,14 @@ import Item from './Item'
 
 export default class Column extends React.Component {
   render() {
+    let hover = this.props.hover ? ' min-height' : ''
     return ([
       <div className="col-3 p-1">
         <div className="outer-column">
           <p className="column-header text-center"><span>{this.props.emoji}</span> {this.props.title} <span>{this.props.emoji}</span></p>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
-            <div className="items" ref={provided.innerRef} {...provided.droppableProps}>
+            <div className={"items" + hover} ref={provided.innerRef} {...provided.droppableProps}>
               {this.props.items.map((item, index) => 
                 <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked} type={this.props.type}/>
               )}
