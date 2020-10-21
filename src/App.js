@@ -44,6 +44,7 @@ export default class App extends Component {
   // adding column to item would allow for easier searching
 
   componentDidMount() {
+    this.checkTime()
     // local storage blanks
     this.setState(states)
 
