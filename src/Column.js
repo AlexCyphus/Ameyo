@@ -6,14 +6,16 @@ import Item from './Item'
 
 export default class Column extends React.Component {
   render() {
-    let hover = this.props.hover ? ' min-height' : ''
+    let hover = this.props.hover ? ' min-height ' : ''
+    let display = this.props.items.length > 0 ? '' : 'd-none '
+    let margintop = this.props.items.length > 0 ? '' : 'mt-0'
     return ([
       <div className="col-3 p-1">
         <div className="outer-column">
           <p className="column-header text-center"><span>{this.props.emoji}</span> {this.props.title} <span>{this.props.emoji}</span></p>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
-            <div className={"items" + hover} ref={provided.innerRef} {...provided.droppableProps}>
+            <div className={"items" + hover + display} ref={provided.innerRef} {...provided.droppableProps}>
               {this.props.items.map((item, index) => 
                 <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked} type={this.props.type}/>
               )}
@@ -34,7 +36,7 @@ export default class Column extends React.Component {
             </Droppable>
           :
           <form onSubmit={this.props.addItem} id={this.props.column.id} autocomplete="off">
-            <div className="add-item d-flex">
+            <div className={"add-item d-flex " + margintop}>
               <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
             </div>
           </form>
