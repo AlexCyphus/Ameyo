@@ -7,7 +7,7 @@ import Item from './Item'
 export default class Column extends React.Component {
   render() {
     let hover = this.props.hover ? ' min-height ' : ''
-    let display = this.props.items.length > 0 ? '' : 'd-none '
+    let display = this.props.items.length > 0 ? '' : this.props.hover ? '' : ' d-none ';
     let margintop = this.props.items.length > 0 ? '' : 'mt-0'
     return ([
       <div className="col-3 p-1">

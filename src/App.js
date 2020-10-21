@@ -44,7 +44,6 @@ export default class App extends Component {
   // adding column to item would allow for easier searching
 
   componentDidMount() {
-    this.checkTime()
     // local storage blanks
     this.setState(states)
 
@@ -53,6 +52,8 @@ export default class App extends Component {
 
     // update clock + time logic once in a while 
     this.intervalID = setInterval(() => this.checkTime(), 30000);
+
+    setTimeout(() => this.checkTime(), 0)
   };
 
   // for each checked habit - uncheck them
