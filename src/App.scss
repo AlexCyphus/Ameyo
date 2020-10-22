@@ -212,10 +212,11 @@ body {
 // popups //
 
 .fullscreen-popup {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   background-color: black;
+  opacity: 80%;
   z-index: 5;
   
   .coming-soon {
