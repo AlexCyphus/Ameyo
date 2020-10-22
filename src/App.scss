@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 
 
 // Override Sass min()
@@ -16,7 +18,9 @@ $border-radius: 5px;
 
 #root {
   height: 100vh;
+  letter-spacing: 0;
 }
+
 
 p {
   margin-bottom: 0 !important;
@@ -25,13 +29,9 @@ p {
 }
 
 body {
-  font-family: 'Inconsolata', monospace !important;
-  
+  font-family: 'Open Sans', sans-serif !important;
   background-image: url("https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1992&q=80");
-  
   background-size: cover;
-  //background: black !important;
-  letter-spacing: 0.5px;
 }
 
 .item-row {
@@ -93,14 +93,19 @@ body {
 }
 
 .column-header {
-  font-size: 23px;
-  color: black;
+  font-size: 26px;
   padding-top: 9px;
   padding-bottom: 9px;
+  font-family: 'Open Sans', sans-serif !important;
+  
 
   span {
     font-size: 15px;
   }
+}
+
+.emoji {
+  font-size: 26px;
 }
 
 .checkbox {
@@ -130,6 +135,7 @@ body {
   top: calc(100vh - 50px);
   border-top: 1px white solid;
   background-color: rgba(0, 0, 0, 0.738);
+  font-family: 'Open Sans', sans-serif !important;
   p {
    font-size: 18px; 
   }
@@ -137,6 +143,10 @@ body {
 
 .footer-item {
   margin: auto;
+}
+
+#countdown {
+  font-family: 'Inconsolata', monospace !important;
 }
 
 @media (max-width: 790px){

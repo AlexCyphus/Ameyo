@@ -12,7 +12,10 @@ export default class Column extends React.Component {
     return ([
       <div className="col-3 p-1">
         <div className="outer-column">
-          <p className="column-header text-center"><span>{this.props.emoji}</span> {this.props.title} <span>{this.props.emoji}</span></p>
+          <div className="d-flex">
+            <div className="col-auto pl-2"><p className="column-header text-left">#{this.props.title.toLowerCase()}</p></div>
+            <div className="col pr-2"><p className="column-header text-right emoji">{this.props.emoji}</p></div>
+          </div>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
             <div className={"items" + hover + display} ref={provided.innerRef} {...provided.droppableProps}>

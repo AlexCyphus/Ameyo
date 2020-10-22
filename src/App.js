@@ -44,6 +44,11 @@ export default class App extends Component {
   uncheckHabits = uncheckHabits
   checkItem = checkItem
   addItem = addItem
+
+  settingsOpen(){this.setState({settings: true})}
+  settingsClose(){this.setState({settings:false})}
+  statisticsOpen(){this.setState({statistics: true})}
+  statisticsClose(){this.setState({statistics:false})}
   
 
   queryLocalStorage(_callback = false){
@@ -86,11 +91,6 @@ export default class App extends Component {
 
   componentDidUpdate(){}
 
-  settingsOpen(){this.setState({settings: true})}
-  settingsClose(){this.setState({settings:false})}
-  statisticsOpen(){this.setState({statistics: true})}
-  statisticsClose(){this.setState({statistics:false})}
-
   render() {
     // set up for the countdown (this isn't working)
     let minutesLeft = 59 - this.state.date.getMinutes();
@@ -131,9 +131,9 @@ export default class App extends Component {
           })}
           </div>
           <div className="outer-footer d-flex text-center">
-            <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings ⚙️</p></div>
-            <div className="col-auto footer-item"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
-            <div className="col footer-item clickable" onClick={this.statisticsOpen}><p>📈 Statistics 📈</p></div>
+            <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings</p></div>
+            <div className="col-auto footer-item" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
+            <div className="col footer-item clickable" onClick={this.statisticsOpen}><p>📈 Statistics</p></div>
           </div>
         </div>
       </DragDropContext>
