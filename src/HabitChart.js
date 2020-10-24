@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2'
-import states from './states';
+import {Line} from 'react-chartjs-2'
 
 const data = {
     labels: Array.from({length: 30}, (_, i) => i - 30),
@@ -44,7 +43,7 @@ class HabitChart extends Component {
         var sumArr = [];
         var sum = 0;
         for (var x = arr.length - 1 ; x > -1; x--){
-            if (arr[x] == 1){sum++}
+            if (arr[x] === 1){sum++}
             sumArr.unshift(sum)
         }
         return sumArr

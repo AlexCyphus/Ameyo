@@ -16,7 +16,7 @@ export default class Item extends React.Component {
             </div>
           </div>
           : null}
-          <div className={"item-name"} id={itemId}><p className={"item-p " + (this.props.type != 'none' ? 'px-3' : '')} id={itemId}>{this.props.item.content}</p></div>
+          <div className={"item-name"} id={itemId}><p className={"item-p " + (this.props.type !== 'none' ? 'px-3' : '')} id={itemId}>{this.props.item.content}</p></div>
           </div>
         )}
       </Draggable>

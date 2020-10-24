@@ -11,7 +11,7 @@ export default function checkTime() {
     else {oldDate = new Date()}
 
     // if the days aren't the same
-    if (newDate.getDate() != oldDate.getDate()){
+    if (newDate.getDate() !== oldDate.getDate()){
       var todayItemIds = JSON.parse(JSON.stringify(this.state.columns['today'].itemIds));
       var yesterdayItemIds = JSON.parse(JSON.stringify(this.state.columns['yesterday'].itemIds));
       let history = JSON.parse(JSON.stringify(this.state.history));
@@ -26,19 +26,19 @@ export default function checkTime() {
         let newState = {...this.state}
 
         // Move "todays" to "yesterday"
-        for (var itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
+        for (let itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
           let itemId = this.state.columns['today'].itemIds[itemIndex]
 
-          if (this.state.items[itemId].checked == 'checked'){
+          if (this.state.items[itemId].checked === 'checked'){
             todayItemIds.splice(todayItemIds.indexOf(itemId), 1)
             yesterdayItemIds.push(itemId)
           }
         }
 
         // Move "yesterdays" to history and delete item
-        for (var itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
+        for (let itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
           let itemId = this.state.columns['yesterday'].itemIds[itemIndex]
-          if (this.state.items[itemId].checked == 'checked'){
+          if (this.state.items[itemId].checked === 'checked'){
             let itemLocation = yesterdayItemIds.indexOf(itemId);
             history.push([this.state.items[yesterdayItemIds[itemLocation]].content, yesterday]);
             delete newState.items[itemId]
@@ -62,13 +62,13 @@ export default function checkTime() {
         this.uncheckHabits()
 
         // delete all checked items from today
-        for (var itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
+        for (let itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
           let itemId = this.state.columns['today'].itemIds[itemIndex]
           let checked = this.state.items[itemId].checked
 
 
           // if item is checked remove it from today
-          if (checked == 'checked'){
+          if (checked === 'checked'){
             let itemLocation = todayItemIds.indexOf(itemId);
             history.push([this.state.items[todayItemIds[itemLocation]].content, history]);
             todayItemIds.splice(todayItemIds.indexOf(itemId), 1)
@@ -76,11 +76,11 @@ export default function checkTime() {
           }
         }
 
-        for (var itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
+        for (let itemIndex = 0; itemIndex < this.state.columns['yesterday'].itemIds.length; itemIndex++){
           let itemId = this.state.columns['yesterday'].itemIds[itemIndex]
           let checked = this.state.items[itemId].checked
 
-          if (checked == 'checked'){
+          if (checked === 'checked'){
             let itemLocation = yesterdayItemIds.indexOf(itemId);
             history.push([this.state.items[yesterdayItemIds[itemLocation]].content, newDate]);
             yesterdayItemIds.splice(yesterdayItemIds.indexOf(itemId), 1)

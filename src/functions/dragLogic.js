@@ -9,7 +9,7 @@ export function onDragEnd(result) {
     () => {
       if (!destination){return}
 
-      if (destination.droppableId.split('-')[0] == 'deletable'){
+      if (destination.droppableId.split('-')[0] === 'deletable'){
         // remove item from items array
         let newItems = this.state.items
         delete newItems[draggableId]

@@ -10,7 +10,7 @@ export function uncheckHabits() {
         var status = 0
 
         // if the habit is "checked"...
-        if (item.checked == 'checked'){
+        if (item.checked === 'checked'){
             newState.items[habit].checked = 'unchecked';
             status = 1
         }
@@ -89,8 +89,8 @@ export function checkItem(e){
         }
     }
 
-    if (this.state.items[itemId].checked == "unchecked"){
-        if (column != 'backlog'){
+    if (this.state.items[itemId].checked === "unchecked"){
+        if (column !== 'backlog'){
         newState.items[itemId].checked = "checked"
         let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
         newState.columns[column].itemIds.splice(itemLocation, 1)
