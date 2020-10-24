@@ -2,28 +2,37 @@ export function uncheckHabits() {
     const newState = {...this.state}
 
     for (var itemId in this.state.columns['habits'].itemIds){
+
         // get all habits from column
         let habit = this.state.columns['habits'].itemIds[itemId]
         let item = this.state.items[habit]
+        let itemName = item['content']
+        var status = 0
+
         // if the habit is "checked"...
         if (item.checked == 'checked'){
-            // ... change newState at items array for the item
-            newState.items[habit].checked = 'unchecked'
-            
-            // ... and add a date object 
-            let newDate = new Date();
-            if (newState.habitHistory[item.content]){
-                newState.habitHistory[item.content].push(newDate) 
-            }
-            
-            else {newState.habitHistory[item.content] = [newDate]}
+            newState.items[habit].checked = 'unchecked';
+            status = 1
+        }
+
+        let habitHistory = newState.monthlyHabitsCount[itemName]
+
+        if(habitHistory){
+            if (habitHistory.length > 29){
+                newState.monthlyHabitsCount[itemName].pop()
+            } 
+            newState.monthlyHabitsCount[itemName].unshift(status)
+        }
+
+        else {
+            newState.monthlyHabitsCount[itemName] = [status]
         }
     }
 
     // save items + habit history
     this.setState(newState, () => {
         localStorage.setItem('items', JSON.stringify(this.state.items))
-        localStorage.setItem('habitHistory', JSON.stringify(this.state.habitHistory))
+        localStorage.setItem('monthlyHabitsCount', JSON.stringify(this.state.monthlyHabitsCount))
     })
 }
 

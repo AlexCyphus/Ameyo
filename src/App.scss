@@ -29,7 +29,8 @@ p {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif !important;
+  //font-family: 'Open Sans', sans-serif !important;
+  font-family: 'IBM Plex Mono', monospace !important;
   background-image: url("https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1992&q=80");
   background-size: cover;
 }
@@ -93,10 +94,11 @@ body {
 }
 
 .column-header {
-  font-size: 26px;
+  font-size: 23px;
   padding-top: 9px;
   padding-bottom: 9px;
   font-family: 'Open Sans', sans-serif !important;
+  //font-family: 'IBM Plex Mono', monospace !important;
   
 
   span {
@@ -226,7 +228,7 @@ body {
   height: 100vh;
   position: absolute;
   background-color: black;
-  opacity: 80%;
+  opacity: 0.8;
   z-index: 5;
   
   .coming-soon {

@@ -13,7 +13,7 @@ export default class Column extends React.Component {
       <div className="col-3 p-1">
         <div className="outer-column">
           <div className="d-flex">
-            <div className="col-auto pl-2"><p className="column-header text-left">#{this.props.title.toLowerCase()}</p></div>
+            <div className="col-auto pl-2"><p className="column-header text-left">{this.props.title}</p></div>
             <div className="col pr-2"><p className="column-header text-right emoji">{this.props.emoji}</p></div>
           </div>
           <Droppable droppableId={this.props.column.id}>

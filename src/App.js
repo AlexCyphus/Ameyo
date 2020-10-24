@@ -15,6 +15,7 @@ import Column from "./Column.js"
 import checkTimeImport from './functions/checkTime';
 import {onDragEnd, onDragStart} from './functions/dragLogic';
 import {uncheckHabits, checkItem, addItem} from './functions/itemLogic'
+import {queryLocalStorage} from './functions/queryLogic'
 
 // credits //
 // https://github.com/plibither8/markdown-new-tab/blob/master/src/manifest.json
@@ -36,6 +37,7 @@ export default class App extends Component {
     this.settingsClose = this.settingsClose.bind(this)
     this.statisticsOpen = this.statisticsOpen.bind(this)
     this.statisticsClose = this.statisticsClose.bind(this)
+    this.queryLocalStorage = this.queryLocalStorage.bind(this)
   }
 
   checkTime = checkTimeImport
@@ -44,6 +46,7 @@ export default class App extends Component {
   uncheckHabits = uncheckHabits
   checkItem = checkItem
   addItem = addItem
+  queryLocalStorage = queryLocalStorage
 
   settingsOpen(){this.setState({settings: true})}
   settingsClose(){this.setState({settings:false})}
@@ -55,12 +58,9 @@ export default class App extends Component {
     const newState = {...this.state}
 
     if (JSON.parse(localStorage.getItem('items'))){newState.items = JSON.parse(localStorage.getItem('items'))}
-
-    // if columns already in local storage
     if (JSON.parse(localStorage.getItem('columns'))){newState.columns = JSON.parse(localStorage.getItem('columns'))}
-
-    // if column order already in storage (currently not)
     if (JSON.parse(localStorage.getItem('columnOrder'))){newState.columnOrder = JSON.parse(localStorage.getItem('columnOrder'))}
+    if (JSON.parse(localStorage.getItem('monthlyHabitsCount'))){newState.monthlyHabitsCount = JSON.parse(localStorage.getItem('monthlyHabitsCount'))}
 
     this.setState(newState, () => {
       if (_callback) {_callback()};
@@ -105,7 +105,12 @@ export default class App extends Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
         <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen}/>
-        <Statistics statisticsState={this.state.statistics} statisticsClose={this.statisticsClose} onClick={this.statisticsOpen}/>
+        <Statistics 
+          statisticsState={this.state.statistics}
+          statisticsClose={this.statisticsClose}
+          onClick={this.statisticsOpen}
+          monthlyHabitsCount={this.state.monthlyHabitsCount}
+        />
         <div className={"columns " + columnVisibility}>
           <div className="inner-container">
           {this.state.columnOrder.map((columnId) => {

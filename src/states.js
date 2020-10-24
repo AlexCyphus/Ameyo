@@ -20,7 +20,7 @@ const states = {
     'yesterday': {
       id: 'yesterday',
       title: 'Yesterday',
-      emoji: "🔙",
+      emoji: "✅",
       itemIds: [],
       description: 'Tasks completed yesterday'
     },
@@ -34,7 +34,8 @@ const states = {
     }
   },
   history: [], // [["item-10","2020-10-13T07:30:50.711Z"],["item-9","2020-10-13T07:31:05.711Z"],["item-12","2020-10-13T07:31:05.711Z"],["item-13","2020-10-13T07:31:05.711Z"]],
-  habitHistory: {},
+  monthlyHabitsCount: {},
+  monthlyHabitsSum: {},
   columnOrder: ['habits', 'today', 'backlog', 'yesterday'],
   inputs: {
     'habits': '',
@@ -47,7 +48,7 @@ const states = {
   date: new Date(),
   deletable: false,
   settings: false,
-  statistics: false,
+  statistics: true,
   hover: false
 }
 
