@@ -228,8 +228,9 @@ body {
   height: 100vh;
   position: absolute;
   background-color: black;
-  opacity: 0.8;
+  opacity: 0.9;
   z-index: 5;
+  padding-top: 110px;
   
   .coming-soon {
     color: white;
@@ -261,5 +262,37 @@ body {
 
 .habit-chart {
   height: 500px;
-  width: 500px;
+  width: 100%;
+}
+
+.white {
+  color: white
+}
+
+.history {
+  max-height: 500px;
+  padding-left: 25px;
+  padding-right: 25px;
+  overflow-y: scroll
+}
+
+.history-container {
+  max-height: 554px
+}
+
+.history-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: 1px white solid;
+  border-bottom: 1px white solid;
+  border-right: 1px white solid;
+}
+
+.history-item {
+  border-right: 1px white solid;
+  border-left: 1px white solid;
+}
+
+.chart-title {
+  font-size: 1.5vw;
 }
