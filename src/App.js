@@ -137,7 +137,7 @@ export default class App extends Component {
           </div>
           <div className="outer-footer d-flex text-center">
             <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings</p></div>
-            <div className="col-auto footer-item" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
+            <div className="col-auto m-auto" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
             <div className="col footer-item clickable" onClick={this.statisticsOpen}><p>📈 Statistics</p></div>
           </div>
         </div>

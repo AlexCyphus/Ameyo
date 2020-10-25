@@ -18,10 +18,11 @@ const chartConfig = {
         }]
     },
     legend: {
-        position: 'bottom',
+        position: 'top',
         labels: {
             fontColor: "#fff",
             boxWidth: 10,
+            fontSize: 10
         }
     }
     

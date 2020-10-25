@@ -48,7 +48,7 @@ const states = {
   date: new Date(),
   deletable: false,
   settings: false,
-  statistics: false,
+  statistics: true,
   hover: false
 }
 

@@ -19,23 +19,21 @@ var data = {
 const chartConfig = {
     maintainAspectRatio: false,
     scales: {
-        xAxes: [{ticks: {fontColor: "#fff"}}],
+        xAxes: [{
+            ticks: {
+                fontColor: "#fff",
+                stepSize: 1
+            }}],
         yAxes: [{
             ticks: {
-                fontColor: "#fff"
-                
-                
+                fontColor: "#fff",
+                stepSize: 1
             },
         }]
     },
     legend: {
-        display: false,
-        position: 'bottom',
-        labels: {
-            fontColor: "#fff"
-        }
-    }
-    
+        display: false
+    }    
 }
 
 var thirtyDaysAgo = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
