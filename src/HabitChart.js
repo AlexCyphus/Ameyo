@@ -66,7 +66,6 @@ class HabitChart extends Component {
     componentDidMount(){
         this.calculateSums()
         this.generateDatasets()
-        console.log('habits', data)
     }
 
     generateDatasets() {
@@ -82,7 +81,6 @@ class HabitChart extends Component {
                 pointRadius: 0,
                 data: itemArr
             }
-            console.log(dataset)
             data.datasets.push(dataset)
             if (counter >= colors.length - 1){
                 counter = 0

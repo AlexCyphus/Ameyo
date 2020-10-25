@@ -11,7 +11,7 @@ var data = {
             lineTension: 0.1,
             borderColor: 'green',                
             pointRadius: 0,
-            data: [1,2,3,4]
+            data: []
         }
     ]
 };
@@ -22,7 +22,8 @@ const chartConfig = {
         xAxes: [{ticks: {fontColor: "#fff"}}],
         yAxes: [{
             ticks: {
-                fontColor: "#fff",
+                fontColor: "#fff"
+                
                 
             },
         }]
@@ -54,23 +55,22 @@ class HabitChart extends Component {
     analyzeHistory = (historyArr) => {
         // check if less than 30 days old 
         historyArr = historyArr.filter(item => {return new Date(item[1]) > thirtyDaysAgo});
+
+        // pushing to individual counts 
         historyArr = historyArr.filter(item => {
             let daysSince = Math.floor((new Date() - new Date(item[1])) / 1000 / 60 / 60 / 24)
             individualCounts[daysSince] = individualCounts[daysSince] + 1
         })
         var sum = 0
-        individualCounts.map((item) => {
+        individualCounts.reverse().map((item) => {
             sum += item
             summatedTickets.push(sum)
         })
-        console.log('individual counts', individualCounts)
-        console.log('is this it', data.datasets[0].data)
         data.datasets[0].data = summatedTickets
     }
 
     componentDidMount(){
         this.analyzeHistory(this.props.history)
-        console.log(data)
     }
             
             
