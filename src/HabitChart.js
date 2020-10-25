@@ -20,7 +20,8 @@ const chartConfig = {
     legend: {
         position: 'bottom',
         labels: {
-            fontColor: "#fff"
+            fontColor: "#fff",
+            boxWidth: 10,
         }
     }
     
@@ -65,6 +66,7 @@ class HabitChart extends Component {
     componentDidMount(){
         this.calculateSums()
         this.generateDatasets()
+        console.log('habits', data)
     }
 
     generateDatasets() {
