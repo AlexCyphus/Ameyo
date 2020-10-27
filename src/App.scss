@@ -24,7 +24,7 @@ $border-radius: 5px;
 
 p {
   margin-bottom: 0 !important;
-  font-size: 14px;
+  font-size: 13px;
   overflow-wrap: anywhere;
 }
 
@@ -70,6 +70,7 @@ body {
   background-color: white;
   margin-top: 5px;
   margin-bottom: 5px;
+  font-size: 13px;
 
   input {
     border: none;
@@ -94,9 +95,9 @@ body {
 }
 
 .column-header {
-  font-size: 23px;
-  padding-top: 9px;
-  padding-bottom: 9px;
+  font-size: 22px;
+  padding-top: 7px;
+  padding-bottom: 7px;
   font-family: 'Open Sans', sans-serif !important;
   //font-family: 'IBM Plex Mono', monospace !important;
   
@@ -107,13 +108,13 @@ body {
 }
 
 .emoji {
-  font-size: 26px;
+  font-size: 22px;
 }
 
 .checkbox {
   border: 1px solid black;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   border-radius: $border-radius;
 }
 
@@ -129,15 +130,15 @@ body {
 }
 
 .outer-footer {
-  color: white;
+  color: black;
   width: 100vw;
   position: fixed;
   height: 50px;
   left: 0;
   top: calc(100vh - 50px);
-  border-top: 1px white solid;
-  background-color: rgba(0, 0, 0, 0.738);
-  font-family: 'Open Sans', sans-serif !important;
+  background-color: #ececece7;
+  opacity: 0.8;
+  font-family: 'IBM Plex Mono', monospace !important;
   p {
    font-size: 18px; 
   }
@@ -148,10 +149,6 @@ body {
   p {
     font-size: 20px;
   }
-}
-
-#countdown {
-  font-family: 'Inconsolata', monospace !important;
 }
 
 @media (max-width: 790px){
@@ -206,15 +203,12 @@ body {
     border: 1px solid white;
     p {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 23px;
+      font-size: 20px;
       font-style: italic;
       font-weight: 400;
       text-align: center;
-      height: 30px;
-      width: 30px;
       vertical-align: center;
-      bottom: 8.5px;
-      right: 3px;
+      bottom: 7.52px;
       position: relative;
     }
   }

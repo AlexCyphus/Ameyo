@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {Line} from 'react-chartjs-2'
 
+// incomplete data object
 var data = {
     labels: Array.from({length: 30}, (_, i) => i - 30),
     datasets: []
 };
 
+// chart settings
 const chartConfig = {
     maintainAspectRatio: false,
     scales: {
@@ -22,13 +24,11 @@ const chartConfig = {
         labels: {
             fontColor: "#fff",
             boxWidth: 10,
-            fontSize: 10
+            fontSize: 12
         }
     }
     
 }
-
-
 
 class HabitChart extends Component {
     constructor(props){
