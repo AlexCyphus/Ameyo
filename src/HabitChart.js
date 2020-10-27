@@ -42,12 +42,14 @@ class HabitChart extends Component {
     }
 
     summateArr = (arr) => {
-        var sumArr = [];
+        var sumArr = Array.from({length: 30}, (_, i) => 0);
         var sum = 0;
         for (var x = arr.length - 1 ; x > -1; x--){
             if (arr[x] === 1){sum++}
-            sumArr.unshift(sum)
+            sumArr[x] = sum;
         }
+        // console.log('og arr', arr)
+        // console.log('reverse sum arr', sumArr.reverse())
         return sumArr.reverse()
     }
 
@@ -56,8 +58,9 @@ class HabitChart extends Component {
 
         var newState = {...this.state}
 
-        for (var habit in this.state.monthlyHabitsCount){
-            var sumArr = this.summateArr(this.state.monthlyHabitsCount[habit])
+        for (var habit in newState.monthlyHabitsCount){
+            console.log(habit, newState.monthlyHabitsCount[habit])
+            var sumArr = this.summateArr(newState.monthlyHabitsCount[habit])
             newState.monthlyHabitsSum[habit.toString()] = sumArr;
         }
 
@@ -80,7 +83,9 @@ class HabitChart extends Component {
                 lineTension: 0.1,
                 borderColor: colors[counter],                
                 pointRadius: 0,
-                data: itemArr
+                data: itemArr,
+                fill: true,
+                backgroundColor: colors[counter]
             }
             data.datasets.push(dataset)
             if (counter >= colors.length - 1){
