@@ -33,7 +33,7 @@ const chartConfig = {
 class HabitChart extends Component {
     constructor(props){
         super(props);
-        var habitsSum =  JSON.parse(localStorage.getItem('monthlyHabitsSum')) ? JSON.parse(localStorage.getItem('monthlyHabitsSum')) : {}
+        var habitsSum = JSON.parse(localStorage.getItem('monthlyHabitsSum')) ? JSON.parse(localStorage.getItem('monthlyHabitsSum')) : {}
         this.state = {
             monthlyHabitsCount: JSON.parse(localStorage.getItem('monthlyHabitsCount')),
             monthlyHabitsSum: habitsSum

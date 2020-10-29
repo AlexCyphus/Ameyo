@@ -4,7 +4,7 @@ export default class Settings extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            history: JSON.parse(localStorage.getItem('history'))
+            history: JSON.parse(localStorage.getItem('history')) ? JSON.parse(localStorage.getItem('history')) : [],
         }
     }
     render(){
