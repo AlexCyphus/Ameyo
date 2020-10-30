@@ -16,7 +16,7 @@ export default class Settings extends React.Component {
                     <div className='col-md-4 d-flex chart-holder'>
                         <div className="m-auto w-100 history-container chart-title">
                             <div className='history'>
-                                    {this.state.history.map((item, index) => {
+                                    {this.state.history.reverse().map((item, index) => {
                                             var date = new Date(item[1])
                                             return (
                                                 <div className="row white history-row">
