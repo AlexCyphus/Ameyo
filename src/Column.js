@@ -29,7 +29,7 @@ export default class Column extends React.Component {
           {this.props.deletable ?
             <Droppable droppableId={'deletable-'+this.props.column.id} className="h-100">
             {(provided) => (
-                <div className="add-item d-flex" ref={provided.innerRef} {...provided.droppableProps}>
+                <div className="add-item d-flex delete-item" ref={provided.innerRef} {...provided.droppableProps}>
                   <div className="w-100 h-100 text-center deletion-box" placeholder="test">
                     <p>delete item</p>
                     {provided.placeholder}
@@ -39,7 +39,7 @@ export default class Column extends React.Component {
             </Droppable>
           :
           <form onSubmit={this.props.addItem} id={this.props.column.id} autoComplete="off">
-            <div className={"add-item d-flex " + margintop}>
+            <div className={"add-item d-flex" + margintop}>
               <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
             </div>
           </form>

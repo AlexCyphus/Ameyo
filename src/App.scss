@@ -69,7 +69,7 @@ body {
   border: lightgrey 0.5px solid;
   background-color: white;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-size: 13px;
 
   input {
@@ -84,6 +84,7 @@ body {
   background-color: red;
   color: white;
   border-radius: $border-radius;
+  height: 150px !important;
 
   p {
     font-weight: bold;
@@ -307,4 +308,12 @@ canvas {
   min-width: 400px;
   padding-left: 25px !important;
   padding-right: 25px !important;
+}
+
+.delete-item {
+  height: 50px;
+
+  p {
+    margin-top: 14.5px;
+  }
 }

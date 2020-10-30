@@ -1,9 +1,9 @@
 // for each checked habit - uncheck them
 export default function checkTime() {
-    console.log('checkTime')
+    let newDate = new Date();
+    console.log('checkTime', newDate.getHours(), newDate.getMinutes(), newDate.getSeconds())
     this.queryLocalStorage()
     let oldDate;
-    let newDate = new Date();
     // if old date in memory set to newDate
     if(localStorage.getItem('date')){oldDate = new Date(localStorage.getItem('date'))}
 

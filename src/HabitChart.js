@@ -59,7 +59,6 @@ class HabitChart extends Component {
         var newState = {...this.state}
 
         for (var habit in newState.monthlyHabitsCount){
-            console.log(habit, newState.monthlyHabitsCount[habit])
             var sumArr = this.summateArr(newState.monthlyHabitsCount[habit])
             newState.monthlyHabitsSum[habit.toString()] = sumArr;
         }
