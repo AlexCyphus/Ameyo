@@ -12,6 +12,19 @@ export default function checkTime() {
 
     // if the days aren't the same
     if (newDate.getDate() !== oldDate.getDate()){
+      // change background image
+      if (window.navigator.onLine){
+        var image = Math.ceil(Math.random()*20).toString()
+        if (image == "1"){image = "2"}
+        image = "url('http://alexcyph.us/images/" + image + ".jpg')"
+        // save image url
+        localStorage.setItem('background', JSON.stringify(image))
+        document.body.style.backgroundImage = image
+        console.log(image)
+      }
+
+
+      
       var todayItemIds = JSON.parse(JSON.stringify(this.state.columns['today'].itemIds));
       var yesterdayItemIds = JSON.parse(JSON.stringify(this.state.columns['yesterday'].itemIds));
       let history = JSON.parse(JSON.stringify(this.state.history));

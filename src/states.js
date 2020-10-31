@@ -49,7 +49,8 @@ const states = {
   deletable: false,
   settings: false,
   statistics: false,
-  hover: false
+  hover: false,
+  background: false
 }
 
 export default states

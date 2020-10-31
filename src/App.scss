@@ -31,8 +31,9 @@ p {
 body {
   //font-family: 'Open Sans', sans-serif !important;
   font-family: 'IBM Plex Mono', monospace !important;
-  background-image: url("https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1992&q=80");
+  background-image: url("/default.jpg");
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .item-row {
