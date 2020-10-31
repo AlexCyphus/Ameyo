@@ -10,13 +10,22 @@ export function onDragEnd(result) {
       if (!destination){return}
 
       if (destination.droppableId.split('-')[0] === 'deletable'){
-        // remove item from items array
         let newItems = this.state.items
-        delete newItems[draggableId]
+        
 
         // remove item from column -> itemIds array
         let newColumn = this.state.columns[source.droppableId]
         newColumn.itemIds.splice(source.index, 1)
+
+        const newMonthlyHabits = {...this.state.monthlyHabitsCount}
+         // check if habit
+         if(source.droppableId == "habits"){
+          // remove from monthlyhabitcount
+          delete newMonthlyHabits[this.state.items[draggableId].content]
+        }
+
+        // remove item from items array
+        delete newItems[draggableId]
 
         // update state
         const newState = {
@@ -25,13 +34,15 @@ export function onDragEnd(result) {
             ...this.state.columns,
             [source.droppableId]: newColumn
           },
-          items: newItems
+          items: newItems,
+          monthlyHabitsCount: newMonthlyHabits
         }
 
         const setStateAndStorage = () => {
           this.setState(newState, () => {
             localStorage.setItem('columns', JSON.stringify(this.state.columns))
             localStorage.setItem('items', JSON.stringify(this.state.items))
+            localStorage.setItem('monthlyHabitsCount', JSON.stringify(this.state.monthlyHabitsCount))
           }) 
         }
 
@@ -39,11 +50,12 @@ export function onDragEnd(result) {
         return
       }
 
-      // did anything move?
+      // no movement between columns or within columns
       if (destination.droppableId === source.droppableId && destination.index === source.index) {return}
 
       const finish = this.state.columns[destination.droppableId]
 
+      // movement within the same column
       if (start === finish) {
         const column = start
         const newTaskIds = Array.from(column.itemIds)
@@ -69,13 +81,14 @@ export function onDragEnd(result) {
         return
       }
 
+      // else if there was movement 
       const startTaskIds = Array.from(start.itemIds);
-      startTaskIds.splice(source.index, 1); // remove where it came from
-      const newStart = {
-        ...start,
-        itemIds: startTaskIds
-      }
-
+      
+      // remove where it came from
+      startTaskIds.splice(source.index, 1); 
+      
+      // create new state
+      const newStart = {...start, itemIds: startTaskIds}
       const finishTaskIds = Array.from(finish.itemIds);
       finishTaskIds.splice(destination.index, 0, draggableId)
       const newFinish = {
@@ -83,16 +96,29 @@ export function onDragEnd(result) {
         itemIds: finishTaskIds
       }
 
+      // check if it was a habit
+      const newMonthlyHabits = {...this.state.monthlyHabitsCount}
+         if(source.droppableId == "habits"){
+          // remove from monthlyhabitcount
+          delete newMonthlyHabits[this.state.items[draggableId].content]
+        }
+
+
+      // save new state
       const newState = {
         ...this.state,
         columns: {
           ...this.state.columns,
           [newStart.id]: newStart,
           [newFinish.id]: newFinish
-        }
+        },
+        monthlyHabitsCount: newMonthlyHabits
       }
 
-      this.setState(newState, () => {localStorage.setItem('columns', JSON.stringify(this.state.columns))})
+      this.setState(newState, () => {
+        localStorage.setItem('columns', JSON.stringify(this.state.columns))
+        localStorage.setItem('monthlyHabitsCount', JSON.stringify(this.state.monthlyHabitsCount))
+      })
       return
     }
   )
