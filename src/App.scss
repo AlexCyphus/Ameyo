@@ -272,15 +272,11 @@ body {
 }
 
 .history {
-  max-height: 500px;
+  max-height: 70vh;
   min-height: 500px;
   padding-left: 15px;
   padding-right: 25px;
   overflow-y: scroll
-}
-
-.history-container {
-  max-height: 554px
 }
 
 .history-row {
@@ -317,4 +313,8 @@ canvas {
   p {
     margin-top: 14.5px;
   }
+}
+
+.mh-80 {
+  max-height: 80vh;
 }

@@ -84,17 +84,17 @@ export function checkItem(e){
 
     for (var col in this.state.columns){
         if(this.state.columns[col].itemIds.includes(itemId)){
-        column = col
-        break
+            column = col
+            break
         }
     }
 
     if (this.state.items[itemId].checked === "unchecked"){
         if (column !== 'backlog'){
-        newState.items[itemId].checked = "checked"
-        let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
-        newState.columns[column].itemIds.splice(itemLocation, 1)
-        newState.columns[column].itemIds.push(itemId);
+            newState.items[itemId].checked = "checked"
+            let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
+            newState.columns[column].itemIds.splice(itemLocation, 1)
+            newState.columns[column].itemIds.push(itemId);
         }
     }
 

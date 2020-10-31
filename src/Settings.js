@@ -11,10 +11,10 @@ export default class Settings extends React.Component {
         return (
             <div className={this.props.settingsState === true ? "fullscreen-popup d-flex" : "d-none"}>
                 <p className="close-popup" onClick={this.props.settingsClose}>x</p>
-                <div className='d-flex justify-content-center w-100 white'>
-                    <div className="col-md-8">More settings coming soon...</div>
+                <div className='d-flex justify-content-center w-100 white mh-80 m-auto'>
+                    <div className="col-md-8 m-auto text-center">More settings coming soon...</div>
                     <div className='col-md-4 d-flex chart-holder'>
-                        <div className="m-auto w-100 history-container chart-title">
+                        <div className="w-100 history-container chart-title">
                             <div className='history'>
                                     {this.state.history.reverse().map((item, index) => {
                                             var date = new Date(item[1])
