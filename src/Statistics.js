@@ -13,9 +13,9 @@ export default class Statistics extends React.Component {
         
         return (
             <div>
-                <div className={this.props.statisticsState === true ? "fullscreen-popup d-flex" : "d-none"}>
+                <div className={this.props.statisticsState === true ? "fullscreen-popup d-flex p-0" : "d-none"}>
                     <p className="close-popup" onClick={this.props.statisticsClose}>x</p>
-                    <div className='d-flex m-auto w-100'>
+                    <div className='d-flex m-auto w-100 outer-chart-holder px-5'>
                         <div className='col-md-6 d-flex chart-holder'>
                             <div className='m-auto w-100'>
                                 <HabitChart/>
