@@ -271,8 +271,7 @@ body {
 }
 
 .history {
-  max-height: 70vh;
-  min-height: 500px;
+  height: 70vh !important;
   padding-left: 15px;
   padding-right: 25px;
   overflow-y: scroll
@@ -334,4 +333,14 @@ canvas {
 
 #typeform {
   margin-top: 0 !important;
+}
+
+.information {
+  font-size: 14.5px;
+  height: 70vh;
+  overflow-y: scroll;
+  p {
+    font-size: 14.5px;
+    padding-bottom: 15px;
+  }
 }

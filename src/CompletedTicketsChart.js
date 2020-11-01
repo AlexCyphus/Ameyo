@@ -30,7 +30,8 @@ const chartConfig = {
         yAxes: [{
             ticks: {
                 fontColor: "#fff",
-                stepSize: 1
+                stepSize: 1,
+                min: 0
             },
         }]
     },

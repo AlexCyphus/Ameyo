@@ -29,11 +29,21 @@ export default class Settings extends React.Component {
             <div className={this.props.settingsState === true ? "fullscreen-popup d-flex" : "d-none"}>
                 <p className="close-popup" onClick={this.props.settingsClose}>x</p>
                 <div className='d-flex justify-content-center w-100 white mh-80 m-auto'>
-                    <div className={"text-center align-middle d-flex " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
-                        <div className="m-auto">
-                            <h2 className="text-center pb-3">More settings coming soon</h2>
-                            {this.state.hideFeedback ? <h3 className="clickable font-italic chart-title text-center" onClick={this.toggleFeedback}>(Show Feedback Form?)</h3> : null}
+                    <div className={"text-center align-middle " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
+                        <div className="text-left information">
+                            <h4 className="pb-3 font-underline">ℹ️ Information</h4>
+                            <p>The logic behind Ameyo is that everyday at midnight...</p>
+                            <ul>
+                                <li>All completed "Habits" will uncheck - ready for the next day</li>
+                                <li>Completed "Today" tasks will move to yesterday to remind you where you left off</li>
+                                <li>Completed "Yesterday" tasks will move to history to create a distraction free board</li>
+                            </ul>
+                            <p>There is no need to delete or move completed tasks as this will all be done automatically.</p>
+                            <p>You will then be able to track your progress in the statistics tab.</p>
+                            <p>Have feedback? Send me an email <a href="mailto:alexjcyphus@gmail.com">alexjcyphus@gmail.com</a></p>
+                            {this.state.hideFeedback ? <h5 className="clickable pt-4 text-italic" onClick={this.toggleFeedback}>(🎤 Show feedback form?)</h5> : null}
                         </div>
+                        <h2 className="text-center chart-title pt-3">More settings coming soon</h2>
                     </div>
                     <div className='col-md-4 d-flex chart-holder'>
                         <div className="w-100 history-container chart-title">
