@@ -26,7 +26,6 @@ export default function checkTime() {
         // save image url
         localStorage.setItem('background', JSON.stringify(image))
         document.body.style.backgroundImage = image
-        console.log(image)
       }
 
 

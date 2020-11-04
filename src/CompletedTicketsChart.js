@@ -62,7 +62,6 @@ class HabitChart extends Component {
         historyArr = historyArr.filter(item => {
             let daysSince = Math.floor((new Date() - new Date(item[1])) / 1000 / 60 / 60 / 24) - 1
             individualCounts[daysSince] = individualCounts[daysSince] + 1
-            console.log(individualCounts)
         })
 
         // summing the counts across the days (can + should probably be done in the last loop)

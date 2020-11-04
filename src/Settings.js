@@ -13,7 +13,6 @@ export default class Settings extends React.Component {
     }
 
     toggleFeedback() {
-        console.log(this.state.hideFeedback)
         var newFeedback = ''
         if (this.state.hideFeedback){var newFeedback = false}
         else {var newFeedback = true}
@@ -53,7 +52,7 @@ export default class Settings extends React.Component {
                                             return (
                                                 <div className="row white history-row">
                                                     <div className="col history-item pr-2"><p>{item[0]}</p></div>
-                                                    <div className="col-auto text-right pl-2"><p>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</p></div>
+                                                    <div className="col-auto text-right pl-2"><p>{date.getDate() - 1}/{date.getMonth() + 1}/{date.getFullYear()}</p></div>
                                                 </div>
                                             )
                                             })

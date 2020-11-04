@@ -47,7 +47,7 @@ const states = {
   hoursLeft: 24 - new Date().getHours(),
   date: new Date(),
   deletable: false,
-  settings: true,
+  settings: false,
   statistics: false,
   hover: false,
   background: false

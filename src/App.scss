@@ -344,3 +344,7 @@ canvas {
     padding-bottom: 15px;
   }
 }
+
+textarea:focus, input:focus{
+  outline: none;
+}
