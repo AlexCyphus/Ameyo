@@ -28,7 +28,7 @@ export default class Settings extends React.Component {
             <div className={this.props.settingsState === true ? "fullscreen-popup d-flex" : "d-none"}>
                 <p className="close-popup" onClick={this.props.settingsClose}>x</p>
                 <div className='d-flex justify-content-center w-100 white mh-80 m-auto'>
-                    <div className={"text-center align-middle " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
+                    <div className={"text-center align-middle p-0 d-none d-md-block " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
                         <div className="text-left information">
                             <h4 className="pb-3 font-underline">ℹ️ Information</h4>
                             <p>The logic behind Ameyo is that everyday at midnight...</p>
@@ -62,7 +62,7 @@ export default class Settings extends React.Component {
                         </div>
                     </div>
                     {!this.state.hideFeedback ? 
-                     <div className="col-md-5" id='typeform'>
+                     <div className="col-md-5 d-none d-lg-block" id='typeform'>
                         <ReactTypeformEmbed url="https://alexjcyphus.typeform.com/to/Ns596HzQ" />
                         <h2 className='text-center pt-3 white chart-title'>Feedback <span className="font-italic clickable" onClick={this.toggleFeedback}>(hide?)</span></h2>
                     </div>

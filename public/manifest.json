@@ -1,6 +1,6 @@
 {
   "name": "Ameyo | Task + Habit Tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "👨‍💻 Keep track of your 🌄 daily habits, 🆙 standups, and ⏰ future tasks. Think Trello but focused on 💪 daily self improvement.",
   "chrome_url_overrides": {
@@ -10,7 +10,5 @@
       "default_icon": "favicon.png"
   },
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
-  "permissions": [
-    "storage"
-  ]
+  "permissions": []
 }

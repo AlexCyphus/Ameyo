@@ -17,12 +17,16 @@ export default function checkTime() {
       if (window.navigator.onLine){
         const randomNumber = () => {
           image = Math.ceil(Math.random()*20).toString()
-          if (image == "1"){image = "2"}
+          if (image == "1" | image == "10"){image = "2"}
           image = "url('http://alexcyph.us/images/" + image + ".jpg')"
           if (image == localStorage.getItem('background')){randomNumber()}
+          console.log(image)
         }
+
+        randomNumber()
         
-        
+        console.log(image)
+      
         // save image url
         localStorage.setItem('background', JSON.stringify(image))
         document.body.style.backgroundImage = image
