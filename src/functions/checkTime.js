@@ -3,37 +3,17 @@ export default function checkTime() {
     let newDate = new Date();
     console.log('checkTime', newDate.getHours(), newDate.getMinutes(), newDate.getSeconds())
     this.queryLocalStorage()
+    
+    // check for previous date
     let oldDate;
-    // if old date in memory set to newDate
-    if(localStorage.getItem('date')){oldDate = new Date(localStorage.getItem('date'))}
-
-    // otherwise create a newDate
-    else {oldDate = new Date()}
+    if(localStorage.getItem('date')){oldDate = new Date(localStorage.getItem('date'))} 
+    else {oldDate = new Date()} // otherwise create a newDate
 
     // if the days aren't the same
     if (newDate.getDate() !== oldDate.getDate()){
-      // change background image
-      var image = ""
-      if (window.navigator.onLine){
-        const randomNumber = () => {
-          image = Math.ceil(Math.random()*20).toString()
-          if (image == "1" | image == "10"){image = "2"}
-          image = "url('http://alexcyph.us/images/" + image + ".jpg')"
-          if (image == localStorage.getItem('background')){randomNumber()}
-          console.log(image)
-        }
 
-        randomNumber()
-        
-        console.log(image)
-      
-        // save image url
-        localStorage.setItem('background', JSON.stringify(image))
-        document.body.style.backgroundImage = image
-      }
+      this.handleChangeBackground()
 
-
-      
       var todayItemIds = JSON.parse(JSON.stringify(this.state.columns['today'].itemIds));
       var yesterdayItemIds = JSON.parse(JSON.stringify(this.state.columns['yesterday'].itemIds));
       let history = JSON.parse(JSON.stringify(this.state.history));

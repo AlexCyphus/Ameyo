@@ -50,7 +50,7 @@ const states = {
   settings: false,
   statistics: false,
   hover: false,
-  background: false
+  backgroundImageIndex: 0
 }
 
 export default states
