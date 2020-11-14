@@ -71,13 +71,10 @@ export default class App extends Component {
   componentWillMount() {
     const newState = {...this.state}
     // check local storage 
-    if (JSON.parse(localStorage.getItem('background'))){
-      newState.background = JSON.parse(localStorage.getItem('background'))
-    }
+    if (JSON.parse(localStorage.getItem('background'))){newState.background = JSON.parse(localStorage.getItem('background'))}
+    else {newState.background = "url('/default.jpg')"}
 
-    this.setState(newState, () => {
-      document.body.style.backgroundImage = this.state.background
-    })
+    this.setState(newState, () => {document.body.style.backgroundImage = newState.background})
   }
 
   componentDidMount() {
