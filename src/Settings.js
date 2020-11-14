@@ -24,6 +24,8 @@ export default class Settings extends React.Component {
     }
 
     render(){
+        let history = {...this.state.history}
+        history = Object.values(history).reverse()
         return (
             <div className={this.props.settingsState === true ? "fullscreen-popup d-flex" : "d-none"}>
                 <p className="close-popup" onClick={this.props.settingsClose}>x</p>
@@ -47,7 +49,7 @@ export default class Settings extends React.Component {
                     <div className='col-md-4 d-flex chart-holder'>
                         <div className="w-100 history-container chart-title">
                             <div className='history'>
-                                    {this.state.history.reverse().map((item, index) => {
+                                    {history.map((item, index) => {
                                             var date = new Date(item[1])
                                             return (
                                                 <div className="row white history-row">
