@@ -6,11 +6,19 @@ export default function checkTime() {
     
     // check for previous date
     let oldDate;
+    var hideOnWeekend = false;
     if(localStorage.getItem('date')){oldDate = new Date(localStorage.getItem('date'))} 
+    if(localStorage.getItem('hideOnWeekend')){hideOnWeekend = new Date(localStorage.getItem('hideOnWeekend'))} 
     else {oldDate = new Date()} // otherwise create a newDate
 
     // if the days aren't the same
     if (newDate.getDate() !== oldDate.getDate()){
+
+      // hide background on weekends
+      this.setState({hideColumn: false})
+      if (newDate.getDay() == 6 || newDate.getDay() == 0){
+        if (hideOnWeekend){this.setState({hideColumn: true})}
+      }
 
       this.handleChangeBackground()
 

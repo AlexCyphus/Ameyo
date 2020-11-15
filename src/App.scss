@@ -349,12 +349,6 @@ textarea:focus, input:focus{
   outline: none;
 }
 
-.MuiFormGroup-root {
-  background-color: #1b1b1b;
-  padding: 35px;
-  height: 70vh;
-}
-
 .MuiTypography-root {
   font-family: 'IBM Plex Mono', monospace !important;
 }
@@ -363,5 +357,37 @@ textarea:focus, input:focus{
   text-align: left;
   font-weight: bold !important;
   font-family: 'IBM Plex Mono', monospace !important;
-  margin: 5px 0px !important;
+  margin: 5px 5px !important;
+}
+
+.MuiButton-root:hover {
+  text-decoration: none;
+  color: white;
+}
+
+#danger-zone {
+  margin-top: 30px;
+  
+}
+
+#settings-outer {
+  background-color: #313131e7;
+  padding: 25px;
+  height: 70vh;
+  overflow-y: scroll;
+  justify-content: center;
+}
+
+.MuiSwitch-root {
+  padding-left: 0 !important;
+  padding-right: 18px !important;
+}
+
+.PrivateSwitchBase-root-1 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.MuiFormControlLabel-root {
+  width: 100%;
 }
