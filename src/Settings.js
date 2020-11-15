@@ -1,14 +1,21 @@
 import React from 'react'
 import { ReactTypeformEmbed } from 'react-typeform-embed';
+import {Switch, Button} from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
 
 
 export default class Settings extends React.Component {
     constructor(props){
         super(props);
         this.toggleFeedback = this.toggleFeedback.bind(this)
+        this.handleChange = this.handleChange.bind(this)
         this.state = {
             history: JSON.parse(localStorage.getItem('history')) ? JSON.parse(localStorage.getItem('history')) : [],
             hideFeedback: JSON.parse(localStorage.getItem('hideFeedback')) ? JSON.parse(localStorage.getItem('hideFeedback')) : false, 
+            gilad: true,
+    jason: false,
+    antoine: true,
         }
     }
 
@@ -23,6 +30,10 @@ export default class Settings extends React.Component {
         )
     }
 
+    handleChange(event){
+        this.setState({ ...this.state, [event.target.name]: event.target.checked });
+      };
+
     render(){
         let history = {...this.state.history}
         history = Object.values(history).reverse()
@@ -31,7 +42,29 @@ export default class Settings extends React.Component {
                 <p className="close-popup" onClick={this.props.settingsClose}>x</p>
                 <div className='d-flex justify-content-center w-100 white mh-80 m-auto'>
                     <div className={"text-center align-middle p-0 d-none d-md-block " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
-                        <div className="text-left information">
+                        <FormGroup>
+                            <div>Settings</div>
+                            <FormControlLabel
+                                control={<Switch checked={this.state.gilad} onChange={this.handleChange} name="gilad" />}
+                                label="Freeze on todays image"
+                                inputProps={{ 'aria-label': 'primary checkbox' }}
+                            />
+                            <FormControlLabel
+                                control={<Switch checked={this.state.gilad} onChange={this.handleChange} name="gilad" />}
+                                label="Hide columns on weekends"
+                                inputProps={{ 'aria-label': 'primary checkbox' }}
+                            />
+                            <Button variant="contained" color="primary">Skip the current background image</Button>
+                            <Button variant="contained" color="primary">See information screen</Button>
+                            <Button variant="contained" color="primary">Give feedback</Button>
+                            <div>⚠️ Danger Zone ⚠️</div>
+                            <div>You probably don't want to click these buttons</div>
+                            <Button variant="contained" color="secondary">Clear task history</Button>
+                            <Button variant="contained" color="secondary">Clear habit history</Button>
+                            <Button variant="contained" color="secondary">Unistall Ameyo</Button>
+                        </FormGroup>
+                        <div className="bg-success mt-2 py-2 rounded">Settings updated successfully</div>
+                        {/* <div className="text-left information">
                             <h4 className="pb-3 font-underline">ℹ️ Information</h4>
                             <p>The logic behind Ameyo is that everyday at midnight...</p>
                             <ul>
@@ -43,8 +76,7 @@ export default class Settings extends React.Component {
                             <p>You will then be able to track your progress in the statistics tab.</p>
                             <p>Have feedback? Send me an email <a href="mailto:alexjcyphus@gmail.com">alexjcyphus@gmail.com</a></p>
                             {this.state.hideFeedback ? <h5 className="clickable pt-4 text-italic" onClick={this.toggleFeedback}>(🎤 Show feedback form?)</h5> : null}
-                        </div>
-                        <h2 className="text-center chart-title pt-3">More settings coming soon</h2>
+                        </div> */}
                     </div>
                     <div className='col-md-4 d-flex chart-holder'>
                         <div className="w-100 history-container chart-title">

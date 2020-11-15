@@ -348,3 +348,20 @@ canvas {
 textarea:focus, input:focus{
   outline: none;
 }
+
+.MuiFormGroup-root {
+  background-color: #1b1b1b;
+  padding: 35px;
+  height: 70vh;
+}
+
+.MuiTypography-root {
+  font-family: 'IBM Plex Mono', monospace !important;
+}
+
+.MuiButton-root {
+  text-align: left;
+  font-weight: bold !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  margin: 5px 0px !important;
+}
