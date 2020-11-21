@@ -17,8 +17,8 @@ export default class Information extends React.Component {
             return (
                 <div className="info-navigation row justify-content-end text-right">
                     <div className="w-25 text-left"><p className="f-30 clickable" onClick={() => this.props.handleChangeInfoPage(false)}>LAST</p></div>
-                    <div className="w-50 text-center"><p className="f-30">{number}/5</p></div>
-                    {number == 5 
+                    <div className="w-50 text-center"><p className="f-30">{number}/6</p></div>
+                    {number == 6 
                     ?
                     <div className="w-25"><p className="f-30 clickable" onClick={this.props.toggleInformation}>BEGIN!</p></div> 
                     :
@@ -81,7 +81,7 @@ export default class Information extends React.Component {
                                 <li>Checked <strong>Yesterday</strong> tasks are moved to the history and off the board.</li>
                                 <li>A beautiful new background image will be shown.</li>
                             </ol>
-                            <p className="pb-0">Click next to see it in action.</p>
+                            <p className="pb-0">Click NEXT to see it in action.</p>
                         </div>
                     </div>
                     <Navigation number={2}/>
@@ -146,20 +146,17 @@ export default class Information extends React.Component {
                 )
             }
 
-            else if (this.props.page == 5){
+            // 6/6
+            else if (this.props.page == 6){
+                // welcome 
                 return (
                     <>
-                    <div className="d-flex align-items-center main-info-content">
-                        <div>
-                            <img src="./info5.jpg" className="info-image" id=""></img>
-                        </div>
-                        <div className="text-left instructions">
-                            <p>Want to know what you did 138 days ago? Perhaps to prove an alibi? </p>
-                            <p>You can find history along with useful options in the settings tab.</p>
-                        </div>
+                    <div className="text-center">
+                        <h1 className="pb-3">You're ready.</h1>
+                        <h5>Now go forth and be the most productive version of yourself you can be!</h5>
                     </div>
-                    <Navigation number={5}/>
-                    </>   
+                    <Navigation number={6}/>
+                    </>
                 )
             }
 

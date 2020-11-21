@@ -399,7 +399,7 @@ textarea:focus, input:focus{
 
 .white-black-button {
   background-color: white;
-  border-radius: 30px;
+  border-radius: 15px;
   width: fit-content;
   color: black;
   opacity: 1;
@@ -422,21 +422,36 @@ textarea:focus, input:focus{
 
   ol, p, ul {
     padding-bottom: 25px;
-    font-size: 2vw;
+    font-size: 1.7vw;
     max-height: 70vh;
   }
 
-  
+  ol {
+    margin-left: 15px;
+  }
+}
+
+.info-navigation {
+  p {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
 }
 
 .info-image {
-  max-height: 85vh;
+  height: auto;
   max-width: 60vw;
+  height: 70vh;
+  margin-bottom: 15px;
 }
 
 .two-info-images {
-  max-height: 65vh;
-  max-width: 40vw;
+  height: auto;
+  width: 40vw;
+  min-height: 30vh;
+  min-width: 30vh;
 }
 
 .f-30 {

@@ -103,11 +103,7 @@ export default class App extends Component {
   }
 
   handleChangeInfoPage(next) {
-    console.log('firing')
-    if (next == true){
-      this.setState({informationPage: this.state.informationPage + 1})
-      console.log('it true')
-    }
+    if (next == true){this.setState({informationPage: this.state.informationPage + 1})}
     else {this.setState({informationPage: this.state.informationPage - 1})}
   }
 
