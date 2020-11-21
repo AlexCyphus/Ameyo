@@ -79,8 +79,7 @@ export default class App extends Component {
     else {return document.body.style.backgroundImage = "url('/default.jpg')"}
 
     this.setState(newState, () => {document.body.style.backgroundImage = imageUrls[newState.backgroundImageIndex]})
-    this.queryLocalStorage()
-    
+    this.queryLocalStorage()    
   }
 
   componentDidMount() {
