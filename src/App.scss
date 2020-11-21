@@ -430,6 +430,11 @@ textarea:focus, input:focus{
 }
 
 .info-image {
+  max-height: 85vh;
+  max-width: 60vw;
+}
+
+.two-info-images {
   max-height: 65vh;
   max-width: 40vw;
 }

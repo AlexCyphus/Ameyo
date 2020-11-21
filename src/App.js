@@ -8,6 +8,7 @@ import states from './states';
 
 // components
 import Settings from './Settings';
+import Information from './Information';
 import Statistics from './Statistics';
 import Column from "./Column.js"
 
@@ -38,9 +39,10 @@ export default class App extends Component {
     this.settingsClose = this.settingsClose.bind(this)
     this.statisticsOpen = this.statisticsOpen.bind(this)
     this.statisticsClose = this.statisticsClose.bind(this)
+    this.handleChangeInfoPage = this.handleChangeInfoPage.bind(this)
     this.queryLocalStorage = this.queryLocalStorage.bind(this)
     this.handleChangeBackground = this.handleChangeBackground.bind(this)
-
+    this.toggleInformation = this.toggleInformation.bind(this)
   }
 
   checkTime = checkTimeImport
@@ -52,24 +54,20 @@ export default class App extends Component {
   queryLocalStorage = queryLocalStorage
   handleChangeBackground = handleChangeBackground
 
+  // i dont know why i didnt just write one toggle function
   settingsOpen(){this.setState({settings: true})}
   settingsClose(){this.setState({settings:false})}
   statisticsOpen(){this.setState({statistics: true})}
   statisticsClose(){this.setState({statistics:false})}
-  
-
-  queryLocalStorage(_callback = false){
-    const newState = {...this.state}
-
-    if (JSON.parse(localStorage.getItem('items'))){newState.items = JSON.parse(localStorage.getItem('items'))}
-    if (JSON.parse(localStorage.getItem('columns'))){newState.columns = JSON.parse(localStorage.getItem('columns'))}
-    if (JSON.parse(localStorage.getItem('columnOrder'))){newState.columnOrder = JSON.parse(localStorage.getItem('columnOrder'))}
-    if (JSON.parse(localStorage.getItem('monthlyHabitsCount'))){newState.monthlyHabitsCount = JSON.parse(localStorage.getItem('monthlyHabitsCount'))}
-    if (JSON.parse(localStorage.getItem('background'))){newState.background = JSON.parse(localStorage.getItem('background'))}
-
-
-    this.setState(newState, () => {
-      if (_callback) {_callback()};
+  toggleInformation(){
+    // if first time using Ameyo and closed
+    if (JSON.parse(localStorage.getItem("showIntroduction")) == null){localStorage.setItem("showIntroduction", JSON.stringify(false))}
+    
+    // if not first time and accessing info from settings
+    this.setState({
+      information: !this.state.information,
+      settings: false,
+      informationPage: 1
     })
   }
 
@@ -81,19 +79,13 @@ export default class App extends Component {
     else {return document.body.style.backgroundImage = "url('/default.jpg')"}
 
     this.setState(newState, () => {document.body.style.backgroundImage = imageUrls[newState.backgroundImageIndex]})
-
+    this.queryLocalStorage()
+    
   }
 
   componentDidMount() {
-    // local storage blanks
-    this.setState(states)
-
-   // if items already in local storage
-    this.queryLocalStorage()
-
     // update clock + time logic once in a while 
     this.intervalID = setInterval(() => this.checkTime(), 30000);
-
     setTimeout(() => this.checkTime(), 0)
   }
 
@@ -110,6 +102,15 @@ export default class App extends Component {
     //this.handleChangeBackground()
   }
 
+  handleChangeInfoPage(next) {
+    console.log('firing')
+    if (next == true){
+      this.setState({informationPage: this.state.informationPage + 1})
+      console.log('it true')
+    }
+    else {this.setState({informationPage: this.state.informationPage - 1})}
+  }
+
   render() {
     // set up for the countdown (this isn't working)
     let minutesLeft = 59 - this.state.date.getMinutes();
@@ -119,48 +120,56 @@ export default class App extends Component {
     if (hoursLeft > 1) {plurals[0] = 's'}
     if (minutesLeft > 1) {plurals[1] = 's'}
 
-    var columnVisibility = ((this.state.settings || this.state.statistics) ? 'd-none' : 'd-flex')
+    var columnVisibility = ((this.state.settings || this.state.statistics || this.state.information) ? 'd-none' : 'd-flex')
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
-        <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen}/>
+      <>
+        <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen} toggleInformation={this.toggleInformation}/>
+        <Information 
+          informationState={this.state.information}
+          toggleInformation={this.toggleInformation}
+          handleChangeInfoPage={this.handleChangeInfoPage}
+          page={this.state.informationPage}
+        />
         <Statistics 
           statisticsState={this.state.statistics}
           statisticsClose={this.statisticsClose}
           onClick={this.statisticsOpen}
           monthlyHabitsCount={this.state.monthlyHabitsCount}
         />
-        <div className={"columns " + columnVisibility}>
-          <div className="inner-container">
-          {this.state.columnOrder.map((columnId) => {
-            const column = this.state.columns[columnId];
-            const items = column.itemIds.map(itemId => this.state.items[itemId])
-            let type;
-            this.state.columns[columnId].type ? type=this.state.columns[columnId].type : type='none';
-            return <Column 
-                      key={column.id}
-                      column={column} 
-                      items={items} 
-                      checkItem={this.checkItem} 
-                      itemInputChange={this.itemInputChange} 
-                      addItem={this.addItem} 
-                      title={this.state.columns[columnId].title} 
-                      inputs={this.state.inputs} 
-                      deletable={this.state.deletable} 
-                      type={type} 
-                      description={this.state.columns[columnId].description}
-                      emoji={this.state.columns[columnId].emoji}
-                      hover={this.state.hover}
-                    />
-          })}
+        <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
+          <div className={"columns " + columnVisibility}>
+            <div className="inner-container">
+            {this.state.columnOrder.map((columnId) => {
+              const column = this.state.columns[columnId];
+              const items = column.itemIds.map(itemId => this.state.items[itemId])
+              let type;
+              this.state.columns[columnId].type ? type=this.state.columns[columnId].type : type='none';
+              return <Column 
+                        key={column.id}
+                        column={column} 
+                        items={items} 
+                        checkItem={this.checkItem} 
+                        itemInputChange={this.itemInputChange} 
+                        addItem={this.addItem} 
+                        title={this.state.columns[columnId].title} 
+                        inputs={this.state.inputs} 
+                        deletable={this.state.deletable} 
+                        type={type} 
+                        description={this.state.columns[columnId].description}
+                        emoji={this.state.columns[columnId].emoji}
+                        hover={this.state.hover}
+                      />
+            })}
+            </div>
+            <div className="outer-footer d-flex text-center">
+              <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings</p></div>
+              <div className="col-auto m-auto" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
+              <div className="col footer-item clickable" onClick={this.statisticsOpen}><p>📈 Statistics</p></div>
+            </div>
           </div>
-          <div className="outer-footer d-flex text-center">
-            <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings</p></div>
-            <div className="col-auto m-auto" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
-            <div className="col footer-item clickable" onClick={this.statisticsOpen}><p>📈 Statistics</p></div>
-          </div>
-        </div>
-      </DragDropContext>
+        </DragDropContext>
+      </>
     );
   }
 }

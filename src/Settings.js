@@ -52,6 +52,8 @@ export default class Settings extends React.Component {
             this.setState({monthlyHabitsCount: {}})
         }
     }
+    
+    
 
     render(){
         let history = {...this.state.history}
@@ -70,7 +72,7 @@ export default class Settings extends React.Component {
                                 className="mx-1"
                             />
                             <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground(true)}>Skip the current background image</Button>
-                            <Button variant="contained" color="primary">See information screen</Button>
+                            <Button variant="contained" color="primary" onClick={() => this.props.toggleInformation()}>See information screen</Button>
                             <Button variant="contained" color="primary" onClick={this.toggleFeedback}>Give feedback</Button>
                             <Button variant="contained" color="primary" target="_blank" href="https://bit.ly/AmeyoRate">Rate Ameyo 5 stars</Button>
                             <div className="d-block" id="danger-zone">
@@ -78,7 +80,7 @@ export default class Settings extends React.Component {
                                 <div className="pt-1 pb-3 text-center"><p>You probably don't want to click these buttons</p></div>
                                 <Button variant="contained" color="secondary" onClick={this.deleteHistory} className="mx-1">Clear task history</Button>
                                 <Button variant="contained" color="secondary" onClick={this.deleteHabits} className="mx-1">Clear habit history</Button>
-                                <Button href="https://bit.ly/AmeyoUninstall" variant="contained" color="secondary" className="mx-1">Unistall Ameyo</Button>
+                                <Button href="https://bit.ly/AmeyoUninstall" variant="contained" color="secondary" className="mx-1">Uninstall Ameyo</Button>
                             </div>
                         </div>
                         {/* <div className="text-left information">

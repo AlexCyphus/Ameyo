@@ -1,0 +1,81 @@
+[1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1]
+[0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1]
+[0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1]
+[0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1]
+[0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0]
+[0, 4, 2, 1, 4, 0, 0, 0, 4, 0, 3, 2, 1, 3, 1, 1, 4, 2, 4, 3, 0, 4, 3, 3, 0, 2, 4, 3, 0, 4]
+
+Tell a Complete Stranger my Life Story
+Meet a Person Born on the Same Day As Me
+
+Learn How to Pick Locks
+
+Make an Important Decision With a Coin Toss
+
+
+
+
+{"item-1":{"id":"item-1","content":"Workout","checked":"checked","date":[10,31]},"item-2":{"id":"item-2","content":"Read 20 pages","checked":"checked","date":[10,31]},"item-3":{"id":"item-3","content":"Study French flashcards for 30 minutes","checked":"checked","date":[10,31]},"item-4":{"id":"item-4","content":"Clean room","checked":"unchecked","date":[10,31]},"item-5":{"id":"item-5","content":"Call my mom","checked":"checked","date":[10,31]},"item-6":{"id":"item-6","content":"Contact the Zucc to tell him about my new Chrome Extension","checked":"unchecked","date":[10,31]},"item-7":{"id":"item-7","content":"Figure out how to become a millionaire off of Chrome Extensions","checked":"unchecked","date":[10,31]},"item-8":{"id":"item-8","content":"Call my dad","checked":"checked","date":[10,31]},"item-9":{"id":"item-9","content":"Figure out the meaning of the universe","checked":"checked","date":[10,31]},"item-10":{"id":"item-10","content":"Code whole Chrome extension","checked":"checked","date":[10,31]},"item-11":{"id":"item-11","content":"Design whole Chrome extension","checked":"checked","date":[10,31]},"item-12":{"id":"item-12","content":"Les Glaneurs et la Glaneuse 🇫🇷","checked":"checked","date":[10,31]},"item-13":{"id":"item-13","content":"Learn all the numbers in French","checked":"checked","date":[10,31]},"item-14":{"id":"item-14","content":"Go to the pool with Chelsea","checked":"checked","date":[10,31]},"item-15":{"id":"item-15","content":"Solve the traveling salesman problem","checked":"checked","date":[10,31]},"item-16":{"id":"item-16","content":"Think of name for plant (maybe something to do with the color green?)","checked":"checked","date":[10,31]},"item-17":{"id":"item-17","content":"Think of new better name for plant","checked":"unchecked","date":[10,31]},"item-18":{"id":"item-18","content":"Finish Figma wireframes for new social network","checked":"checked","date":[10,31]},"item-19":{"id":"item-19","content":"Create algorithm to predict cryptocurrency prices","checked":"checked","date":[10,31]},"item-20":{"id":"item-20","content":"Speak with the mayor of Malabo about new transportation infrastructure","checked":"checked","date":[10,31]},"item-21":{"id":"item-21","content":"Come up with novel solution to world hunger","checked":"unchecked","date":[10,31]},"item-22":{"id":"item-22","content":"Figure out whether Elvis is still alive or not ","checked":"unchecked","date":[10,31]},"item-23":{"id":"item-23","content":"Find Atlantas (maybe on Google Maps?) 🐟","checked":"unchecked","date":[10,31]},"item-24":{"id":"item-24","content":"Create new cryptocurrency (Alexcoin)","checked":"checked","date":[10,31]},"item-25":{"id":"item-25","content":"Speak to Fernanda and make sure you still remember how to speak Spanish","checked":"checked","date":[10,31]},"item-27":{"id":"item-27","content":"Complete pre-reqs to become eligible for astronaut training","checked":"unchecked","date":[10,31]},"item-28":{"id":"item-28","content":"See if you're eligible for astronaut training","checked":"checked","date":[10,31]},"item-26":{"id":"item-26","content":"See if Spielberg is looking for lead actors for his next film","checked":"unchecked","date":[10,31]},"item-29":{"id":"item-29","content":"Learn how to act ","checked":"unchecked","date":[10,31]},"item-30":{"id":"item-30","content":"Go swimming in the ocean and reflect on all the injustices present in the world today","checked":"unchecked","date":[10,31]}}
+
+{"habits":{"id":"habits","title":"Habits","emoji":"⏰","itemIds":["item-4","item-1","item-3","item-2"],"description":"Daily tasks"},"today":{"id":"today","title":"Today","emoji":"🗓","itemIds":["item-17","item-7","item-6","item-30","item-18","item-19","item-24","item-25","item-28","item-20","item-5"],"description":"Tasks to do today"},"yesterday":{"id":"yesterday","title":"Yesterday","emoji":"✅","itemIds":["item-8","item-11","item-10","item-9","item-12","item-13","item-14","item-15","item-16"],"description":"Tasks completed yesterday"},"backlog":{"id":"backlog","title":"Backlog","emoji":"📚","itemIds":["item-29","item-26","item-27","item-23","item-22","item-21"],"description":"Future tasks","type":"backlog"}}
+
+{"Workout":[1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,1,1,1,0,0,0,0,1,1,1,0,0,0,1,1],"Read 20 pages":[0,0,0,0,1,1,0,0,1,0,0,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1],"Study French flashcards for 30 minutes":[0,1,1,1,1,1,0,0,1,1,1,0,1,1,1,0,1,0,1,0,0,1,1,0,0,1,0,1,1,1],"Clean room":[0,1,1,1,1,0,1,0,0,0,1,0,1,0,0,1,1,0,0,0,1,0,0,1,1,1,1,0,0,0]}
+
+
+[
+["Meet my Favorite Baseball Player","2020-10-01T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-01T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-01T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-02T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-02T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-02T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-02T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-03T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-03T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-03T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-06T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-06T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-06T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-07T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-08T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-08T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-09T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-09T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-09T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-10T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-10T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-11T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-12T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-13T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-14T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-14T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-14T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-15T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-16T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-17T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-18T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-22T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-25T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-25T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-25T23:09:07.316Z"],
+["Think about the impacts of my daily habits on the delicate ecosystem we live in","2020-10-25T23:09:07.316Z"],
+["Try diving in the Dead Sea ","2020-10-25T23:09:07.316Z"],
+["Decide whether I prefer cats or dogs","2020-10-25T23:09:07.316Z"],
+["Try to find a new color","2020-10-26T23:09:07.316Z"],
+["Meet my Favorite Baseball Player","2020-10-26T23:09:07.316Z"],
+["Ride a dirt bike","2020-10-27T23:09:07.316Z"],
+["Go on date at the amusement park","2020-10-27T23:00:01.826Z"],
+["Sail around ustralia","2020-10-27T23:00:01.826Z"],
+["Buy a pair of designer heels","2020-10-28T23:00:01.826Z"],
+["Create my own drink","2020-10-28T23:00:01.826Z"],
+["Learn Half Moon yoga pose","2020-10-28T23:00:01.826Z"],
+["Figure out if moon landing was fake or not","2020-10-29T23:00:01.826Z"],
+["See the tulips in Holland","2020-10-29T23:00:01.826Z"],
+["Become a master marksman","2020-10-29T23:00:01.826Z"],
+["Make homemade miso","2020-10-29T23:00:01.826Z"],
+["Create a scrapbook","2020-10-29T23:00:01.826Z"],
+["Go to the supermarket and buy the most expensive item","2020-10-30T23:00:01.826Z"],
+["Try talking to squirrels","2020-10-30T23:00:01.826Z"],
+["To my plant to the plant-vet","2020-10-30T23:00:01.826Z"],
+["Count all the coins I have in my apartmet","2020-10-30T23:00:01.826Z"],
+["Try Tirameesu? Tiramisue? Teeramiesu?","2020-10-31T10:45:59.992Z"]]
