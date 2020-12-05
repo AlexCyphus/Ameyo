@@ -5,6 +5,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import {handleChangeBackground, toggleAllowedBackgroundChanges} from './functions/imageLogic'
 
+const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const nth = (date) => {
+    if (date > 3 && date < 21) return 'th';
+    date = date % 10
+    switch (date){
+        case 1: return "st"
+        case 2: return "nd"
+        case 3: return "rd"
+        default: return "th"
+    }
+}
 
 export default class Settings extends React.Component {
     constructor(props){
@@ -83,32 +96,21 @@ export default class Settings extends React.Component {
                                 <Button href="https://bit.ly/AmeyoUninstall" variant="contained" color="secondary" className="mx-1">Uninstall Ameyo</Button>
                             </div>
                         </div>
-                        {/* <div className="text-left information">
-                            <h4 className="pb-3 font-underline">ℹ️ Information</h4>
-                            <p>The logic behind Ameyo is that everyday at midnight...</p>
-                            <ul>
-                                <li>All completed "Habits" will uncheck - ready for the next day</li>
-                                <li>Completed "Today" tasks will move to yesterday to remind you where you left off</li>
-                                <li>Completed "Yesterday" tasks will move to history to create a distraction free board</li>
-                            </ul>
-                            <p>There is no need to delete or move completed tasks as this will all be done automatically.</p>
-                            <p>You will then be able to track your progress in the statistics tab.</p>
-                            <p>Have feedback? Send me an email <a href="mailto:alexjcyphus@gmail.com">alexjcyphus@gmail.com</a></p>
-                            {this.state.hideFeedback ? <h5 className="clickable pt-4 text-italic" onClick={this.toggleFeedback}>(🎤 Show feedback form?)</h5> : null}
-                        </div> */}
                     </div>
                     <div className='col-md-4 d-flex chart-holder'>
                         <div className="w-100 history-container chart-title">
                             <div className='history'>
                                     {history.map((item, index) => {
-                                            var date = new Date(item[1])
-                                            return (
-                                                <div className="row white history-row">
-                                                    <div className="col history-item pr-2"><p>{item[0]}</p></div>
-                                                    <div className="col-auto text-right pl-2"><p>{date.getDate() - 1}/{date.getMonth() + 1}/{date.getFullYear()}</p></div>
-                                                </div>
-                                            )
-                                            })
+                                        var date = new Date(item[1])
+                                        date = new Date(date.getTime() - 24*60*60*1000)
+                                        var ordinal = nth(date.getDate())
+                                        return (
+                                            <div className="row white history-row" key={index}>
+                                                <div className="col-sm-8 history-item pr-2"><p>{item[0]}</p></div>
+                                                <div className="col-sm-4 text-center m-auto pl-0 pr-0"><p>{weekday[date.getDay()]}, {months[date.getMonth()]} {date.getDate() + ordinal}</p></div>
+                                            </div>
+                                        )
+                                        })
                                     }
                                 </div>
                             <h2 className='text-center pt-3 white chart-title'>History</h2>
