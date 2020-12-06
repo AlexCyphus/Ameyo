@@ -1,11 +1,16 @@
 {
   "name": "goalz",
   "version": "0.1.0",
+  "babel": {
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
+  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
@@ -24,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "testWatch": "jest --watchAll"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,5 +47,9 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
+    "@testing-library/react": "^9.5.0"
+  }
 }

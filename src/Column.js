@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import './App.css';
@@ -10,7 +9,7 @@ export default class Column extends React.Component {
     let display = this.props.items.length > 0 ? '' : this.props.hover ? '' : ' d-none ';
     let margintop = this.props.items.length > 0 ? '' : 'mt-0'
     return ([
-      <div className="col-3 p-1">
+      <div key={this.props.column.id} className="col-3 p-1">
         <div className="outer-column">
           <div className="d-flex">
             <div className="col-auto pl-2"><p className="column-header text-left">{this.props.title}</p></div>
@@ -44,7 +43,6 @@ export default class Column extends React.Component {
             </div>
           </form>
           }
-
         </div>
       </div>
     ])
