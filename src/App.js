@@ -138,8 +138,6 @@ export default class App extends Component {
             {this.state.columnOrder.map((columnId) => {
               const column = this.state.columns[columnId];
               const items = column.itemIds.map(itemId => this.state.items[itemId])
-              let type;
-              this.state.columns[columnId].type ? type=this.state.columns[columnId].type : type='none';
               return <Column 
                         key={column.id}
                         column={column} 
@@ -147,12 +145,9 @@ export default class App extends Component {
                         checkItem={this.checkItem} 
                         itemInputChange={this.itemInputChange} 
                         addItem={this.addItem} 
-                        title={this.state.columns[columnId].title} 
                         inputs={this.state.inputs} 
                         deletable={this.state.deletable} 
-                        type={type} 
-                        description={this.state.columns[columnId].description}
-                        emoji={this.state.columns[columnId].emoji}
+                        type={column.type ? column.type : 'none'}
                         hover={this.state.hover}
                       />
             })}

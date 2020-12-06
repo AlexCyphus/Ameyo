@@ -4,16 +4,20 @@ import './App.css';
 import Item from './Item'
 
 export default class Column extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
   render() {
     let hover = this.props.hover ? ' min-height ' : ''
     let display = this.props.items.length > 0 ? '' : this.props.hover ? '' : ' d-none ';
     let margintop = this.props.items.length > 0 ? '' : 'mt-0'
     return ([
-      <div key={this.props.column.id} className="col-3 p-1">
+      <div key="1" className="col-3 p-1">
         <div className="outer-column">
           <div className="d-flex">
-            <div className="col-auto pl-2"><p className="column-header text-left">{this.props.title}</p></div>
-            <div className="col pr-2"><p className="column-header text-right emoji">{this.props.emoji}</p></div>
+            <div className="col-auto pl-2"><p className="column-header text-left">{this.props.column.title}</p></div>
+            <div className="col pr-2"><p className="column-header text-right emoji">{this.props.column.emoji}</p></div>
           </div>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (

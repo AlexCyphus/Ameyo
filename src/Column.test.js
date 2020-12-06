@@ -7,7 +7,6 @@ import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 import './App.css';
 import Item from './Item'
-
 import Column from "./Column";
 
 let container = null;
@@ -26,21 +25,20 @@ afterEach(() => {
 
 it("renders with item", () => {
   act(() => {
-    const items = [{"id":"item-1","content":"this is a test card","checked":"unchecked","date":[12,5]}]
-    const column = {"id":"habits","title":"Habits","emoji":"⏰","itemIds":["item-1"],"description":"Daily tasks"}
+    let items = [{"id":"item-1","content":"this is a test card","checked":"unchecked","date":[12,5]}]
+    let column = {"id":"habits","title":"Habits","emoji":"⏰","itemIds":["item-1"],"description":"Daily tasks"}
     render(<DragDropContext><Column items={items} column={column} inputs=""/></DragDropContext>, container);
   })
-  expect(container.textContent).toBe("this is a test card");
+  expect(container.textContent).toBe("Habits⏰this is a test card");
 });
 
-//   act(() => {
-//     render(<Hello name="Margaret" />, container);
-//   });
-//   expect(container.textContent).toBe("Hello, Margaret!");
-// });
-
-// renders in general 
-
-// renders correctly given certain props 
+it("renders without any items", () => {
+  act(() => {
+    let items = []
+    let column = {"id":"habits","title":"Habits","emoji":"⏰","itemIds":["item-1", "item-3"],"description":"Daily tasks"}
+    render(<DragDropContext><Column items={items} column={column} inputs=""/></DragDropContext>, container);
+  })
+  expect(container.textContent).toBe("Habits⏰");
+});
 
 // matches snapshot
