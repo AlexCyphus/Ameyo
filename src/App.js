@@ -45,6 +45,17 @@ export default class App extends Component {
     this.toggleInformation = this.toggleInformation.bind(this)
   }
 
+  /*
+    Don't need to do this... 
+
+    Can just do 
+    import checkTime from './functions/checkTime';
+    this.checkTime = checkTime.bind(this)
+
+    and not do the stuff below
+
+  */
+
   checkTime = checkTimeImport
   onDragEnd = onDragEnd
   onDragStart = onDragStart
@@ -84,7 +95,7 @@ export default class App extends Component {
 
   componentDidMount() {
     // update clock + time logic once in a while 
-    this.intervalID = setInterval(() => this.checkTime(), 30000);
+    this.intervalID = setInterval(() => this.checkTime(), 1000);
     setTimeout(() => this.checkTime(), 0)
   }
 
