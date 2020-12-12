@@ -75,7 +75,7 @@ export default class Settings extends React.Component {
             <div className={this.props.settingsState === true ? "fullscreen-popup d-flex" : "d-none"}>
                 <p className="close-popup" onClick={this.props.settingsClose}>x</p>
                 <div className='d-flex justify-content-center w-100 white mh-80 m-auto'>
-                    <div className={"align-middle p-0 d-none d-md-block " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
+                    <div className={"align-middle p-0 d-none settings-outer d-md-block " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
                         <div id="settings-outer">
                             <h4 className="mb-3 mt-0 text-center">Settings</h4>
                             <FormControlLabel

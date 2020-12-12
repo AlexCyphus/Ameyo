@@ -95,7 +95,7 @@ export default class App extends Component {
 
   componentDidMount() {
     // update clock + time logic once in a while 
-    this.intervalID = setInterval(() => this.checkTime(), 1000);
+    this.intervalID = setInterval(() => this.checkTime(), 30000);
     setTimeout(() => this.checkTime(), 0)
   }
 

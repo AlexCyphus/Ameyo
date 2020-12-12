@@ -2,8 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
-
-
 // Override Sass min()
 @function min($numbers...) {
   @return m#{i}n(#{$numbers});
@@ -21,12 +19,23 @@ $border-radius: 5px;
   letter-spacing: 0;
 }
 
-
 p {
   margin-bottom: 0 !important;
   font-size: 13px;
   overflow-wrap: anywhere;
 }
+
+// fix weird scrollbar changes
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(39, 36, 36, 0.4);
+}
+
+.items::-webkit-scrollbar {width: 6px}
+.history::-webkit-scrollbar {width: 6px}
+.history::-webkit-scrollbar-thumb {background-color: rgba(255, 255, 255, 0.315)}
+#settings-outer::-webkit-scrollbar {width: 0px}
+.outer-chart-holder::-webkit-scrollbar {height: 0}
 
 body {
   //font-family: 'Open Sans', sans-serif !important;
@@ -100,8 +109,6 @@ body {
   padding-top: 7px;
   padding-bottom: 7px;
   font-family: 'Open Sans', sans-serif !important;
-  //font-family: 'IBM Plex Mono', monospace !important;
-  
 
   span {
     font-size: 15px;
@@ -173,7 +180,9 @@ body {
   height: fit-content;
   border-radius: $border-radius;
   overflow-y: auto;
-  padding-right: 10px;
+  padding-right: 2px;
+  margin-right: 2px;
+  z-index: 5;
 }
 
 .min-height {
