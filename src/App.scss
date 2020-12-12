@@ -29,9 +29,11 @@ p {
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: rgba(39, 36, 36, 0.4);
+  border-right: 15px;
+  
 }
-
-.items::-webkit-scrollbar {width: 6px}
+.items::-webkit-scrollbar {width: 6px;}
+.items::-webkit-track {margin: 6px;}
 .history::-webkit-scrollbar {width: 6px}
 .history::-webkit-scrollbar-thumb {background-color: rgba(255, 255, 255, 0.315)}
 #settings-outer::-webkit-scrollbar {width: 0px}
@@ -179,7 +181,7 @@ body {
   max-height: calc(77vh - 55px);
   height: fit-content;
   border-radius: $border-radius;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding-right: 2px;
   margin-right: 2px;
   z-index: 5;
@@ -479,8 +481,8 @@ textarea:focus, input:focus{
 .main-info-content {
   margin-top: -50px;
   
-}
 
+}
 .w-25 {
   width: 25%;
 }
