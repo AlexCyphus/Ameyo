@@ -106,6 +106,13 @@ export default class App extends Component {
   }
 
   handleKeyDown(e) {
+    console.log(e)
+    if (document.activeElement.id.split("-")[0] == 'item'){
+      if (e.keyCode == 13){
+        console.log('hi')
+        this.checkItem(e)
+      }
+    }
     const setFocus = (el) => {
       document.getElementById(el).children[0].children[0].focus() 
       e.preventDefault()
