@@ -43,6 +43,7 @@ export default class App extends Component {
     this.queryLocalStorage = this.queryLocalStorage.bind(this)
     this.handleChangeBackground = this.handleChangeBackground.bind(this)
     this.toggleInformation = this.toggleInformation.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   /*
@@ -97,6 +98,43 @@ export default class App extends Component {
     // update clock + time logic once in a while 
     this.intervalID = setInterval(() => this.checkTime(), 30000);
     setTimeout(() => this.checkTime(), 0)
+    document.addEventListener("keydown", this.handleKeyDown)
+  }
+
+  componentWillUnmount() {
+    document.addEventListener("keydown", this.handleKeyDown)
+  }
+
+  handleKeyDown(e) {
+    const setFocus = (el) => {
+      document.getElementById(el).children[0].children[0].focus() 
+      e.preventDefault()
+    }
+    // escape
+    if (e.keyCode === 27){
+      document.activeElement.blur()
+      this.setState({
+        settings: false,
+        statistics: false
+      })
+    }
+    if (document.activeElement.id == 'body'){
+      switch(e.keyCode) {
+        case 72: 
+          setFocus('habits')
+          break;
+        case 84: 
+          setFocus('today')
+          break;
+        case 66: 
+          setFocus('backlog')
+          break;
+        case 89: 
+          setFocus('yesterday')
+          break;
+      }
+    }
+
   }
 
   // update state when form data changed
