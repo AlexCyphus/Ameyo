@@ -113,7 +113,8 @@ export default class Settings extends React.Component {
                                         })
                                     }
                                 </div>
-                            <h2 className='text-center pt-3 white chart-title'>History</h2>
+                            <h2 className='text-center pt-3 pb-0 white chart-title mb-0'>History</h2>
+                            <p className='text-center pt-1 white'>Total completed: {history.length}</p>
                         </div>
                     </div>
                     {!this.state.hideFeedback ? 
