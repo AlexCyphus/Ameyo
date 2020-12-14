@@ -1,12 +1,7 @@
-// hello.test.js
-
 import React from "react"
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
-import './App.css';
-import Item from './Item'
 import Column from "./Column";
 
 let container = null;
@@ -40,5 +35,3 @@ it("renders without any items", () => {
   })
   expect(container.textContent).toBe("Habits⏰");
 });
-
-// matches snapshot

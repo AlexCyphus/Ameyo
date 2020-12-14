@@ -53,8 +53,6 @@ export default class Settings extends React.Component {
         }
     }
     
-    
-
     render(){
         let history = {...this.state.history}
         history = Object.values(history).reverse()
@@ -68,7 +66,7 @@ export default class Settings extends React.Component {
                             <FormControlLabel
                                 control={<Switch checked={this.state.preventChangeBackground} onChange={this.toggleAllowedBackgroundChanges} name="gilad" />}
                                 label="Freeze on today's image"
-                                inputProps={{ 'aria-label': 'primary checkbox' }}
+                                inputprops={{ 'aria-label': 'primary checkbox' }}
                                 className="mx-1"
                             />
                             <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground(true)}>Skip the current background image</Button>

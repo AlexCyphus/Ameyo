@@ -2,9 +2,12 @@
   "name": "goalz",
   "version": "0.1.0",
   "babel": {
-    "presets": ["@babel/preset-env"],
+    "presets": [
+      "@babel/preset-env"
+    ],
     "plugins": [
-      "@babel/plugin-transform-react-jsx"
+      "@babel/plugin-transform-react-jsx",
+      "@babel/plugin-proposal-class-properties"
     ]
   },
   "private": true,
@@ -14,6 +17,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "jest-canvas-mock": "^2.3.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
@@ -47,9 +51,15 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
+  },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.12.7",
     "@babel/preset-env": "^7.12.7",
-    "@testing-library/react": "^9.5.0"
+    "@testing-library/react": "^9.5.0",
+    "ignore-styles": "^5.0.1"
   }
 }
