@@ -44,8 +44,8 @@ export default class Information extends React.Component {
                 )
             }
 
-            else if (this.props.page == 1){
-                // 1/5 
+            // 1/5
+            else if (this.props.page == 1){ 
                 return (
                     <>
                     <div className="d-flex align-items-center main-info-content">
@@ -159,11 +159,8 @@ export default class Information extends React.Component {
                     </>
                 )
             }
-
-
-            
         }
-        
+
         return (
             <div className={this.props.informationState === true ? "fullscreen-popup pt-0 d-flex" : "d-none"}>
                 <div className='white m-auto'>
