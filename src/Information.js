@@ -12,7 +12,6 @@ export default class Information extends React.Component {
     }
 
     render(){
-
         const Navigation = ({number}) => {
             return (
                 <div className="info-navigation row justify-content-end text-right">

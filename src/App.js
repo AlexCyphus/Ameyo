@@ -69,6 +69,7 @@ export default class App extends Component {
   settingsClose(){this.setState({settings:false})}
   statisticsOpen(){this.setState({statistics: true})}
   statisticsClose(){this.setState({statistics:false})}
+  
   toggleInformation(){
     // if first time using Ameyo and closed
     if (JSON.parse(localStorage.getItem("showIntroduction")) == null){localStorage.setItem("showIntroduction", JSON.stringify(false))}
@@ -80,15 +81,19 @@ export default class App extends Component {
       informationPage: 1
     })
   }
-  
-  componentDidMount() {
+
+  componentWillMount(){
+    this.queryLocalStorage()
     const newState = {...this.state}
     // check local storage 
     if (JSON.parse(localStorage.getItem('backgroundImageIndex'))){newState.backgroundImageIndex = JSON.parse(localStorage.getItem('backgroundImageIndex'))}
     else {return document.body.style.backgroundImage = "url('/default.jpg')"}
 
     this.setState(newState, () => {document.body.style.backgroundImage = imageUrls[newState.backgroundImageIndex]})
-    this.queryLocalStorage()    
+  }
+  
+  componentDidMount() {
+
     // update clock + time logic once in a while 
     this.intervalID = setInterval(() => this.checkTime(), 30000);
     setTimeout(() => this.checkTime(), 0)
@@ -157,6 +162,7 @@ export default class App extends Component {
   }
 
   render() {
+
     // set up for the countdown (this isn't working)
     let minutesLeft = 59 - this.state.date.getMinutes();
     let hoursLeft = 23 - this.state.date.getHours();
