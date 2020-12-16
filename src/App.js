@@ -89,7 +89,8 @@ export default class App extends Component {
         [color]: name,
       }
     }
-    this.setState(newState)
+    
+    this.setState(newState, localStorage.setItem("colors", JSON.stringify(newState.colors)))
   }
 
   componentWillUnmount() {

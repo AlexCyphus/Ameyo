@@ -1,7 +1,6 @@
 export function onDragEnd(result) {
   const { destination, source, draggableId } = result;
   const start = this.state.columns[source.droppableId];
-  // was it dropped in a column?
   this.setState({
     deletable: false,
     hover: false
@@ -9,9 +8,9 @@ export function onDragEnd(result) {
     () => {
       if (!destination){return}
 
+      // if dropped in deletion column 
       if (destination.droppableId.split('-')[0] === 'deletable'){
-        let newItems = this.state.items
-        
+        let newItems = JSON.parse(JSON.stringify(this.state.items))
 
         // remove item from column -> itemIds array
         let newColumn = this.state.columns[source.droppableId]
@@ -24,8 +23,29 @@ export function onDragEnd(result) {
           delete newMonthlyHabits[this.state.items[draggableId].content]
         }
 
+        var newColors = JSON.parse(JSON.stringify({...this.state.colors}))
+        // check if it was labelled 
+        
         // remove item from items array
         delete newItems[draggableId]
+        
+        if (this.state.items[draggableId].content.split(" ")[0].includes(":")){
+          const label = this.state.items[draggableId].content.split(":")[0]
+          
+          var itemIds = Object.keys(newItems)
+
+          var moreItemsWithLabel = false
+          itemIds.forEach(item => newItems[item].content.split(" ")[0].includes(label + ":") ? moreItemsWithLabel = true : null)
+
+          // if there are more items with the same label 
+          if (!moreItemsWithLabel){
+            // "unclaim" the color for that label
+            const color = Object.keys(this.state.colors).find(key => this.state.colors[key] === label)
+            newColors[color] = false
+          } 
+        }
+
+        if (true){}
 
         // update state
         const newState = {
@@ -35,14 +55,18 @@ export function onDragEnd(result) {
             [source.droppableId]: newColumn
           },
           items: newItems,
-          monthlyHabitsCount: newMonthlyHabits
+          monthlyHabitsCount: newMonthlyHabits,
+          colors: newColors
         }
+
+        console.log(this.state.colors)
 
         const setStateAndStorage = () => {
           this.setState(newState, () => {
             localStorage.setItem('columns', JSON.stringify(this.state.columns))
             localStorage.setItem('items', JSON.stringify(this.state.items))
             localStorage.setItem('monthlyHabitsCount', JSON.stringify(this.state.monthlyHabitsCount))
+            localStorage.setItem('colors', JSON.stringify(this.state.colors))
           }) 
         }
 
