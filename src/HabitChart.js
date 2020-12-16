@@ -48,8 +48,6 @@ class HabitChart extends Component {
             if (arr[x] === 1){sum++}
             sumArr[x] = sum;
         }
-        // console.log('og arr', arr)
-        // console.log('reverse sum arr', sumArr.reverse())
         return sumArr.reverse()
     }
 

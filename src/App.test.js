@@ -25,5 +25,5 @@ it("renders", () => {
     act(() => {
       render(<App/>, container);
     })
-    
+    expect(container.textContent).toContain("Settings");
   });

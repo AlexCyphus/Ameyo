@@ -6,39 +6,13 @@ import Item from './Item'
 export default class Column extends React.Component {
   constructor(props){
     super(props);
-    this.claimColor = this.claimColor.bind(this);
-    this.state = {
-      colors: { 
-          '#18C186': false,
-          '#fc8427': false,
-          '#ED0F47': false,
-          '#042C79': false,
-          '#A02B5D': false,
-          '#077353': false,
-          'darkgrey': false,
-          '#000': false,
-          '#03fff7': false,
-          '#fe01b1': false,
-          '#98623c': false
-      }
-    }
-  }
-
-  claimColor(color, name) {
-    const newState = {
-      ...this.state,
-      colors: {
-        ...this.state.colors,
-        [color]: name,
-      }
-    }
-    this.setState(newState)
   }
 
   render() {
     let hover = this.props.hover ? ' min-height ' : ''
     let display = this.props.items.length > 0 ? '' : this.props.hover ? '' : ' d-none ';
     let margintop = this.props.items.length > 0 ? '' : 'mt-0'
+    
     return ([
       <div key="1" className="col-3 p-1">
         <div className="outer-column">
@@ -50,7 +24,7 @@ export default class Column extends React.Component {
           {(provided, snapshot) => (
             <div className={"items" + hover + display} ref={provided.innerRef} {...provided.droppableProps}>
               {this.props.items.map((item, index) => 
-                <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked} type={this.props.type} colors={this.state.colors} claimColor={this.claimColor}/>
+                <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked} type={this.props.type} colors={this.props.colors} claimColor={this.props.claimColor}/>
               )}
               {provided.placeholder}
             </div>

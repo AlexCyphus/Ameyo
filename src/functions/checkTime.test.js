@@ -1,5 +1,5 @@
-import checkTime from './checkTime';
 
-it("changes the background", () => {
-    
+
+it('works', () => {
+
 });

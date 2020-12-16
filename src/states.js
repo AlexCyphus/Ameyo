@@ -53,6 +53,19 @@ const states = {
   backgroundImageIndex: 0,
   information: false,
   informationPage: 0,
+  colors: { 
+    '#18C186': false,
+    '#fc8427': false,
+    '#ED0F47': false,
+    '#042C79': false,
+    '#A02B5D': false,
+    '#077353': false,
+    'darkgrey': false,
+    '#000': false,
+    '#03fff7': false,
+    '#fe01b1': false,
+    '#98623c': false
+  }
 }
 
 export default states
