@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React from 'react'; // we need this to make JSX compile
 
 interface LabelProps  {

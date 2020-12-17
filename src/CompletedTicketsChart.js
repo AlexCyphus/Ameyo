@@ -56,17 +56,17 @@ class HabitChart extends Component {
 
     analyzeHistory = (historyArr) => {
         // filtering for only the ones in the last thirty days
-        historyArr = historyArr.filter(item => {return new Date(item[1]) > this.state.thirtyDaysAgo});
+        historyArr = historyArr.filter(item => new Date(item[1]) > this.state.thirtyDaysAgo);
 
         // pushing the daily counts to individual counts
-        historyArr = historyArr.filter(item => {
+        historyArr = historyArr.forEach(item => {
             let daysSince = Math.floor((new Date() - new Date(item[1])) / 1000 / 60 / 60 / 24) - 1
             individualCounts[daysSince] = individualCounts[daysSince] + 1
         })
 
         // summing the counts across the days (can + should probably be done in the last loop)
         var sum = 0
-        individualCounts.reverse().map((item) => {
+        individualCounts.reverse().forEach((item) => {
             sum += item
             summatedTickets.push(sum)
         })

@@ -2,7 +2,6 @@ import React from 'react'
 import { ReactTypeformEmbed } from 'react-typeform-embed';
 import {Switch, Button} from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import {handleChangeBackground, toggleAllowedBackgroundChanges} from './functions/imageLogic'
 
 const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -39,8 +38,8 @@ export default class Settings extends React.Component {
 
     toggleFeedback() {
         var newFeedback = ''
-        if (this.state.hideFeedback){var newFeedback = false}
-        else {var newFeedback = true}
+        if (this.state.hideFeedback){newFeedback = false}
+        else {newFeedback = true}
         this.setState({
             hideFeedback: newFeedback
         },
@@ -87,7 +86,7 @@ export default class Settings extends React.Component {
                             <Button variant="contained" color="primary" onClick={this.toggleFeedback}>Give feedback</Button>
                             <Button variant="contained" color="primary" target="_blank" href="https://bit.ly/AmeyoRate">Rate Ameyo 5 stars</Button>
                             <div className="d-block" id="danger-zone">
-                                <div className="text-center"><h5>⚠️ Danger Zone ⚠️</h5></div>
+                                <div className="text-center"><h5><span role="img" aria-label="warning">⚠️</span> Danger Zone <span role="img" aria-label="warning">⚠️</span></h5></div>
                                 <div className="pt-1 pb-3 text-center"><p>You probably don't want to click these buttons</p></div>
                                 <Button variant="contained" color="secondary" onClick={this.deleteHistory} className="mx-1">Clear task history</Button>
                                 <Button variant="contained" color="secondary" onClick={this.deleteHabits} className="mx-1">Clear habit history</Button>

@@ -1,23 +1,13 @@
 import React from 'react'
-import { ReactTypeformEmbed } from 'react-typeform-embed';
-import {Switch, Button} from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import {handleChangeBackground, toggleAllowedBackgroundChanges} from './functions/imageLogic'
-
 
 export default class Information extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
     render(){
         const Navigation = ({number}) => {
             return (
                 <div className="info-navigation row justify-content-end text-right">
                     <div className="w-25 text-left"><p className="f-30 clickable" onClick={() => this.props.handleChangeInfoPage(false)}>LAST</p></div>
                     <div className="w-50 text-center"><p className="f-30">{number}/6</p></div>
-                    {number == 6 
+                    {number === 6 
                     ?
                     <div className="w-25"><p className="f-30 clickable" onClick={this.props.toggleInformation}>BEGIN!</p></div> 
                     :
@@ -30,7 +20,7 @@ export default class Information extends React.Component {
         
         const Content = () => {
 
-            if (this.props.page == 0){
+            if (this.props.page === 0){
                 // welcome 
                 return (
                     <div className="text-center">
@@ -44,12 +34,12 @@ export default class Information extends React.Component {
             }
 
             // 1/5
-            else if (this.props.page == 1){ 
+            else if (this.props.page === 1){ 
                 return (
                     <>
                     <div className="d-flex align-items-center main-info-content">
                         <div>
-                            <img src="./info1.jpg" className="two-info-images"></img>
+                            <img alt="" src="./info1.jpg" className="two-info-images"></img>
                         </div>
                         <div className="text-left instructions">
                             <p><u>Ameyo is based around four columns...</u></p>
@@ -65,12 +55,12 @@ export default class Information extends React.Component {
             }
 
             // 2/5
-            else if (this.props.page == 2){
+            else if (this.props.page === 2){
                 return (
                     <>
                     <div className="d-flex align-items-center main-info-content">
                         <div>
-                            <img src="./info1.jpg" className="two-info-images"></img>
+                            <img alt="" src="./info1.jpg" className="two-info-images"></img>
                         </div>
                         <div className="text-left instructions">
                             <p><u>Every night at midnight...</u></p>
@@ -89,16 +79,16 @@ export default class Information extends React.Component {
             }
 
             // 3/5
-            else if (this.props.page == 3){
+            else if (this.props.page === 3){
                 return (
                     <>
                     <div className="d-flex align-items-center main-info-content">
                         <div className="img-1">
-                            <img src="./info1.jpg" className="two-info-images"></img>
+                            <img alt="" src="./info1.jpg" className="two-info-images"></img>
                         </div>
                         <div className="arrow">➥</div>
                         <div className="img-2">
-                            <img src="./info2.jpg" className="two-info-images"></img>
+                            <img alt="" src="./info2.jpg" className="two-info-images"></img>
                         </div>
                     </div>
                     <Navigation number={3}/>
@@ -107,12 +97,12 @@ export default class Information extends React.Component {
             }
 
             // 4/5
-            else if (this.props.page == 4){
+            else if (this.props.page === 4){
                 return (
                     <>
                     <div className="d-flex align-items-center main-info-content">
                         <div>
-                            <img src="./info4.png" className="info-image"></img>
+                            <img alt="" src="./info4.png" className="info-image"></img>
                         </div>
                         <div className="text-left instructions">
                             <p>You can then see your progress in the statistics tab and find out...</p>
@@ -128,12 +118,12 @@ export default class Information extends React.Component {
                 )
             }     
             // 5/5
-            else if (this.props.page == 5){
+            else if (this.props.page === 5){
                 return (
                     <>
                     <div className="d-flex align-items-center main-info-content">
                         <div>
-                            <img src="./info5.jpg" className="info-image" id=""></img>
+                            <img alt="" src="./info5.jpg" className="info-image" id=""></img>
                         </div>
                         <div className="text-left instructions">
                             <p>Want to know what you did 138 days ago? Perhaps to prove an alibi? </p>
@@ -146,7 +136,7 @@ export default class Information extends React.Component {
             }
 
             // 6/6
-            else if (this.props.page == 6){
+            else if (this.props.page === 6){
                 // welcome 
                 return (
                     <>

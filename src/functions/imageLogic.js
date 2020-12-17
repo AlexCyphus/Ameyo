@@ -8,7 +8,7 @@ export function handleChangeBackground(skipBackground = false){
     if (JSON.parse(localStorage.getItem('backgroundImageIndex'))){backgroundImageIndex = JSON.parse(localStorage.getItem('backgroundImageIndex'))}
     else {backgroundImageIndex = 0}
   
-    if (backgroundImageIndex == imageUrls.length - 1) {backgroundImageIndex = 0}
+    if (backgroundImageIndex === imageUrls.length - 1) {backgroundImageIndex = 0}
     else {backgroundImageIndex++}
   
     // save image url

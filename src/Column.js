@@ -4,9 +4,6 @@ import './App.css';
 import Item from './Item'
 
 export default class Column extends React.Component {
-  constructor(props){
-    super(props);
-  }
 
   render() {
     let hover = this.props.hover ? ' min-height ' : ''

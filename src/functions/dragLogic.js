@@ -18,7 +18,7 @@ export function onDragEnd(result) {
 
         const newMonthlyHabits = {...this.state.monthlyHabitsCount}
          // check if habit
-         if(source.droppableId == "habits"){
+         if(source.droppableId === "habits"){
           // remove from monthlyhabitcount
           delete newMonthlyHabits[this.state.items[draggableId].content]
         }
@@ -122,7 +122,7 @@ export function onDragEnd(result) {
 
       // check if it was a habit
       const newMonthlyHabits = {...this.state.monthlyHabitsCount}
-         if(source.droppableId == "habits"){
+         if(source.droppableId === "habits"){
           // remove from monthlyhabitcount
           delete newMonthlyHabits[this.state.items[draggableId].content]
         }

@@ -98,8 +98,8 @@ export default class App extends Component {
   }
 
   handleKeyDown(e) {
-    if (document.activeElement.id.split("-")[0] == 'item'){
-      if (e.keyCode == 13){
+    if (document.activeElement.id.split("-")[0] === 'item'){
+      if (e.keyCode === 13){
         this.checkItem(e)
       }
     }
@@ -115,7 +115,7 @@ export default class App extends Component {
         statistics: false
       })
     }
-    if (document.activeElement.id == 'body'){
+    if (document.activeElement.id === 'body'){
       switch(e.keyCode) {
         case 72: 
           setFocus('habits')
@@ -129,6 +129,8 @@ export default class App extends Component {
         case 89: 
           setFocus('yesterday')
           break;
+        default: 
+          break
       }
     }
 
@@ -148,7 +150,7 @@ export default class App extends Component {
   }
 
   handleChangeInfoPage(next) {
-    if (next == true){this.setState({informationPage: this.state.informationPage + 1})}
+    if (next === true){this.setState({informationPage: this.state.informationPage + 1})}
     else {this.setState({informationPage: this.state.informationPage - 1})}
   }
 
@@ -202,9 +204,9 @@ export default class App extends Component {
             })}
             </div>
             <div className="outer-footer d-flex text-center">
-              <div className="col footer-item clickable" onClick={this.settingsOpen}><p>⚙️ Settings</p></div>
+              <div className="col footer-item clickable" onClick={this.settingsOpen}><p><span role="img" aria-label="gear">⚙️</span> Settings</p></div>
               <div className="col-auto m-auto" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
-              <div className="col footer-item clickable" onClick={this.statisticsOpen}><p>📈 Statistics</p></div>
+              <div className="col footer-item clickable" onClick={this.statisticsOpen}><p><span role="img" aria-label="chart">📈</span> Statistics</p></div>
             </div>
           </div>
         </DragDropContext>

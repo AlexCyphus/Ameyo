@@ -1,13 +1,8 @@
-import { amber } from '@material-ui/core/colors';
-import createPalette from '@material-ui/core/styles/createPalette';
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import Label from './Label.tsx'
 
 export default class Item extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const itemId = this.props.item.id;
@@ -23,7 +18,7 @@ export default class Item extends React.Component {
         for (var x = 0; x < Object.keys(this.props.colors).length; x++){
           let key = Object.keys(this.props.colors)[x]
           let val = this.props.colors[key]
-          if (val == false){
+          if (val === false){
             color = key
             this.props.claimColor(key, label)
             break;
