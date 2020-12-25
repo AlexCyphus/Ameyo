@@ -40,7 +40,7 @@ export function addItem(e) {
 
     // dont let page refresh on submit
     e.preventDefault();
-    var columnId = e.target.id;
+    var columnId = e.target.id.split('-')[0];
 
     this.queryLocalStorage(() => {
         

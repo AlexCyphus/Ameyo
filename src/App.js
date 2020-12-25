@@ -128,14 +128,13 @@ export default class App extends Component {
           break
       }
     }
-
   }
 
   // update state when form data changed
   itemInputChange(e){
     const newInputs = {
       ...this.state.inputs,
-      [e.target.id]: e.target.value
+      [e.target.id.split("-")[0]]: e.target.value
     }
     this.setState({inputs: newInputs})
   }
