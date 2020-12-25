@@ -450,8 +450,6 @@ textarea:focus, input:focus{
 .info-navigation {
   p {
     -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
   }
 }
@@ -485,8 +483,6 @@ textarea:focus, input:focus{
 
 .main-info-content {
   margin-top: -50px;
-  
-
 }
 .w-25 {
   width: 25%;
@@ -512,5 +508,9 @@ canvas {
   left: -1px;
   border-radius: 5px 0px 0px 5px;
   opacity: 1;
+}
 
+.item-p {
+  -webkit-user-select: none; /* Safari */        
+  user-select: none; /* Standard */
 }
