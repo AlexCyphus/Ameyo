@@ -3,29 +3,32 @@ import {Draggable} from 'react-beautiful-dnd'
 import Label from './Label.tsx'
 
 export default class Item extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      label: false,
+      label: this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : false,
       color: 'none'
     }
   }
 
-  UNSAFE_componentWillMount(){
-    if (this.props.item.content.split(" ")[0].includes(":")){this.setState({label:this.props.item.content.split(":")[0]})}
+  componentDidMount(){
+    // if colors exist already
     if (this.props.colors && Object.values(this.props.colors)){
+
+      // if the label doesn't exist
       if (!Object.values(this.props.colors).includes(this.state.label)){
+        console.log('label exists')
         for (var x = 0; x < Object.keys(this.props.colors).length; x++){
           let key = Object.keys(this.props.colors)[x]
           let val = this.props.colors[key]
           if (val === false){
             this.setState({color: key})
-            // this is where the error comes from
             this.props.claimColor(key, this.state.label)
             break;
           }
         }
       }
+
       else {this.setState({color: Object.keys(this.props.colors).find(key => this.props.colors[key] === this.state.label)})}
     }
   }

@@ -17,6 +17,8 @@ $border-radius: 5px;
 #root {
   height: 100vh;
   letter-spacing: 0;
+  -webkit-user-select: none; /* Safari */        
+  user-select: none; /* Standard */
 }
 
 p {
