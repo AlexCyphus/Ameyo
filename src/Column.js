@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import './App.css';
 import Item from './Item'
@@ -27,23 +27,26 @@ export default class Column extends React.Component {
             </div>
           )}
           </Droppable>
-          {this.props.deletable ?
-            <Droppable droppableId={'deletable-'+this.props.column.id} className="h-100">
-            {(provided) => (
-                <div className="add-item d-flex delete-item" ref={provided.innerRef} {...provided.droppableProps}>
-                  <div className="w-100 h-100 text-center deletion-box" placeholder="test">
+          {this.props.deletable 
+            ?
+            <div className="add-item d-flex delete-item">
+              <div className="w-100 h-100 text-center deletion-box" placeholder="test">
+                <Droppable droppableId={'deletable-'+this.props.column.id} className="h-100">
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
                     <p>delete item</p>
                     {provided.placeholder}
                   </div>
-                </div>
-            )}
-            </Droppable>
-          :
-          <form onSubmit={this.props.addItem} id={this.props.column.id} autoComplete="off">
-            <div className={"add-item d-flex" + margintop}>
-              <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id + '-add'} value={this.props.inputs[this.props.column.id]}/>
+                )}
+                </Droppable>
+              </div>        
             </div>
-          </form>
+            :
+            <form onSubmit={this.props.addItem} id={this.props.column.id} autoComplete="off">
+              <div className={"add-item d-flex" + margintop}>
+                <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
+              </div>
+            </form>
           }
         </div>
       </div>
