@@ -63,22 +63,14 @@ export default class App extends Component {
   }
 
   // should move all this logic into the initial states
-  UNSAFE_componentWillMount(){
-    const newState = {...this.state}
-    
-    // check local storage 
-    if (JSON.parse(localStorage.getItem('backgroundImageIndex'))){newState.backgroundImageIndex = JSON.parse(localStorage.getItem('backgroundImageIndex'))}
-    else {return document.body.style.backgroundImage = "url('/default.jpg')"}
-
-    this.setState(newState, () => {document.body.style.backgroundImage = imageUrls[newState.backgroundImageIndex]})
-    this.queryLocalStorage()
-  }
   
-  componentDidMount() {
+  async componentDidMount() {    
+    await this.queryLocalStorage()
     // update clock + time logic once in a while 
     this.intervalID = setInterval(() => this.checkTime(), 30000);
     setTimeout(() => this.checkTime(), 0)
     document.addEventListener("keydown", this.handleKeyDown)
+    document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex]
   }
 
   claimColor(color, name) {

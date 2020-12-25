@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'
 import React from "react"
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
@@ -21,7 +22,7 @@ afterEach(() => {
   container = null;
 });
 
-it("renders", () => {
+it("renders", async () => {
     act(() => {
       render(<App/>, container);
     })
