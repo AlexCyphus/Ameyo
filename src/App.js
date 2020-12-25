@@ -62,15 +62,12 @@ export default class App extends Component {
     })
   }
 
-  // should move all this logic into the initial states
-  
-  async componentDidMount() {    
-    await this.queryLocalStorage()
+  componentDidMount() {    
     // update clock + time logic once in a while 
     this.intervalID = setInterval(() => this.checkTime(), 30000);
     setTimeout(() => this.checkTime(), 0)
     document.addEventListener("keydown", this.handleKeyDown)
-    document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex]
+    this.queryLocalStorage(() => document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex])
   }
 
   claimColor(color, name) {
@@ -84,6 +81,7 @@ export default class App extends Component {
     this.setState(newState, localStorage.setItem("colors", JSON.stringify(newState.colors)))
   }
 
+  // keyboard shortcuts
   handleKeyDown(e) {
     if (document.activeElement.id.split("-")[0] === 'item'){
       if (e.keyCode === 13){
