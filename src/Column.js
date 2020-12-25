@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import './App.css';
 import Item from './Item'
@@ -44,7 +44,7 @@ export default class Column extends React.Component {
             :
             <form onSubmit={this.props.addItem} id={this.props.column.id} autoComplete="off">
               <div className={"add-item d-flex" + margintop}>
-                <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id} value={this.props.inputs[this.props.column.id]}/>
+                <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id + "-add"} value={this.props.inputs[this.props.column.id]}/>
               </div>
             </form>
           }
