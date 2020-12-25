@@ -92,9 +92,12 @@ export function checkItem(e){
     if (this.state.items[itemId].checked === "unchecked"){
         if (column !== 'backlog'){
             newState.items[itemId].checked = "checked"
-            let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
-            newState.columns[column].itemIds.splice(itemLocation, 1)
-            newState.columns[column].itemIds.push(itemId);
+
+            if (!this.state.hover){
+                let itemLocation = newState.columns[column].itemIds.indexOf(itemId)
+                newState.columns[column].itemIds.splice(itemLocation, 1)
+                newState.columns[column].itemIds.push(itemId);
+            }
         }
     }
 

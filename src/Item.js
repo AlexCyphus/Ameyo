@@ -12,7 +12,7 @@ export default class Item extends React.Component {
   }
 
   UNSAFE_componentWillMount(){
-    if (this.props.item.content.split(" ")[0].includes(":")){this.state.label = this.props.item.content.split(":")[0]}
+    if (this.props.item.content.split(" ")[0].includes(":")){this.setState({label:this.props.item.content.split(":")[0]})}
     if (this.props.colors && Object.values(this.props.colors)){
       if (!Object.values(this.props.colors).includes(this.state.label)){
         for (var x = 0; x < Object.keys(this.props.colors).length; x++){
@@ -29,7 +29,6 @@ export default class Item extends React.Component {
       else {this.setState({color: Object.keys(this.props.colors).find(key => this.props.colors[key] === this.state.label)})}
     }
   }
-  
   
   render() {
     const itemId = this.props.item.id;

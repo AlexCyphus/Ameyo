@@ -5,7 +5,7 @@ export function onDragEnd(result) {
     deletable: false,
     hover: false
   },
-    () => {
+    () => {      
       if (!destination){return}
 
       // if dropped in deletion column 
@@ -24,6 +24,7 @@ export function onDragEnd(result) {
         }
 
         var newColors = JSON.parse(JSON.stringify({...this.state.colors}))
+        
         // check if it was labelled 
         
         // remove item from items array
@@ -45,8 +46,6 @@ export function onDragEnd(result) {
           } 
         }
 
-        if (true){}
-
         // update state
         const newState = {
           ...this.state,
@@ -58,8 +57,6 @@ export function onDragEnd(result) {
           monthlyHabitsCount: newMonthlyHabits,
           colors: newColors
         }
-
-        console.log(this.state.colors)
 
         const setStateAndStorage = () => {
           this.setState(newState, () => {
