@@ -470,6 +470,10 @@ textarea:focus, input:focus{
   min-width: 30vh;
 }
 
+.info-image, .two-info-images {
+  object-fit: contain;
+}
+
 .f-30 {
   font-size: 30px;
 }

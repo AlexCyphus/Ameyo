@@ -6,8 +6,8 @@ export default class Information extends React.Component {
             return (
                 <div className="info-navigation row justify-content-end text-right">
                     <div className="w-25 text-left"><p className="f-30 clickable" onClick={() => this.props.handleChangeInfoPage(false)}>LAST</p></div>
-                    <div className="w-50 text-center"><p className="f-30">{number}/6</p></div>
-                    {number === 6 
+                    <div className="w-50 text-center"><p className="f-30">{number}/7</p></div>
+                    {number === 7 
                     ?
                     <div className="w-25"><p className="f-30 clickable" onClick={this.props.toggleInformation}>BEGIN!</p></div> 
                     :
@@ -33,7 +33,7 @@ export default class Information extends React.Component {
                 )
             }
 
-            // 1/5
+
             else if (this.props.page === 1){ 
                 return (
                     <>
@@ -54,7 +54,7 @@ export default class Information extends React.Component {
                 )
             }
 
-            // 2/5
+
             else if (this.props.page === 2){
                 return (
                     <>
@@ -78,7 +78,7 @@ export default class Information extends React.Component {
                 )
             }
 
-            // 3/5
+
             else if (this.props.page === 3){
                 return (
                     <>
@@ -96,7 +96,7 @@ export default class Information extends React.Component {
                 )
             }
 
-            // 4/5
+
             else if (this.props.page === 4){
                 return (
                     <>
@@ -117,7 +117,7 @@ export default class Information extends React.Component {
                     </>   
                 )
             }     
-            // 5/5
+
             else if (this.props.page === 5){
                 return (
                     <>
@@ -135,16 +135,34 @@ export default class Information extends React.Component {
                 )
             }
 
-            // 6/6
-            else if (this.props.page === 6){
-                // welcome 
+            else if (this.props.page === 6){ 
+                return (
+                    <>
+                        <div className="d-flex align-items-center main-info-content">
+                            <div>
+                                <img alt="" src="./info6.png" className="info-image" id=""></img>
+                            </div>
+                            <div className="text-left instructions">
+                                <p>You can also easily add labels to your notes for better visual clarity!</p>
+                                <p>Simply start a note with the group followed by a colon (:) and a label will be assigned to the group</p>
+                                <p>For example... </p>
+                                <p><code>ECON255: Read pages 315 to 319</code></p>
+                            </div>
+                        </div>
+                        <Navigation number={6}/>
+                    </>   
+                )
+            }
+
+
+            else if (this.props.page === 7){ 
                 return (
                     <>
                     <div className="text-center">
                         <h1 className="pb-3">You're ready.</h1>
                         <h5>Now go forth and be the most productive version of yourself you can be!</h5>
                     </div>
-                    <Navigation number={6}/>
+                    <Navigation number={7}/>
                     </>
                 )
             }
