@@ -54,17 +54,26 @@ const states = {
   information: false,
   informationPage: 0,
   colors: { 
-    '#18C186': false,
-    '#fc8427': false,
-    '#ED0F47': false,
-    '#042C79': false,
-    '#A02B5D': false,
-    '#077353': false,
-    'darkgrey': false,
-    '#000': false,
-    '#03fff7': false,
-    '#fe01b1': false,
-    '#98623c': false
+    '#66ff00': false,
+    '#ff08e8': false,
+    '#be03fd': false,
+    '#ffcf09': false,
+    '#01f9c6': false,
+    '#ff003f': false,
+    '#0ff0fc': false,
+    '#fc74fd': false,
+    '#6600ff': false,
+    '#fffc00': false,
+    '#ff5555': false,
+    '#006400': false,
+    '#808080': false,
+    '#00008B': false,
+    '#4169E1': false,
+    '#009999': false,
+    '#cc6600': false,
+    '#ffd9b3': false,
+    '#ffccff': false,
+    '#003300': false
   }
 }
 
