@@ -54,16 +54,13 @@ const states = {
   information: false,
   informationPage: 0,
   colors: { 
-    '#66ff00': false,
     '#ff08e8': false,
     '#be03fd': false,
     '#ffcf09': false,
-    '#01f9c6': false,
     '#ff003f': false,
     '#0ff0fc': false,
     '#fc74fd': false,
     '#6600ff': false,
-    '#fffc00': false,
     '#ff5555': false,
     '#006400': false,
     '#808080': false,
@@ -71,7 +68,6 @@ const states = {
     '#4169E1': false,
     '#009999': false,
     '#cc6600': false,
-    '#ffd9b3': false,
     '#ffccff': false,
     '#003300': false
   }

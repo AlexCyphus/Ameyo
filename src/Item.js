@@ -17,7 +17,6 @@ export default class Item extends React.Component {
 
       // if the label doesn't exist
       if (!Object.values(this.props.colors).includes(this.state.label)){
-        console.log('label exists')
         for (var x = 0; x < Object.keys(this.props.colors).length; x++){
           let key = Object.keys(this.props.colors)[x]
           let val = this.props.colors[key]

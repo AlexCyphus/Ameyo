@@ -4,12 +4,20 @@ export function handleChangeBackground(skipBackground = false){
   var preventChangeBackground = JSON.parse(localStorage.getItem('preventChangeBackground'))
   if (!preventChangeBackground | skipBackground){
     var backgroundImageIndex;
+    
     // check for previous image
     if (JSON.parse(localStorage.getItem('backgroundImageIndex'))){backgroundImageIndex = JSON.parse(localStorage.getItem('backgroundImageIndex'))}
     else {backgroundImageIndex = 0}
   
-    if (backgroundImageIndex === imageUrls.length - 1) {backgroundImageIndex = 0}
-    else {backgroundImageIndex++}
+    if (skipBackground === "last"){
+      if (backgroundImageIndex === 0) {backgroundImageIndex = imageUrls.length - 1}
+      else {backgroundImageIndex--}
+    }
+      
+    else {
+      if (backgroundImageIndex === imageUrls.length - 1) {backgroundImageIndex = 0}
+      else {backgroundImageIndex++}
+    }
   
     // save image url
     localStorage.setItem('backgroundImageIndex', JSON.stringify(backgroundImageIndex))
