@@ -1,0 +1,51 @@
+@mixin clickable {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.new-screen-outer {
+    position: absolute;
+    display: flex;
+    text-align: center;
+    color: white;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 2;
+}
+
+.new-screen-inner {
+    margin: auto;
+    padding: 10vh 10vw;
+}
+
+.close-popup {
+    color: white;
+    font-size: 5vw;
+    font-style: italic;
+    right: 100px;
+    top: 10px;
+    position: absolute;
+    font-family: 'IBM Plex Mono', monospace;
+
+    @include clickable;
+}
+
+.new-screen-labels-info {
+    padding: 0px 45px;
+    margin: auto;
+    
+    p {
+        font-size: 1.3vw;
+        padding-bottom: 2vh;
+    }
+}
+
+#new-screen-image {
+    max-width: 50vw;
+}
+
+.p-relative {position: relative}

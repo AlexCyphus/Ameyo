@@ -12,6 +12,9 @@ export function queryLocalStorage(_callback = false){
     // if first time user
     if (JSON.parse(localStorage.getItem('showIntroduction') == null)){newState.information = true}
 
+    // check for new feature 
+    // if (JSON.parse(localStorage.getItem('showNew') == null)){newState.information = true}
+
     this.setState(newState, () => {
         if (_callback) {_callback()};
     })

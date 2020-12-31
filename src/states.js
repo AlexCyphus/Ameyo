@@ -70,7 +70,8 @@ const states = {
     '#cc6600': false,
     '#ffccff': false,
     '#003300': false
-  }
+  },
+  newScreen: true
 }
 
 export default states

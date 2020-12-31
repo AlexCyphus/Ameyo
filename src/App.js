@@ -10,6 +10,7 @@ import Settings from './Settings';
 import Information from './Information';
 import Statistics from './Statistics';
 import Column from "./Column.js"
+import NewScreen from './components/NewScreen/NewScreen';
 
 // functions 
 import checkTime from './functions/checkTime';
@@ -148,10 +149,11 @@ export default class App extends Component {
     if (hoursLeft > 1) {plurals[0] = 's'}
     if (minutesLeft > 1) {plurals[1] = 's'}
 
-    var columnVisibility = ((this.state.settings || this.state.statistics || this.state.information) ? 'd-none' : 'd-flex')
+    var columnVisibility = ((this.state.settings || this.state.statistics || this.state.information || this.state.newScreen) ? 'd-none' : 'd-flex')
     
     return (
       <>
+        {this.state.newScreen ? <NewScreen/> : null}
         <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen} toggleInformation={this.toggleInformation}/>
         <Information 
           informationState={this.state.information}
