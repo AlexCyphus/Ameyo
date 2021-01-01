@@ -2,7 +2,7 @@ var imageUrls = ["url('https://i.imgur.com/Je4AcTJ.jpg')", "url('https://i.imgur
 
 export function handleChangeBackground(skipBackground = false){
   var preventChangeBackground = JSON.parse(localStorage.getItem('preventChangeBackground'))
-  if (!preventChangeBackground | skipBackground){
+  if (!preventChangeBackground || skipBackground){
     var backgroundImageIndex;
     
     // check for previous image

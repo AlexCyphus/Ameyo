@@ -81,8 +81,8 @@ export default class Settings extends React.Component {
                                 inputprops={{ 'aria-label': 'primary checkbox' }}
                                 className="mx-1"
                             />
-                            <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground("next")}>Next background image</Button>
                             <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground("last")}>Last background image</Button>
+                            <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground("next")}>Next background image</Button>
                             <Button variant="contained" color="primary" onClick={() => this.props.toggleInformation()}>See information screen</Button>
                             <Button variant="contained" color="primary" onClick={this.toggleFeedback}>Give feedback</Button>
                             <Button variant="contained" color="primary" target="_blank" href="https://bit.ly/AmeyoRate">Rate Ameyo 5 stars</Button>
