@@ -1,6 +1,13 @@
 import React from 'react'
 
 export default class Information extends React.Component {
+    constructor(){
+        super()
+    }
+    componentDidMount(){
+        console.log('info-mounted')
+        this.props.avoidNewFeature()
+    }
     render(){
         const Navigation = ({number}) => {
             return (
@@ -13,7 +20,6 @@ export default class Information extends React.Component {
                     :
                     <div className="w-25"><p className="f-30 clickable" onClick={() => this.props.handleChangeInfoPage(true)}>NEXT</p></div>
                     }
-                    
                 </div>
             )
         }

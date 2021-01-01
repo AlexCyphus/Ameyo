@@ -13,9 +13,22 @@ export function queryLocalStorage(_callback = false){
     if (JSON.parse(localStorage.getItem('showIntroduction') == null)){newState.information = true}
 
     // check for new feature 
-    // if (JSON.parse(localStorage.getItem('showNew') == null)){newState.information = true}
+    if (localStorage.getItem('newestFeature')){newState.newestFeature = localStorage.getItem('newestFeature')}
 
     this.setState(newState, () => {
         if (_callback) {_callback()};
     })
 }
+
+
+/* 
+
+current user 
+* as long as localstorage @ showNew != labels => render newScreen 
+* when newScreen renders set localStorage @ showNew => 'labels'
+
+new user 
+* if information this.state.information === true => localStorage @ showNew = 'labels
+
+*/
+

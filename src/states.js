@@ -71,7 +71,7 @@ const states = {
     '#ffccff': false,
     '#003300': false
   },
-  newScreen: true
+  newestFeature: false
 }
 
 export default states

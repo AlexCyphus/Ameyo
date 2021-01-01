@@ -1,11 +1,10 @@
 import './NewScreen.scss';
 import React from 'react';
 
-const NewScreen = () => {
-    console.log('render')
+const NewScreen = ({handleClose, newestFeature}) => {
     return (
         <div className="new-screen-outer">
-            <p className="close-popup">x</p>
+            <p className="close-popup" onClick={() => handleClose(newestFeature)}>x</p>
             <div className="new-screen-inner">
                 <h1 className="pb-5"> 🆕 Introducing: Labels! 🆕 </h1>
                 <div className="d-flex">
