@@ -3,7 +3,6 @@ import React from 'react'
 export default class Information extends React.Component {
 
     componentDidMount(){
-        console.log('info-mounted')
         this.props.avoidNewFeature()
     }
     render(){
