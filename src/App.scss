@@ -459,8 +459,13 @@ textarea:focus, input:focus{
 .info-image {
   height: auto;
   max-width: 60vw;
+  max-height: 60vh;
   height: 70vh;
   margin-bottom: 15px;
+}
+
+#info-image-6 {
+  border-radius: 1vw;
 }
 
 .two-info-images {

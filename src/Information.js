@@ -1,9 +1,7 @@
 import React from 'react'
 
 export default class Information extends React.Component {
-    constructor(){
-        super()
-    }
+
     componentDidMount(){
         console.log('info-mounted')
         this.props.avoidNewFeature()
@@ -146,7 +144,7 @@ export default class Information extends React.Component {
                     <>
                         <div className="d-flex align-items-center main-info-content">
                             <div>
-                                <img alt="" src="./info6.png" className="info-image" id=""></img>
+                                <img alt="" src="./info6.png" className="info-image" id="info-image-6"></img>
                             </div>
                             <div className="text-left instructions">
                                 <p>You can also easily add labels to your notes for better visual clarity!</p>
