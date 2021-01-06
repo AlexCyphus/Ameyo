@@ -22,7 +22,8 @@ const states = {
       title: 'Yesterday',
       emoji: "✅",
       itemIds: [],
-      description: 'Tasks completed yesterday'
+      description: 'Tasks completed yesterday',
+      type: 'yesterday'
     },
     'backlog': {
       id: 'backlog',

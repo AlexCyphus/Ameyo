@@ -36,26 +36,17 @@ export default class Item extends React.Component {
     const itemId = this.props.item.id;
     const checkedClass = this.props.checked;
 
-    /* UNRESOLVED ISSUE */
-    /* 
-    We use the "colors" state to determine what colors have already been taken by other labels
-    We claim these colors on rendering which causes the state to change, the component to re-render, and _theoretically_ the function to be called again
-    Need to move the this.props.claimColor outside of the render method
-    */
-
-    // check if item should have label 
-
     return (
       <Draggable draggableId={itemId} index={this.props.index} id={itemId}>
         {(provided, snapshot) => (
           <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} id={itemId}>
-            {this.props.type === 'none' ? 
+            {this.props.type === 'none' && 
               <div className="item-checkbox d-flex" id={itemId}>
               <div className="checkbox m-auto" id={itemId}>
-                {checkedClass === 'checked' ? <p id={itemId}>x</p> : null}
+                {checkedClass === 'checked' && <p id={itemId}>x</p>}
               </div>
             </div>
-            : null}
+            }
             <div className={"item-name"} id={itemId}>
               <p className={"item-p " + (this.props.type !== 'none' ? 'px-3' : '')} id={itemId}>{this.props.item.content}</p>
             </div>

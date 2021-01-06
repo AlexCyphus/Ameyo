@@ -1,21 +1,14 @@
-import React from 'react'; // we need this to make JSX compile
+import React from 'react'; 
 
 interface LabelProps  {
   color: string,
   display: string
 }
 
-//({ color, display="yes" }: CardProps)
-
 class Label extends React.Component<LabelProps> { 
   render(){
     return (
-      this.props.display ? 
-      <>
-        <span className="dot" style={{backgroundColor: this.props.color}}></span>
-      </>
-      : 
-      null
+      this.props.display && <span className="dot" style={{backgroundColor: this.props.color}}></span>
     )
   }
 } 

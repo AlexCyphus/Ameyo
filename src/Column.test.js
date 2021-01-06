@@ -35,3 +35,4 @@ it("renders without any items", () => {
   })
   expect(container.textContent).toBe("Habits⏰");
 });
+
