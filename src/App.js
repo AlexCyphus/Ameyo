@@ -163,21 +163,33 @@ export default class App extends Component {
     
     return (
       <>
-        {this.state.newestFeature !== newestFeature && this.state.information === false ? <NewScreen handleClose={this.closeNewFeature} newestFeature={newestFeature}/> : null}
-        <Settings settingsState={this.state.settings} settingsClose={this.settingsClose} onClick={this.settingsOpen} toggleInformation={this.toggleInformation}/>
-        {this.state.information ? <Information 
-          informationState={this.state.information}
-          toggleInformation={this.toggleInformation}
-          handleChangeInfoPage={this.handleChangeInfoPage}
-          page={this.state.informationPage}
-          avoidNewFeature={this.closeNewFeature}
-        /> : null}
-        <Statistics 
-          statisticsState={this.state.statistics}
-          statisticsClose={this.statisticsClose}
-          onClick={this.statisticsOpen}
-          monthlyHabitsCount={this.state.monthlyHabitsCount}
-        />
+        { // conditionally render new feature screen
+        (this.state.newestFeature !== newestFeature && this.state.information === false) 
+          && <NewScreen handleClose={this.closeNewFeature} newestFeature={newestFeature}/>
+        }
+        
+        { // conditionally render settings
+          this.state.settings && <Settings settingsClose={this.settingsClose} onClick={this.settingsOpen} toggleInformation={this.toggleInformation}/>
+        } 
+        
+        { // conditionally render information
+          this.state.information && <Information 
+            informationState={this.state.information}
+            toggleInformation={this.toggleInformation}
+            handleChangeInfoPage={this.handleChangeInfoPage}
+            page={this.state.informationPage}
+            avoidNewFeature={this.closeNewFeature}
+          />
+        }
+
+        { // conditionally render statistics
+          this.state.statistics && <Statistics 
+            statisticsClose={this.statisticsClose}
+            onClick={this.statisticsOpen}
+            monthlyHabitsCount={this.state.monthlyHabitsCount}
+          />
+        }
+
         <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
           <div className={"columns " + columnVisibility}>
             <div className="inner-container">
