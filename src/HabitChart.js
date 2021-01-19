@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import {Line} from 'react-chartjs-2'
 
-// incomplete data object
-var data = {
-    labels: Array.from({length: 30}, (_, i) => i - 30),
-    datasets: []
-};
+var colors = ['rgba(255,0,0,1)', 'rgba(0,255,0,1)', 'rgba(0,0,255,1)', 'rgba(255,255,0,1)', 'rgba(0,255,255,1)', 'rgba(255,0,255,1)', 'rgba(192,192,192,1)', 'rgba(255,255,255,1)']
 
 // chart settings
-const chartConfig = {
+ const chartConfig = {
     maintainAspectRatio: false,
     scales: {
         xAxes: [{ticks: {fontColor: "#fff"}}],
@@ -33,14 +29,15 @@ const chartConfig = {
 class HabitChart extends Component {
     constructor(props){
         super(props);
-        var habitsSum = JSON.parse(localStorage.getItem('monthlyHabitsSum')) ? JSON.parse(localStorage.getItem('monthlyHabitsSum')) : {}
         this.state = {
             monthlyHabitsCount: JSON.parse(localStorage.getItem('monthlyHabitsCount')),
-            monthlyHabitsSum: habitsSum
+            monthlyHabitsSum: {},
+            data: {labels: Array.from({length: 30}, (_, i) => i - 30),datasets: []}
         };
         this.calculateSums = this.calculateSums.bind(this);
     }
 
+    // counts how many of the last 30 days the habit was completed
     summateArr = (arr) => {
         var sumArr = Array.from({length: 30}, (_, i) => 0);
         var sum = 0;
@@ -53,7 +50,6 @@ class HabitChart extends Component {
 
     calculateSums(){
         // prep habits data 
-
         var newState = {...this.state}
 
         for (var habit in newState.monthlyHabitsCount){
@@ -65,12 +61,14 @@ class HabitChart extends Component {
     }
 
     componentDidMount(){
-        this.calculateSums()
-        this.generateDatasets()
+        if (Object.keys(this.state.monthlyHabitsSum).length === 0){
+            this.calculateSums()
+            this.generateDatasets()
+        }
     }
 
     generateDatasets() {
-        var colors = ['rgba(255,0,0,1)', 'rgba(0,255,0,1)', 'rgba(0,0,255,1)', 'rgba(255,255,0,1)', 'rgba(0,255,255,1)', 'rgba(255,0,255,1)', 'rgba(192,192,192,1)', 'rgba(255,255,255,1)']
+        // incomplete data object
         var counter = 0
         for (var item in this.state.monthlyHabitsSum){
             let itemArr = this.state.monthlyHabitsSum[item]
@@ -84,10 +82,14 @@ class HabitChart extends Component {
                 fill: true,
                 backgroundColor: colors[counter]
             }
-            data.datasets.push(dataset)
-            if (counter >= colors.length - 1){
-                counter = 0
-            }
+
+            // update data with up to date chart info
+            let newData = Object.create(this.state.data)
+            newData.datasets.push(dataset)
+            this.setState({data: newData})
+
+            // cycle through colors if too many habits
+            if (counter >= colors.length - 1){counter = 0}
             else (counter++)
         }
     }
@@ -97,7 +99,7 @@ class HabitChart extends Component {
             <div className='charts m-auto text-white'>
                 <div className='habit-chart'>
                     <Line 
-                        data={data} 
+                        data={this.state.data} 
                         options={chartConfig}
                     />
                 </div>
