@@ -3,21 +3,6 @@ import {Line} from 'react-chartjs-2'
 
 // incomplete data object for chart
 // filled in by analyzeHistory()
-var data = {
-    labels: Array.from({length: 30}, (_, i) => i - 30),
-    datasets: [
-        {
-            label: 'x',
-            fill: true,
-            backgroundColor: 'green',
-            lineTension: 0.1,
-            borderColor: 'green',                
-            pointRadius: 0,
-            data: []
-        }
-    ]
-};
-
 // settings for completed ticket chart
 const chartConfig = {
     maintainAspectRatio: false,
@@ -41,8 +26,7 @@ const chartConfig = {
 }
 
 // incomplete arrays
-var individualCounts = Array.from({length: 30}, (_, i) => 0)
-var summatedTickets = []
+
 
 class HabitChart extends Component {
     constructor(props){
@@ -55,8 +39,29 @@ class HabitChart extends Component {
     }    
 
     analyzeHistory = (historyArr) => {
-        let thirtyDaysAgo = new Date().getTime() - 2592000000
+
+        // incomplete data 
+        var individualCounts = Array.from({length: 30}, (_, i) => 0)
+        var summatedTickets = []
+
+        // make incomplete data object complete
+        var data = {
+            labels: Array.from({length: 30}, (_, i) => i - 30),
+            datasets: [
+                {
+                    label: 'x',
+                    fill: true,
+                    backgroundColor: 'green',
+                    lineTension: 0.1,
+                    borderColor: 'green',                
+                    pointRadius: 0,
+                    data: []
+                }
+            ]
+        };
+
         // filtering for only the ones in the last thirty days
+        let thirtyDaysAgo = new Date().getTime() - 2592000000
         historyArr = historyArr.filter(item => new Date(item[1]) > thirtyDaysAgo);
 
         // pushing the daily counts to individual counts
@@ -72,8 +77,9 @@ class HabitChart extends Component {
             summatedTickets.push(sum)
         })
 
-        // make incomplete data object complete
         data.datasets[0].data = summatedTickets
+
+        return data
     }
             
     render(){
@@ -81,7 +87,7 @@ class HabitChart extends Component {
             <div className='charts m-auto text-white'>
                 <div className='habit-chart'>
                     <Line 
-                        data={data} 
+                        data={this.state.data} 
                         options={chartConfig}
                     />
                 </div>
