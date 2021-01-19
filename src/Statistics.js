@@ -1,6 +1,6 @@
 import React from 'react'
 import HabitChart from './HabitChart'
-import CompletedTicketsChart from './CompletedTicketsChart'
+import CompletedTicketsChart from './components/CompletedTicketsChart/CompletedTicketsChart'
 
 export default class Statistics extends React.Component {
     constructor(props){
