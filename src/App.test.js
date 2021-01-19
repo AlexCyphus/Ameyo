@@ -27,4 +27,12 @@ it("renders", async () => {
       render(<App/>, container);
     })
     expect(container.textContent).toContain("Settings");
-  });
+});
+
+it("doesn't render statistics or settings", async () => {
+  act(() => {
+    render(<App/>, container);
+  })
+  expect(container.textContent).not.toContain("Completed Tickets");
+  expect(container.textContent).not.toContain("Freeze on today's image");
+});
