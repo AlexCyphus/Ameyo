@@ -3,7 +3,6 @@ export default function checkTime() {
   this.queryLocalStorage()
 
     let todaysDate = new Date();
-    // console.log('checkTime', todaysDate.getHours(), todaysDate.getMinutes(), todaysDate.getSeconds())
     
     // check for previous date
     var prevDate;

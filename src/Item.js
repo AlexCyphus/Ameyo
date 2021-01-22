@@ -12,22 +12,17 @@ export default class Item extends React.Component {
   }
 
   componentDidMount(){
-    // if colors exist already
+    // if saved labels and colors already exist
     if (this.props.colors && Object.values(this.props.colors)){
 
-      // if the label doesn't exist
+      // if the current label doesn't exist yet
       if (!Object.values(this.props.colors).includes(this.state.label)){
-        for (var x = 0; x < Object.keys(this.props.colors).length; x++){
-          let key = Object.keys(this.props.colors)[x]
-          let val = this.props.colors[key]
-          if (val === false){
-            this.setState({color: key})
-            this.props.claimColor(key, this.state.label)
-            break;
-          }
-        }
+        const emptyColor = Object.keys(this.props.colors).find((key) => this.props.colors[key] === false)
+        this.setState({color: emptyColor})
+        this.props.claimColor(emptyColor, this.state.label)
       }
 
+      // if the current label already exists
       else {this.setState({color: Object.keys(this.props.colors).find(key => this.props.colors[key] === this.state.label)})}
     }
   }

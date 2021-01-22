@@ -24,9 +24,8 @@ export function handleChangeBackground(skipBackground = false){
     
     if (window.navigator.onLine){
       document.body.style.backgroundImage = imageUrls[backgroundImageIndex]
-      console.log('we online homey')
-    } else {
-      console.log('we offlien homey')
+    } 
+    else {
       document.body.style.backgroundImage = '/default.jpg'
     }
   }
