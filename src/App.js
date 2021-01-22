@@ -75,7 +75,14 @@ export default class App extends Component {
     this.intervalID = setInterval(() => this.checkTime(), 30000);
     setTimeout(() => this.checkTime(), 0)
     document.addEventListener("keydown", this.handleKeyDown)
-    this.queryLocalStorage(() => document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex])
+    this.queryLocalStorage(() => {
+      // set background image after checking localStorage
+      if (window.navigator.onLine){
+        document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex]
+      } else {
+        document.body.style.backgroundImage = "url('./default.jpg')"
+      }
+    })
   }
 
   claimColor(color, name) {

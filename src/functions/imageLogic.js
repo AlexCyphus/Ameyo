@@ -21,14 +21,27 @@ export function handleChangeBackground(skipBackground = false){
   
     // save image url
     localStorage.setItem('backgroundImageIndex', JSON.stringify(backgroundImageIndex))
-    document.body.style.backgroundImage = imageUrls[backgroundImageIndex]
+    
+    if (window.navigator.onLine){
+      document.body.style.backgroundImage = imageUrls[backgroundImageIndex]
+      console.log('we online homey')
+    } else {
+      console.log('we offlien homey')
+      document.body.style.backgroundImage = '/default.jpg'
+    }
   }
 }
 
 export function toggleAllowedBackgroundChanges(){
   var preventChangeBackground;
-  if (JSON.parse(localStorage.getItem('preventChangeBackground'))){preventChangeBackground = !JSON.parse(localStorage.getItem('preventChangeBackground'))}
-  else {preventChangeBackground = true}
+
+  // check if we can update background
+  if (JSON.parse(localStorage.getItem('preventChangeBackground'))){
+    preventChangeBackground = !JSON.parse(localStorage.getItem('preventChangeBackground'))
+  } else {
+    preventChangeBackground = true
+  }
+
   this.setState({preventChangeBackground})
   return localStorage.setItem('preventChangeBackground', JSON.stringify(preventChangeBackground))
 }
