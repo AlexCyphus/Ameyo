@@ -68,9 +68,32 @@ class HabitChart extends Component {
     }
 
     generateDatasets() {
-        // incomplete data object
+
+        // sort keys by monthlyHabitsSum
+        const monthlyHabitsSumCopy = this.state.monthlyHabitsSum = JSON.parse(JSON.stringify(this.state.monthlyHabitsSum))
+        let orderedKeys = []
+
+        for (var key in monthlyHabitsSumCopy) {
+           orderedKeys.push([ key, monthlyHabitsSumCopy[key][29]]);
+        }
+
+        orderedKeys.sort((a, b) => a[1] - b[1])
+
+        orderedKeys = orderedKeys.reduce((acc, val) => {
+            console.log(acc)
+            acc.push(val[0])
+            return acc
+        }, [])
+        
+        console.log(orderedKeys)
+
+        // orderedKeys.reduce((acc, val, index) => {
+        //     console.log(acc[index])
+        //     return acc[index] = val[0]
+        // }, new Array())
+        
         var counter = 0
-        for (var item in this.state.monthlyHabitsSum){
+        for (var item of orderedKeys){
             let itemArr = this.state.monthlyHabitsSum[item]
 
             let dataset = {
