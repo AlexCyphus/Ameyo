@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Line} from 'react-chartjs-2'
 
-var colors = ['rgba(255,0,0,1)', 'rgba(0,255,0,1)', 'rgba(0,0,255,1)', 'rgba(255,255,0,1)', 'rgba(0,255,255,1)', 'rgba(255,0,255,1)', 'rgba(192,192,192,1)', 'rgba(255,255,255,1)']
+var colors = ['rgba(255,0,0,1)', 'rgba(0,255,0,1)', 'rgba(0,0,255,1)', 'rgba(255,255,0,1)', 'rgba(0,255,255,1)', 'rgba(255,0,255,1)', 'rgba(192,192,192,1)']
 
 // chart settings
  const chartConfig = {
