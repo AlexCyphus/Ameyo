@@ -5,10 +5,9 @@ export default function checkTime() {
     let todaysDate = new Date();
     
     // check for previous date
-    var prevDate;
-    localStorage.getItem('date') !== null 
-      ? prevDate = new Date(localStorage.getItem('date')) 
-      : prevDate = todaysDate
+    var prevDate = localStorage.getItem('date') == null 
+      ? new Date()
+      : new Date(localStorage.getItem('date')) 
 
     // if the days aren't the same
     if (todaysDate.getDate() !== prevDate.getDate()){

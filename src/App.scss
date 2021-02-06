@@ -523,3 +523,23 @@ canvas {
   -webkit-user-select: none; /* Safari */        
   user-select: none; /* Standard */
 }
+
+.timepicker-outer-wrapper {
+  position: absolute;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+}
+
+.timepicker-inner-wrapper {
+  margin: auto;
+  height: 300px;
+  width: 300px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.react-time-picker {
+  margin: auto;
+}

@@ -72,7 +72,8 @@ const states = {
     '#ffccff': false,
     '#003300': false
   },
-  newestFeature: false
+  newestFeature: false,
+  endOfDay: "19:27"
 }
 
 export default states
