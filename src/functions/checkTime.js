@@ -2,7 +2,11 @@
 export default function checkTime() {
   this.queryLocalStorage()
 
+  // if hour < last hour 
     let todaysDate = new Date();
+
+    let endOfHour = this.state.endOfDay.split(":")[0]
+    let endOfMinute = this.state.endOfDay.split(":")[0]
     
     // check for previous date
     var prevDate = localStorage.getItem('date') == null 
@@ -11,7 +15,6 @@ export default function checkTime() {
 
     // if the days aren't the same
     if (todaysDate.getDate() !== prevDate.getDate()){
-      
       this.handleChangeBackground()
       this.uncheckHabits()
 
@@ -22,7 +25,6 @@ export default function checkTime() {
 
       var yesterday = new Date(todaysDate - 86400000);
       
-
       // if the prev date is < 48 hours past the previous date (yesteday)
       if (((todaysDate - prevDate)/86400000) <= 2){
 

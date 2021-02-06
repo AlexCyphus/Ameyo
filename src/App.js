@@ -163,17 +163,25 @@ export default class App extends Component {
 
   render() {
 
-    let lastMinute = Number(this.state.endOfDay.split(":")[1])
-    let lastHour = Number(this.state.endOfDay.split(":")[0])
+    let endOfMinute = Number(this.state.endOfDay.split(":")[1])
+    let endOfHour = Number(this.state.endOfDay.split(":")[0])
 
     // set up for the countdown (this isn't working)
-    let minutesLeft = lastMinute >= this.state.date.getMinutes()
-      ? Math.max(lastMinute - this.state.date.getMinutes() - 1, 0)
-      : 59 - (this.state.date.getMinutes() - lastMinute)
-    
-    let hoursLeft = lastHour >= this.state.date.getHours()
-      ? Math.max(minutesLeft > lastMinute ? 23 : lastHour - this.state.date.getHours() - 1, 0)
-      : 23 - (this.state.date.getHours() - lastHour)   
+    const getTimeDifference = (timeBorder, currentTime, maxTimeDenomination) => {
+      if (timeBorder > currentTime){return timeBorder - currentTime - 1}
+      else if (timeBorder < currentTime){return maxTimeDenomination - (currentTime - timeBorder)}
+      else if (timeBorder == currentTime) {
+        if (maxTimeDenomination == 23){
+          if (endOfMinute < this.state.date.getMinutes()){
+            return 23
+          }
+        }
+        else {return 0}
+      }
+    }
+
+    let minutesLeft = getTimeDifference(endOfMinute, this.state.date.getMinutes(), 59)
+    let hoursLeft = getTimeDifference(endOfHour, this.state.date.getHours(), 23)
 
     let plurals = ['','']
     if (hoursLeft > 1) {plurals[0] = 's'}

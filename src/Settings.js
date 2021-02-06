@@ -69,7 +69,7 @@ export default class Settings extends React.Component {
 
     handleChangeTime(e) {
         // if submitted
-        if (e == 'submit') {
+        if (e === 'submit') {
             let timeValue = document.getElementById('time-value').value
             console.log(timeValue)
             this.props.changeEndOfDay(timeValue)
@@ -155,15 +155,11 @@ export default class Settings extends React.Component {
                                 <p className='text-center pt-1 white'>Total completed: {history.length}</p>
                             </div>
                         </div>
-                        {!this.state.hideFeedback ? 
-                        <div className="col-md-5 d-none d-lg-block" id='typeform'>
+                        {!this.state.hideFeedback && <div className="col-md-5 d-none d-lg-block" id='typeform'>
                             <ReactTypeformEmbed url="https://alexjcyphus.typeform.com/to/Ns596HzQ" />
                             <h2 className='text-center pt-3 white chart-title'><span className="font-italic clickable" onClick={this.toggleFeedback}>(Hide feedback?)</span></h2>
                         </div>
-                        :
-                        null}
-                    
-                        
+                        }    
                     </div>
                 </div>
             </>

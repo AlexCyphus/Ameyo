@@ -70,7 +70,7 @@ class HabitChart extends Component {
     generateDatasets() {
 
         // sort keys by monthlyHabitsSum
-        const monthlyHabitsSumCopy = this.state.monthlyHabitsSum = JSON.parse(JSON.stringify(this.state.monthlyHabitsSum))
+        const monthlyHabitsSumCopy = JSON.parse(JSON.stringify(this.state.monthlyHabitsSum))
         let orderedKeys = []
 
         for (var key in monthlyHabitsSumCopy) {
