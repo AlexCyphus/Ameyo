@@ -10,15 +10,12 @@ export default function checkTime() {
     
     // check for previous date
 
-    var prevDate = localStorage.getItem('date') == null 
+    let prevDate = localStorage.getItem('date') == null 
       ? new Date()
       : new Date(localStorage.getItem('date')) 
 
-    prevDate.setHours(endOfHour)
-    prevDate.setMinutes(endOfMinute)
-
     // if the days aren't the same
-    if (Number(todaysDate) >= Number(prevDate) + 43200000){
+    if (Number(todaysDate) >= Number(prevDate) + 86400000){
       this.handleChangeBackground()
       this.uncheckHabits()
 

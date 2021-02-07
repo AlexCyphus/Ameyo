@@ -84,13 +84,6 @@ class HabitChart extends Component {
             return acc
         }, [])
         
-        console.log(orderedKeys)
-
-        // orderedKeys.reduce((acc, val, index) => {
-        //     console.log(acc[index])
-        //     return acc[index] = val[0]
-        // }, new Array())
-        
         var counter = 0
         for (var item of orderedKeys){
             let itemArr = this.state.monthlyHabitsSum[item]

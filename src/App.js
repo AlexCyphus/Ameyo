@@ -165,13 +165,15 @@ export default class App extends Component {
     let endOfMinute = Number(this.state.endOfDay.split(":")[1])
     let endOfHour = Number(this.state.endOfDay.split(":")[0])
 
+    let date = new Date()
+
     // set up for the countdown (this isn't working)
     const getTimeDifference = (timeBorder, currentTime, maxTimeDenomination) => {
       if (timeBorder > currentTime){return timeBorder - currentTime - 1}
       else if (timeBorder < currentTime){return maxTimeDenomination - (currentTime - timeBorder)}
       else if (timeBorder == currentTime) {
         if (maxTimeDenomination == 23){
-          if (endOfMinute < this.state.date.getMinutes()){
+          if (endOfMinute < date.getMinutes()){
             return 23
           }
           else {return 0}
@@ -180,8 +182,8 @@ export default class App extends Component {
       }
     }
 
-    let minutesLeft = getTimeDifference(endOfMinute, this.state.date.getMinutes(), 59)
-    let hoursLeft = getTimeDifference(endOfHour, this.state.date.getHours(), 23)
+    let minutesLeft = getTimeDifference(endOfMinute, date.getMinutes(), 59)
+    let hoursLeft = getTimeDifference(endOfHour, date.getHours(), 23)
 
     let plurals = ['','']
     if (hoursLeft > 1) {plurals[0] = 's'}
@@ -199,7 +201,14 @@ export default class App extends Component {
         }
         
         { // conditionally render settings
-          this.state.settings && <Settings settingsClose={this.settingsClose} onClick={this.settingsOpen} toggleInformation={this.toggleInformation} changeEndOfDay={this.changeEndOfDay}/>
+          this.state.settings && <Settings 
+            settingsClose={this.settingsClose}
+            onClick={this.settingsOpen}
+            toggleInformation={this.toggleInformation}
+            endOfDay={this.state.endOfDay}
+            changeEndOfDay={this.changeEndOfDay}
+
+            />
         } 
         
         { // conditionally render information

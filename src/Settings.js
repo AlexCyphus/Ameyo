@@ -85,28 +85,25 @@ export default class Settings extends React.Component {
 
         const TimePickerWrapper = () => {
             return (
-                <div className="timepicker-outer-wrapper">
-                    <div noValidate className="timepicker-inner-wrapper">
-                        <TextField
-                            id="time-value"
-                            label="Set custom end of day"
-                            type="time"
-                            defaultValue="00:00"
-                            // className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <button onClick={() => this.handleChangeTime('submit')}>Submit</button>
-                        <button onClick={() => this.handleChangeTime('cancel')}>Cancel</button>
-                    </div>    
-                </div>
+                <div noValidate className="timepicker-wrapper">
+                    <h6>Change end-of-day time</h6>
+                    <TextField
+                        id="time-value"
+                        type="time"
+                        defaultValue={this.props.endOfDay}
+                        // className={classes.textField}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <button id="timepicker-submit" onClick={() => this.handleChangeTime('submit')}>Change</button>
+                    <button id="timepicker-cancel" onClick={() => this.handleChangeTime('cancel')}>Cancel</button>
+                </div>    
             )
         }
 
         return (
-
-            <>
+            <div className="d-flex h-100">
                 {this.state.timePopup && <TimePickerWrapper/>}
                 <div className="fullscreen-popup d-flex">
                     <p className="close-popup" onClick={this.props.settingsClose}>x</p>
@@ -162,7 +159,7 @@ export default class Settings extends React.Component {
                         }    
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }
