@@ -5,16 +5,20 @@ export default function checkTime() {
   // if hour < last hour 
     let todaysDate = new Date();
 
-    let endOfHour = this.state.endOfDay.split(":")[0]
-    let endOfMinute = this.state.endOfDay.split(":")[0]
+    let endOfHour = Number(this.state.endOfDay.split(":")[0])
+    let endOfMinute = Number(this.state.endOfDay.split(":")[1])
     
     // check for previous date
+
     var prevDate = localStorage.getItem('date') == null 
       ? new Date()
       : new Date(localStorage.getItem('date')) 
 
+    prevDate.setHours(endOfHour)
+    prevDate.setMinutes(endOfMinute)
+
     // if the days aren't the same
-    if (todaysDate.getDate() !== prevDate.getDate()){
+    if (Number(todaysDate) >= Number(prevDate) + 43200000){
       this.handleChangeBackground()
       this.uncheckHabits()
 
@@ -26,7 +30,7 @@ export default function checkTime() {
       var yesterday = new Date(todaysDate - 86400000);
       
       // if the prev date is < 48 hours past the previous date (yesteday)
-      if (((todaysDate - prevDate)/86400000) <= 2){
+      if (((Number(todaysDate) - Number(prevDate))/86400000) <= 2){
 
         // Move "todays" to "yesterday"
         for (let itemIndex = 0; itemIndex < this.state.columns['today'].itemIds.length; itemIndex++){
@@ -104,9 +108,8 @@ export default function checkTime() {
           localStorage.setItem('history', JSON.stringify(this.state.history))
         })
       }
+      localStorage.setItem('date', todaysDate)
+      this.setState({date: todaysDate})
     }
-
-    localStorage.setItem('date', todaysDate)
-    this.setState({date: todaysDate})
   }
 

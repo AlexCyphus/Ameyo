@@ -158,11 +158,10 @@ export default class App extends Component {
   changeEndOfDay(timeValue){
     this.setState({
       endOfDay: timeValue
-    })
+    }, localStorage.setItem('endOfDay', JSON.stringify(timeValue)))
   }
 
   render() {
-
     let endOfMinute = Number(this.state.endOfDay.split(":")[1])
     let endOfHour = Number(this.state.endOfDay.split(":")[0])
 
@@ -175,6 +174,7 @@ export default class App extends Component {
           if (endOfMinute < this.state.date.getMinutes()){
             return 23
           }
+          else {return 0}
         }
         else {return 0}
       }

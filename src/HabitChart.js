@@ -22,8 +22,7 @@ var colors = ['rgba(255,0,0,1)', 'rgba(0,255,0,1)', 'rgba(0,0,255,1)', 'rgba(255
             boxWidth: 10,
             fontSize: 12
         }
-    }
-    
+    }   
 }
 
 class HabitChart extends Component {
