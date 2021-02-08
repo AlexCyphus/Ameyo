@@ -169,7 +169,7 @@ export default class App extends Component {
 
     // set up for the countdown (this isn't working)
     const getTimeDifference = (timeBorder, currentTime, maxTimeDenomination) => {
-      if (timeBorder > currentTime){return timeBorder - currentTime - 1}
+      if (timeBorder > currentTime){return timeBorder - currentTime}
       else if (timeBorder < currentTime){return maxTimeDenomination - (currentTime - timeBorder)}
       else if (timeBorder == currentTime) {
         if (maxTimeDenomination == 23){
