@@ -18,6 +18,8 @@ const nth = (date) => {
     }
 }
 
+const dogecoinAddress = 'DSSBMedZQNFgixBacfF3ARi6D8i9RRGg7o'
+
 export default class Settings extends React.Component {
     constructor(props){
         super(props);
@@ -77,6 +79,17 @@ export default class Settings extends React.Component {
 
         return this.setState({timePopup: !this.state.timePopup})
     }
+
+    copyDogecoin(e) {        
+        var dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.setAttribute('value', dogecoinAddress);
+        dummy.select();
+        document.execCommand("copy"); 
+        document.body.removeChild(dummy)
+        alert("Address copied to clipboard")
+        
+    }
     
     render(){
         let history = {...this.state.history}
@@ -123,6 +136,25 @@ export default class Settings extends React.Component {
                                 <Button variant="contained" color="primary" onClick={this.toggleFeedback}>Give feedback</Button>
                                 <Button variant="contained" color="primary" target="_blank" href="https://bit.ly/AmeyoRate">Rate Ameyo 5 stars</Button>
                                 <Button variant="contained" color="primary" onClick={this.handleChangeTime}>Change end-of-day time</Button>
+                                <div className="justify-content-center pt-5 pb-2 doge-container">
+                                    <div className="row">
+                                        <div className="col-6 d-flex">
+                                            <div className="m-auto">
+                                                <p>Want to support the development of Ameyo? Consider donating via Dogecoin.</p>
+                                                <p className="pt-3">For more information: check out <a href="http://www.dogecoin.com">www.dogecoin.com</a></p>
+                                            </div>
+                                        </div>
+                                        <div className="col-6 d-flex">
+                                            <div className="m-auto text-center justify-content-center">
+                                                <img src="/dogecoin.png" id="dogecoin-id"></img>
+                                                <div className="pt-3" onClick={this.copyDogecoin}>
+                                                    <p style={{fontSize: "9.5px"}}>{dogecoinAddress}</p>
+                                                    <p>📋 Click to copy address</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="d-block" id="danger-zone">
                                     <div className="text-center"><h5><span role="img" aria-label="warning">⚠️</span> Danger Zone <span role="img" aria-label="warning">⚠️</span></h5></div>
                                     <div className="pt-1 pb-3 text-center"><p>You probably don't want to click these buttons</p></div>
