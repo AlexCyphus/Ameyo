@@ -9,19 +9,22 @@ export default function checkTime() {
     let endOfMinute = Number(this.state.endOfDay.split(":")[1])
     
     // check for previous date
+    let prevDate;
 
-    let prevDate = localStorage.getItem('date') == null 
-      ? new Date()
-      : new Date(localStorage.getItem('date'))
+    if (localStorage.getItem('date') == null ) {
+      prevDate = new Date()
+      localStorage.setItem('date', prevDate)
+    }
 
+    else {
+      prevDate = new Date(localStorage.getItem('date'))
+    }
 
     prevDate.setHours(endOfHour)
     prevDate.setMinutes(endOfMinute)
-    console.log(prevDate)
 
     // if the days aren't the same
     if (Number(todaysDate) >= Number(prevDate) + 86400000){
-      console.log('IT TIME')
       this.handleChangeBackground()
       this.uncheckHabits()
 

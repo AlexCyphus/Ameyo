@@ -9,7 +9,7 @@ export function queryLocalStorage(_callback = false){
     if (JSON.parse(localStorage.getItem('colors'))){newState.colors = JSON.parse(localStorage.getItem('colors'))}
     if (JSON.parse(localStorage.getItem('backgroundImageIndex'))){newState.backgroundImageIndex = JSON.parse(localStorage.getItem('backgroundImageIndex'))}
     if (JSON.parse(localStorage.getItem('endOfDay'))){newState.endOfDay = JSON.parse(localStorage.getItem('endOfDay'))}
-    
+
     // if first time user
     if (JSON.parse(localStorage.getItem('showIntroduction') == null)){newState.information = true}
 

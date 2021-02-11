@@ -79,7 +79,6 @@ class HabitChart extends Component {
         orderedKeys.sort((a, b) => a[1] - b[1])
 
         orderedKeys = orderedKeys.reduce((acc, val) => {
-            console.log(acc)
             acc.push(val[0])
             return acc
         }, [])
