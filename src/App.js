@@ -73,32 +73,44 @@ export default class App extends Component {
     })
   }
 
-  updateClock(){
-    const currentTime = new Date()
-
-    console.log('time updated')
-
+  getTimeDifference(type){
+    let customEndOfTime;
+    let currentTimeOfDenomination;
+    let maxTimeDenomination;
+    let currentTime = new Date()
     let endOfMinute = Number(this.state.endOfDay.split(":")[1])
-    let endOfHour = Number(this.state.endOfDay.split(":")[0])
 
-    // set up for the countdown (this isn't working)
-    const getTimeDifference = (timeBorder, currentTime, maxTimeDenomination) => {
-      if (timeBorder > currentTime){return timeBorder - currentTime}
-      else if (timeBorder < currentTime){return maxTimeDenomination - (currentTime - timeBorder)}
-      else if (timeBorder == currentTime) {
-        if (maxTimeDenomination == 23){
-          if (endOfMinute < currentTime.getMinutes()){
-            return 23
-          }
-          else {return 0}
+    if (type == 'minutes'){
+      customEndOfTime = endOfMinute
+      currentTimeOfDenomination = currentTime.getMinutes()
+      maxTimeDenomination = 59
+    }
+
+    if (type == 'hours'){
+      customEndOfTime = Number(this.state.endOfDay.split(":")[0])
+      currentTimeOfDenomination = currentTime.getHours()
+      maxTimeDenomination = 23
+    }
+
+    if (customEndOfTime > currentTimeOfDenomination){return customEndOfTime - currentTimeOfDenomination}
+    else if (customEndOfTime < currentTimeOfDenomination){return maxTimeDenomination - (currentTimeOfDenomination - customEndOfTime)}
+    else if (customEndOfTime == currentTimeOfDenomination) {
+      if (maxTimeDenomination == 23){
+        if (endOfMinute < currentTime.getMinutes()){
+          return 23
         }
         else {return 0}
       }
+      else {return 0}
     }
+  }
+
+  updateClock(){
+    // set up for the countdown (this isn't working)
 
     this.setState({
-      minutesLeft: getTimeDifference(endOfMinute, currentTime.getMinutes(), 59), 
-      hoursLeft: getTimeDifference(endOfHour, currentTime.getHours(), 23)
+      minutesLeft: this.getTimeDifference('minutes'), 
+      hoursLeft: this.getTimeDifference('hours')
     })
   }
 
@@ -108,12 +120,13 @@ export default class App extends Component {
       this.checkTime()
       this.updateClock()
     }, 30000);
+
     setTimeout(() => {
       this.checkTime()
-      this.updateClock()
     }, 0)
     document.addEventListener("keydown", this.handleKeyDown)
     this.queryLocalStorage(() => {
+      this.updateClock()
       // set background image after checking localStorage
       if (window.navigator.onLine){
         document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex]
