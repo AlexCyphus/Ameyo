@@ -48,7 +48,6 @@ export default class App extends Component {
     this.claimColor = this.claimColor.bind(this)
     this.closeNewFeature = this.closeNewFeature.bind(this)
     this.changeEndOfDay = this.changeEndOfDay.bind(this)
-    this.updateClock = this.updateClock.bind(this)
   }
 
   // i dont know why i didnt just write one toggle function
@@ -57,7 +56,6 @@ export default class App extends Component {
   statisticsOpen(){this.setState({statistics: true})}
   statisticsClose(){this.setState({statistics:false})}
   
-  // hide or show information screen
   toggleInformation(){
     // if first time using Ameyo and closed
     if (JSON.parse(localStorage.getItem("showIntroduction")) == null){
@@ -73,45 +71,10 @@ export default class App extends Component {
     })
   }
 
-  updateClock(){
-    const currentTime = new Date()
-
-    console.log('time updated')
-
-    let endOfMinute = Number(this.state.endOfDay.split(":")[1])
-    let endOfHour = Number(this.state.endOfDay.split(":")[0])
-
-    // set up for the countdown (this isn't working)
-    const getTimeDifference = (timeBorder, currentTime, maxTimeDenomination) => {
-      if (timeBorder > currentTime){return timeBorder - currentTime}
-      else if (timeBorder < currentTime){return maxTimeDenomination - (currentTime - timeBorder)}
-      else if (timeBorder == currentTime) {
-        if (maxTimeDenomination == 23){
-          if (endOfMinute < currentTime.getMinutes()){
-            return 23
-          }
-          else {return 0}
-        }
-        else {return 0}
-      }
-    }
-
-    this.setState({
-      minutesLeft: getTimeDifference(endOfMinute, currentTime.getMinutes(), 59), 
-      hoursLeft: getTimeDifference(endOfHour, currentTime.getHours(), 23)
-    })
-  }
-
-  componentDidMount() {
+  componentDidMount() {    
     // update clock + time logic once in a while 
-    this.intervalID = setInterval(() => {
-      this.checkTime()
-      this.updateClock()
-    }, 30000);
-    setTimeout(() => {
-      this.checkTime()
-      this.updateClock()
-    }, 0)
+    this.intervalID = setInterval(() => this.checkTime(), 30000);
+    setTimeout(() => this.checkTime(), 0)
     document.addEventListener("keydown", this.handleKeyDown)
     this.queryLocalStorage(() => {
       // set background image after checking localStorage
@@ -123,7 +86,6 @@ export default class App extends Component {
     })
   }
 
-  // claim color for specific label
   claimColor(color, name) {
     const newState = {
       ...this.state,
@@ -200,9 +162,32 @@ export default class App extends Component {
   }
 
   render() {
+    let endOfMinute = Number(this.state.endOfDay.split(":")[1])
+    let endOfHour = Number(this.state.endOfDay.split(":")[0])
+
+    let date = new Date()
+
+    // set up for the countdown (this isn't working)
+    const getTimeDifference = (timeBorder, currentTime, maxTimeDenomination) => {
+      if (timeBorder > currentTime){return timeBorder - currentTime}
+      else if (timeBorder < currentTime){return maxTimeDenomination - (currentTime - timeBorder)}
+      else if (timeBorder == currentTime) {
+        if (maxTimeDenomination == 23){
+          if (endOfMinute < date.getMinutes()){
+            return 23
+          }
+          else {return 0}
+        }
+        else {return 0}
+      }
+    }
+
+    let minutesLeft = getTimeDifference(endOfMinute, date.getMinutes(), 59)
+    let hoursLeft = getTimeDifference(endOfHour, date.getHours(), 23)
+
     let plurals = ['','']
-    if (this.state.hoursLeft > 1) {plurals[0] = 's'}
-    if (this.state.minutesLeft > 1) {plurals[1] = 's'}
+    if (hoursLeft > 1) {plurals[0] = 's'}
+    if (minutesLeft > 1) {plurals[1] = 's'}
 
     // show newest feature if state is not like newestFeature 
 
@@ -222,6 +207,7 @@ export default class App extends Component {
             toggleInformation={this.toggleInformation}
             endOfDay={this.state.endOfDay}
             changeEndOfDay={this.changeEndOfDay}
+
             />
         } 
         
@@ -269,7 +255,7 @@ export default class App extends Component {
         </DragDropContext>
         <div className="outer-footer d-flex text-center">
           <div className="col footer-item clickable" onClick={this.settingsOpen}><p><span role="img" aria-label="gear">⚙️</span> Settings</p></div>
-          <div className="col-auto m-auto" id="countdown"><p>{this.state.hoursLeft} {"hour" + plurals[0]} {this.state.minutesLeft} {"minute" + plurals[1]} remaining</p></div>
+          <div className="col-auto m-auto" id="countdown"><p>{hoursLeft} {"hour" + plurals[0]} {minutesLeft} {"minute" + plurals[1]} remaining</p></div>
           <div className="col footer-item clickable" onClick={this.statisticsOpen}><p><span role="img" aria-label="chart">📈</span> Statistics</p></div>
         </div>
       </>
