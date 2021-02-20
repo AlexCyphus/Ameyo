@@ -92,10 +92,24 @@ export default class App extends Component {
       maxTimeDenomination = 23
     }
 
-    if (customEndOfTime > currentTimeOfDenomination){return customEndOfTime - currentTimeOfDenomination}
-    else if (customEndOfTime < currentTimeOfDenomination){return maxTimeDenomination - (currentTimeOfDenomination - customEndOfTime)}
+    // if customEnd is in the future 
+    if (customEndOfTime > currentTimeOfDenomination){
+      if (endOfMinute == currentTime.getMinutes()){
+        return customEndOfTime - currentTimeOfDenomination + 1
+      }
+      else {
+        return customEndOfTime - currentTimeOfDenomination
+      }
+    }
+
+    // if custom end is in the past
+    else if (customEndOfTime < currentTimeOfDenomination){
+      return maxTimeDenomination - (currentTimeOfDenomination - customEndOfTime)
+    }
+
+    // if custom end is equal to current time
     else if (customEndOfTime == currentTimeOfDenomination) {
-      if (maxTimeDenomination == 23){
+      if (type == 'hours'){
         if (endOfMinute < currentTime.getMinutes()){
           return 23
         }
@@ -107,7 +121,6 @@ export default class App extends Component {
 
   updateClock(){
     // set up for the countdown (this isn't working)
-
     this.setState({
       minutesLeft: this.getTimeDifference('minutes'), 
       hoursLeft: this.getTimeDifference('hours')
@@ -209,7 +222,10 @@ export default class App extends Component {
   changeEndOfDay(timeValue){
     this.setState({
       endOfDay: timeValue
-    }, localStorage.setItem('endOfDay', JSON.stringify(timeValue)))
+    }, () => {
+      localStorage.setItem('endOfDay', JSON.stringify(timeValue))
+      this.updateClock()
+    })
   }
 
   render() {
