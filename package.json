@@ -18,6 +18,9 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
@@ -26,6 +29,7 @@
     "react-dom": "^16.13.1",
     "react-gradient-timepicker": "0.0.3",
     "react-scripts": "^4.0.2",
+    "react-test-renderer": "^17.0.1",
     "react-typeform-embed": "^0.2.1",
     "regenerator-runtime": "^0.13.7",
     "resizable-box": "^1.0.0",
@@ -37,7 +41,8 @@
     "build": "jest && react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "testWatch": "jest --watchAll"
+    "testWatch": "jest --watchAll",
+    "watchCurrent": "jest App.test.js --watchAll"
   },
   "eslintConfig": {
     "extends": "react-app"

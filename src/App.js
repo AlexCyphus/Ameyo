@@ -4,6 +4,7 @@ import './App.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DragDropContext } from 'react-beautiful-dnd';
 import states from './states';
+import moment from 'moment'
 
 // components
 import Settings from './Settings';
@@ -49,6 +50,7 @@ export default class App extends Component {
     this.closeNewFeature = this.closeNewFeature.bind(this)
     this.changeEndOfDay = this.changeEndOfDay.bind(this)
     this.updateClock = this.updateClock.bind(this)
+    this.getTimeDifference = this.getTimeDifference.bind(this)
   }
 
   // i dont know why i didnt just write one toggle function
@@ -73,57 +75,33 @@ export default class App extends Component {
     })
   }
 
-  getTimeDifference(type){
-    let customEndOfTime;
-    let currentTimeOfDenomination;
-    let maxTimeDenomination;
-    let currentTime = new Date()
-    let endOfMinute = Number(this.state.endOfDay.split(":")[1])
+  getTimeDifference(type, endOfDay, date=new Date()){
+    endTime = new Date() 
+    endTime.setDate(date.getDate() + 1);
+    endTime.setHours(Number(endOfDay.split(":")[0]))
+    endTime.setMinutes(Number(endOfDay.split(":")[1]))
 
-    if (type == 'minutes'){
-      customEndOfTime = endOfMinute
-      currentTimeOfDenomination = currentTime.getMinutes()
-      maxTimeDenomination = 59
-    }
+    var startTime = moment(date);
+    var endTime = moment(endTime);
 
-    if (type == 'hours'){
-      customEndOfTime = Number(this.state.endOfDay.split(":")[0])
-      currentTimeOfDenomination = currentTime.getHours()
-      maxTimeDenomination = 23
-    }
+    // calculate total duration
+    var duration = moment.duration(endTime.diff(startTime));
 
-    // if customEnd is in the future 
-    if (customEndOfTime > currentTimeOfDenomination){
-      if (endOfMinute == currentTime.getMinutes()){
-        return customEndOfTime - currentTimeOfDenomination + 1
-      }
-      else {
-        return customEndOfTime - currentTimeOfDenomination
-      }
-    }
+    // duration in hours
+    var hours = parseInt(duration.asHours());
 
-    // if custom end is in the past
-    else if (customEndOfTime < currentTimeOfDenomination){
-      return maxTimeDenomination - (currentTimeOfDenomination - customEndOfTime)
-    }
+    // duration in minutes
+    var minutes = parseInt(duration.asMinutes())%60;
 
-    // if custom end is equal to current time
-    else if (customEndOfTime == currentTimeOfDenomination) {
-      if (type == 'hours'){
-        if (endOfMinute < currentTime.getMinutes()){
-          return 23
-        }
-        else {return 0}
-      }
-      else {return 0}
-    }
+    if (type == 'hours') {return String(hours >= 24 ? hours - 24 : hours)}
+    if (type == 'minutes') {return String(minutes)}
   }
 
   updateClock(){
     // set up for the countdown (this isn't working)
     this.setState({
-      minutesLeft: this.getTimeDifference('minutes'), 
-      hoursLeft: this.getTimeDifference('hours')
+      minutesLeft: this.getTimeDifference('minutes', this.state.endOfDay), 
+      hoursLeft: this.getTimeDifference('hours', this.state.endOfDay)
     })
   }
 
