@@ -4,6 +4,7 @@ import './App.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DragDropContext } from 'react-beautiful-dnd';
 import states from './states';
+import moment from 'moment'
 
 // components
 import Settings from './Settings';
@@ -48,6 +49,8 @@ export default class App extends Component {
     this.claimColor = this.claimColor.bind(this)
     this.closeNewFeature = this.closeNewFeature.bind(this)
     this.changeEndOfDay = this.changeEndOfDay.bind(this)
+    this.updateClock = this.updateClock.bind(this)
+    this.getTimeDifference = this.getTimeDifference.bind(this)
   }
 
   // i dont know why i didnt just write one toggle function
@@ -71,12 +74,49 @@ export default class App extends Component {
     })
   }
 
-  componentDidMount() {    
+  getTimeDifference(type, endOfDay, date=new Date()){
+    endTime = new Date() 
+    endTime.setDate(date.getDate() + 1);
+    endTime.setHours(Number(endOfDay.split(":")[0]))
+    endTime.setMinutes(Number(endOfDay.split(":")[1]))
+
+    var startTime = moment(date);
+    var endTime = moment(endTime);
+
+    // calculate total duration
+    var duration = moment.duration(endTime.diff(startTime));
+
+    // duration in hours
+    var hours = parseInt(duration.asHours());
+
+    // duration in minutes
+    var minutes = parseInt(duration.asMinutes())%60;
+
+    if (type == 'hours') {return String(hours >= 24 ? hours - 24 : hours)}
+    if (type == 'minutes') {return String(minutes)}
+  }
+
+  updateClock(){
+    // set up for the countdown (this isn't working)
+    this.setState({
+      minutesLeft: this.getTimeDifference('minutes', this.state.endOfDay), 
+      hoursLeft: this.getTimeDifference('hours', this.state.endOfDay)
+    })
+  }
+
+  componentDidMount() {
     // update clock + time logic once in a while 
-    this.intervalID = setInterval(() => this.checkTime(), 30000);
-    setTimeout(() => this.checkTime(), 0)
+    this.intervalID = setInterval(() => {
+      this.checkTime()
+      this.updateClock()
+    }, 30000);
+
+    setTimeout(() => {
+      this.checkTime()
+    }, 0)
     document.addEventListener("keydown", this.handleKeyDown)
     this.queryLocalStorage(() => {
+      this.updateClock()
       // set background image after checking localStorage
       if (window.navigator.onLine){
         document.body.style.backgroundImage = imageUrls[this.state.backgroundImageIndex]
@@ -158,7 +198,10 @@ export default class App extends Component {
   changeEndOfDay(timeValue){
     this.setState({
       endOfDay: timeValue
-    }, localStorage.setItem('endOfDay', JSON.stringify(timeValue)))
+    }, () => {
+      localStorage.setItem('endOfDay', JSON.stringify(timeValue))
+      this.updateClock()
+    })
   }
 
   render() {
