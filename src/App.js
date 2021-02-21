@@ -196,11 +196,20 @@ export default class App extends Component {
   }
 
   changeEndOfDay(timeValue){
+    let date = new Date() 
+    date.setDate(date.getDate() - 1);
     this.setState({
-      endOfDay: timeValue
+      endOfDay: timeValue, 
+      date: date
     }, () => {
       localStorage.setItem('endOfDay', JSON.stringify(timeValue))
-      this.updateClock()
+      localStorage.setItem('date', this.state.date)
+
+      setTimeout(() => {
+        this.updateClock()
+        this.checkTime()
+      }, 0)
+
     })
   }
 
