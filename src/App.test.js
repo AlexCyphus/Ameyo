@@ -69,3 +69,30 @@ it("correctly renders the time", () => {
   expect(getTimeDifference('hours', "22:29", date)).toBe("22")
   expect(getTimeDifference('minutes', "22:29", date)).toBe("29")
 })
+
+// it("correctly triggers a new day", () => {
+//   const wrapper = shallow(<App/>);
+//   // const changeEndOfDay = wrapper.instance().changeEndOfDay(timeValue, date)
+//   const holder = {
+//     setState: (whatever, callback) => {
+//       callback()
+//     },
+//     changeEndOfDay: (timeValue, date) => () => (wrapper.instance().changeEndOfDay(timeValue, date)).bind(this),
+//     updateClock: () => {},
+//     checkTime: () => {},
+//   }
+
+//   const localStorage = {}
+
+//   Storage.prototype.setItem = jest.fn((loc, val) => localStorage[loc] = val);
+//   Storage.prototype.getItem = jest.fn((loc) => localStorage[loc]);
+
+//   let date = new Date("Sat Feb 20 2021 00:00:00 GMT+0100 (Central European Standard Time)")
+//   expect(holder.changeEndOfDay("05:00", date)()).toBe("2")
+
+
+
+
+
+  
+// })
