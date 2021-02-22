@@ -4,6 +4,20 @@ import './App.css';
 import Item from './Item'
 
 export default class Column extends React.Component {
+  constructor() {
+    super()
+    this.keyDownHandler = this.keyDownHandler.bind(this)
+  }
+
+  keyDownHandler(e) {
+    let value = this.props.inputs[this.props.column.id]
+    if (e.keyCode == 13) {
+      e.preventDefault()
+      if (value != "") {
+        this.props.addItem(e) 
+      }
+    }
+  }
 
   render() {
     let hover = this.props.hover ? ' min-height ' : ''
@@ -42,9 +56,9 @@ export default class Column extends React.Component {
               </div>        
             </div>
             :
-            <form onSubmit={this.props.addItem} id={this.props.column.id} autoComplete="off">
+            <form onKeyDown={this.keyDownHandler} id={this.props.column.id} autoComplete="off">
               <div className={"add-item d-flex" + margintop}>
-                <input className="w-100 h-100 text-center" type="text" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id + "-add"} value={this.props.inputs[this.props.column.id]}/>
+                <textarea className="w-100 h-100 text-center" type="textArea" placeholder="+ Add item" onChange={this.props.itemInputChange} id={this.props.column.id + "-add"} value={this.props.inputs[this.props.column.id]}/>
               </div>
             </form>
           }
