@@ -1,0 +1,61 @@
+// Column specific scss
+$border-radius: 5px;
+
+.outer-column {
+    height: fit-content;
+    //min-height: 300px;
+    margin: 0;
+    background-color: #ececece7;
+    color: black;
+    border-radius: 7px;
+    box-shadow: 0px 50px 50px rgba(0, 0, 0, 0.137);
+    padding: 0px 0px 1px 10px;
+    width: 100%;
+  }
+  
+  .add-item {
+    height: 40px;
+    margin-right: 10px;
+    border-radius: $border-radius;
+    border: lightgrey 0.5px solid;
+    background-color: white;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  
+    textarea {
+      border: none;
+      background: none;
+      text-align: left !important;
+      padding: 10px 15px 5px 15px;
+    }
+  }
+  
+  .deletion-box {
+    background-color: red;
+    color: white;
+    border-radius: $border-radius;
+  
+    p {
+      font-weight: bold;
+      //position: absolute;
+      margin-top: 9px;
+      width: 100%;
+      vertical-align: middle;
+    }
+  }
+  
+  .column-header {
+    font-size: 22px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-family: 'Open Sans', sans-serif !important;
+  
+    span {
+      font-size: 15px;
+    }
+  }
+  
+  .emoji {
+    font-size: 22px;
+  }
