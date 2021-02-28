@@ -4,6 +4,7 @@ import {Switch, Button, TextField} from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {handleChangeBackground, toggleAllowedBackgroundChanges} from './functions/imageLogic'
 import DogecoinDonationMessage from './components/DogecoinDonationMessage'
+import TimePicker from "./components/Timepicker/Timepicker.js"
 
 const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -85,28 +86,12 @@ export default class Settings extends React.Component {
         history = Object.values(history).reverse()
         const date = new Date()
 
-        const TimePickerWrapper = () => {
-            return (
-                <div noValidate className="timepicker-wrapper">
-                    <h6>Change end-of-day time</h6>
-                    <TextField
-                        id="time-value"
-                        type="time"
-                        defaultValue={this.props.endOfDay}
-                        // className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                    <button id="timepicker-submit" onClick={() => this.handleChangeTime('submit')}>Change</button>
-                    <button id="timepicker-cancel" onClick={() => this.handleChangeTime('cancel')}>Cancel</button>
-                </div>    
-            )
-        }
-
         return (
             <div className="d-flex h-100">
-                {this.state.timePopup && <TimePickerWrapper/>}
+                {this.state.timePopup && <TimePicker 
+                    endOfDay={this.props.endOfDay}
+                    handleChangeTime={this.handleChangeTime}
+                />}
                 <div className="fullscreen-popup d-flex">
                     <p className="close-popup" onClick={this.props.settingsClose}>x</p>
                     <div className='d-flex justify-content-center w-100 white mh-80 m-auto'>
