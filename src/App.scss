@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+@import "./components/HistoryFeed/HistoryFeed.scss";
+@import "./components/Statistics/Statistics.scss";
+@import "./components/NewScreen/NewScreen.scss";
+@import "./components/Column/Column.scss";
+
 // Override Sass min()
 @function min($numbers...) {
   @return m#{i}n(#{$numbers});
@@ -13,6 +18,11 @@ $border-radius: 5px;
   &:hover {
     cursor: pointer;
   }
+}
+
+.habit-chart {
+  height: 500px;
+  width: 100%;
 }
 
 #root {
@@ -27,18 +37,8 @@ p {
 }
 
 // fix weird scrollbar changes
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: rgba(39, 36, 36, 0.4);
-  border-right: 15px;
-  
-}
-.items::-webkit-scrollbar {width: 6px;}
-.items::-webkit-track {margin: 6px;}
-.history::-webkit-scrollbar {width: 6px}
-.history::-webkit-scrollbar-thumb {background-color: rgba(255, 255, 255, 0.315)}
+
 #settings-outer::-webkit-scrollbar {width: 0px}
-.outer-chart-holder::-webkit-scrollbar {height: 0}
 
 body {
   //font-family: 'Open Sans', sans-serif !important;
@@ -111,66 +111,9 @@ body {
   }
 }
 
-.columns {
-  height: calc(100vh - 70px);
-}
-
-.item-p {
-  padding-right: 15px;
-}
-
-.items {
-  max-height: calc(77vh - 55px);
-  height: fit-content;
-  border-radius: $border-radius;
-  overflow-y: scroll;
-  padding-right: 2px;
-  margin-right: 2px;
-  z-index: 5;
-}
-
 .min-height {
   min-height: 45px;
   transition: min-height 35s ease-out;
-}
-
-.inner-container {
-  width: 100%;
-  display: flex;
-  margin: auto;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: min(4vh, 35px);
-  justify-content: center;
-}
-
-@media (max-width: 1050px){
-  .inner-container {
-    justify-content: start;
-    margin-left: 10px;
-  }
-}
-
-.checked {
-  background-color: black;
-  color: white;
-  .checkbox {
-    border: 1px solid white;
-    p {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 20px;
-      font-style: italic;
-      font-weight: 400;
-      text-align: center;
-      vertical-align: center;
-      bottom: 7.52px;
-      position: relative;
-    }
-  }
-}
-
-.col-3 {
-  max-width: 300px !important;
 }
 
 // popups //
@@ -214,70 +157,12 @@ body {
   margin: 0 3px;
 }
 
-.habit-chart {
-  height: 500px;
-  width: 100%;
-}
-
 .white {
   color: white
 }
 
-.history {
-  height: 70vh !important;
-  padding-left: 15px;
-  padding-right: 25px;
-  overflow-y: scroll
-}
-
-.history-row {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-top: 1px white solid;
-  border-bottom: 1px white solid;
-  border-right: 1px white solid;
-}
-
-.history-item {
-  border-right: 1px white solid;
-  border-left: 1px white solid;
-}
-
-.chart-title {
-  font-size: 20px;
-}
-
-canvas {
-  background-color: #000 !important;
-  opacity: 1;
-}
-
-.chart-holder {
-  min-width: 400px;
-  padding-left: 25px !important;
-  padding-right: 25px !important;
-}
-
-.delete-item {
-  height: 50px;
-
-  p {
-    margin-top: 14.5px;
-  }
-}
-
 .mh-80 {
   max-height: 80vh;
-}
-
-.outer-chart-holder {
-  overflow-x: scroll;
-  padding-top: 90px;
-  max-width: 1800px;
-}
-
-.css-1o3fej {
-  height: 80vh;
 }
 
 .ReactTypeformEmbed {

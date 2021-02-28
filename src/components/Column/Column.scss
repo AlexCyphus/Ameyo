@@ -1,6 +1,10 @@
 // Column specific scss
 $border-radius: 5px;
 
+@function min($numbers...) {
+  @return m#{i}n(#{$numbers});
+}
+
 .outer-column {
     height: fit-content;
     //min-height: 300px;
@@ -11,6 +15,10 @@ $border-radius: 5px;
     box-shadow: 0px 50px 50px rgba(0, 0, 0, 0.137);
     padding: 0px 0px 1px 10px;
     width: 100%;
+  }
+
+  .col-3 {
+    max-width: 300px !important;
   }
   
   .add-item {
@@ -59,3 +67,87 @@ $border-radius: 5px;
   .emoji {
     font-size: 22px;
   }
+
+
+  .delete-item {
+    height: 50px;
+  
+    p {
+      margin-top: 14.5px;
+    }
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(39, 36, 36, 0.4);
+    border-right: 15px;
+  }
+  .items::-webkit-scrollbar {width: 6px;}
+  .items::-webkit-track {margin: 6px;}
+
+  .columns {
+    height: calc(100vh - 70px);
+  }
+  
+  .item-p {
+    padding-right: 15px;
+  }
+  
+  .items {
+    max-height: calc(77vh - 55px);
+    height: fit-content;
+    border-radius: $border-radius;
+    overflow-y: scroll;
+    padding-right: 2px;
+    margin-right: 2px;
+    z-index: 5;
+  }
+
+  .inner-container {
+    width: 100%;
+    display: flex;
+    margin: auto;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: min(4vh, 35px);
+    justify-content: center;
+  }
+
+  @media (max-width: 1050px){
+    .inner-container {
+      justify-content: start;
+      margin-left: 10px;
+    }
+  }
+
+  // Checkbox 
+  .checkbox {
+    border: 1px solid black;
+    height: 20px;
+    width: 20px;
+    border-radius: $border-radius;
+  }
+  
+  .item-checkbox {
+    margin: 9px 15px 9px 15px;
+  }
+
+  .checked {
+    background-color: black;
+    color: white;
+    .checkbox {
+      border: 1px solid white;
+      p {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 20px;
+        font-style: italic;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: center;
+        bottom: 7.52px;
+        position: relative;
+      }
+    }
+  }
+  
+  

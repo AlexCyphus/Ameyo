@@ -1,0 +1,31 @@
+.habit-chart {
+    height: 500px;
+    width: 100%;
+}
+
+.outer-chart-holder {
+    overflow-x: scroll;
+    padding-top: 90px;
+    max-width: 1800px;
+}
+
+.outer-chart-holder::-webkit-scrollbar {height: 0}
+
+.chart-title {
+    font-size: 20px;
+}
+  
+canvas {
+    background-color: #000 !important;
+    opacity: 1;
+}
+  
+.chart-holder {
+    min-width: 400px;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.css-1o3fej {
+    height: 80vh;
+  }

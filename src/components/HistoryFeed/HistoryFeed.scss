@@ -1,0 +1,22 @@
+.history::-webkit-scrollbar {width: 6px}
+.history::-webkit-scrollbar-thumb {background-color: rgba(255, 255, 255, 0.315)}
+
+.history {
+    height: 70vh !important;
+    padding-left: 15px;
+    padding-right: 25px;
+    overflow-y: scroll
+}
+
+.history-row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
+    border-right: 1px white solid;
+}
+
+.history-item {
+    border-right: 1px white solid;
+    border-left: 1px white solid;
+}

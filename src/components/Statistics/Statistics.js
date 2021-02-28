@@ -1,6 +1,6 @@
 import React from 'react'
-import HabitChart from './HabitChart'
-import CompletedTicketsChart from './components/CompletedTicketsChart/CompletedTicketsChart'
+import HabitChart from '../../HabitChart'
+import CompletedTicketsChart from '../CompletedTicketsChart/CompletedTicketsChart'
 
 export default class Statistics extends React.Component {
     constructor(props){
@@ -10,7 +10,6 @@ export default class Statistics extends React.Component {
         }
     }
     render(){
-        
         return (
             <div>
                 <div className={"fullscreen-popup d-flex p-0"}>

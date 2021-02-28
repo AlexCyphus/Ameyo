@@ -9,7 +9,7 @@ import moment from 'moment'
 // components
 import Settings from './Settings';
 import Information from './Information';
-import Statistics from './Statistics';
+import Statistics from './components/Statistics/Statistics';
 import Column from "./components/Column/Column.js"
 import NewScreen from './components/NewScreen/NewScreen';
 
