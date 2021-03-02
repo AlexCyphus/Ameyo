@@ -2,6 +2,8 @@
 export default function checkTime() {
   this.queryLocalStorage()
 
+  console.log('si papi')
+
   // if hour < last hour 
     let todaysDate = new Date();
 
