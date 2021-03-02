@@ -1,5 +1,7 @@
 import './HistoryFeed.scss'
 
+// this doesnt work for some reason
+
 const HistoryFeed = ({history, nth, weekday, months}) => {
     return (
         <div className='col-md-4 d-flex chart-holder'>

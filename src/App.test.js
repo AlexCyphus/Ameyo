@@ -45,19 +45,31 @@ it("doesn't render statistics or settings", async () => {
 it("correctly renders the time", () => {
   const wrapper = shallow(<App/>);
   const getTimeDifference = (type, endOfDay, date) => wrapper.instance().getTimeDifference(type, endOfDay, date);
-  
+
+  const makeDateCorrectDate = (oldDate) => {
+    let todaysDate = new Date()
+    oldDate.setDate(todaysDate.getDate())
+    oldDate.setMonth(todaysDate.getMonth())
+    oldDate.setFullYear(todaysDate.getFullYear())
+    return oldDate
+  }
+
   let date = new Date("Sat Feb 20 2021 12:30:00 GMT+0100 (Central European Standard Time)")
+  date = makeDateCorrectDate(date)
   // expect(getTimeDifference('minutes', "00:00", date)).toBe("29")
+  console.log(date)
   expect(getTimeDifference('hours', "23:00", date)).toBe("10")
   expect(getTimeDifference('minutes', "23:00", date)).toBe("30")
   
   date = new Date("Sat Feb 20 2021 02:00:00 GMT+0100 (Central European Standard Time)")
+  date = makeDateCorrectDate(date)
   expect(getTimeDifference('hours', "01:00", date)).toBe("23")
   expect(getTimeDifference('minutes', "01:00", date)).toBe("0")
   expect(getTimeDifference('hours', "00:59", date)).toBe("22")
   expect(getTimeDifference('minutes', "00:59", date)).toBe("59")
 
   date = new Date("Sat Feb 20 2021 00:00:00 GMT+0100 (Central European Standard Time)")
+  date = makeDateCorrectDate(date)
   expect(getTimeDifference('hours', "02:30", date)).toBe("2")
   expect(getTimeDifference('minutes', "02:30", date)).toBe("30")
   expect(getTimeDifference('hours', "00:00", date)).toBe("0")
