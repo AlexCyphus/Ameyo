@@ -1,0 +1,17 @@
+.contextMenu-outer {
+    position: absolute;
+    z-index: 15;
+    background-color: white; 
+    padding: 0;
+    border: black 1px solid;
+    border-radius: 5px;
+
+    p {
+        border-bottom: 1px grey solid;
+        padding: 7px 20px;
+    }
+
+    :last-child {
+        border-bottom: 0;
+    }
+}

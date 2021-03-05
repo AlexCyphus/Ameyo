@@ -10,8 +10,9 @@ import moment from 'moment'
 import Settings from './Settings';
 import Information from './Information';
 import Statistics from './components/Statistics/Statistics';
-import Column from "./components/Column/Column.js"
+import Column from "./components/Column/Column"
 import NewScreen from './components/NewScreen/NewScreen';
+import ContextMenu from './components/ContextMenu/ContextMenu';
 
 // functions 
 import checkTime from './functions/checkTime';
@@ -51,6 +52,7 @@ export default class App extends Component {
     this.changeEndOfDay = this.changeEndOfDay.bind(this)
     this.updateClock = this.updateClock.bind(this)
     this.getTimeDifference = this.getTimeDifference.bind(this)
+    this.showContextMenu = this.showContextMenu.bind(this)
   }
 
   // i dont know why i didnt just write one toggle function
@@ -215,6 +217,15 @@ export default class App extends Component {
     })
   }
 
+  showContextMenu(e){
+    e.preventDefault()
+    this.setState({
+      contextMenuX: e.pageX,
+      contextMenuY: e.pageY,
+      showContextMenu: !this.state.showContextMenu
+    })
+  }
+
   render() {
     let plurals = ['','']
     if (this.state.hoursLeft > 1) {plurals[0] = 's'}
@@ -259,6 +270,13 @@ export default class App extends Component {
           />
         }
 
+        { // conditionally render contextMenu 
+          this.state.showContextMenu && <ContextMenu
+            x={this.state.contextMenuX}
+            y={this.state.contextMenuY}
+          />
+        }
+
         <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
           <div className={"columns " + columnVisibility}>
             <div className="inner-container">
@@ -278,6 +296,7 @@ export default class App extends Component {
                         hover={this.state.hover}
                         colors={this.state.colors}
                         claimColor={this.claimColor}
+                        showContextMenu={this.showContextMenu}
                       />
             })}
             </div>

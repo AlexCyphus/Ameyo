@@ -85,6 +85,15 @@ export function addItem(e) { // dont let page refresh on submit
 }
 
 export function checkItem(e) {
+    if (e.type == "contextmenu"){
+        console.log('hi')
+    }
+
+
+    console.log(e)
+
+
+
     const newState = {
         ...this.state
     }

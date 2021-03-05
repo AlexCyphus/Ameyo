@@ -1,6 +1,7 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import Label from './Label.tsx'
+import ContextMenu from './components/ContextMenu/ContextMenu'
 
 export default class Item extends React.Component {
   constructor(props){
@@ -32,23 +33,26 @@ export default class Item extends React.Component {
     const checkedClass = this.props.checked;
 
     return (
-      <Draggable draggableId={itemId} index={this.props.index} id={itemId}>
-        {(provided, snapshot) => (
-          <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} id={itemId}>
-            {this.props.type === 'none' && 
-              <div className="item-checkbox d-flex" id={itemId}>
-              <div className="checkbox m-auto" id={itemId}>
-                {checkedClass === 'checked' && <p id={itemId}>x</p>}
+      <>
+        {/* {this.state.showContextMenu && <ContextMenu x={this.state.contextMenuX} y={this.state.contextMenuY}/>} */}
+        <Draggable draggableId={itemId} index={this.props.index} id={itemId}>
+          {(provided, snapshot) => (
+            <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} onContextMenu={this.props.showContextMenu} id={itemId}>
+              {this.props.type === 'none' && 
+                <div className="item-checkbox d-flex" id={itemId}>
+                <div className="checkbox m-auto" id={itemId}>
+                  {checkedClass === 'checked' && <p id={itemId}>x</p>}
+                </div>
               </div>
+              }
+              <div className={"item-name"} id={itemId}>
+                <p className={"item-p " + (this.props.type !== 'none' ? 'px-3' : '')} id={itemId}>{this.props.item.content}</p>
+              </div>
+              <Label display={this.state.label} color={String(this.state.color)}/>
             </div>
-            }
-            <div className={"item-name"} id={itemId}>
-              <p className={"item-p " + (this.props.type !== 'none' ? 'px-3' : '')} id={itemId}>{this.props.item.content}</p>
-            </div>
-            <Label display={this.state.label} color={String(this.state.color)}/>
-          </div>
-        )}
-      </Draggable>
+          )}
+        </Draggable>
+      </>
     )
   }
 }

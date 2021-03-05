@@ -73,7 +73,10 @@ const states = {
     '#003300': false
   },
   newestFeature: false,
-  endOfDay: "00:00"
+  endOfDay: "00:00",
+  showContextMenu: false,
+  contextMenuX: 0,
+  contextMenuY: 0
 }
 
 export default states
