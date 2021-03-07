@@ -238,16 +238,15 @@ export default class App extends Component {
     })
   }
 
-  updateSpecificData(type, value){
-    const data = JSON.parse(localStorage.getItem(type))
-    console.log(data)
-    data[this.state.activeContextItem].content = value
-    console.log(data)
+  updateSpecificData(storedDataKey, type, value){
+    const data = JSON.parse(localStorage.getItem(storedDataKey))
+    data[this.state.activeContextItem][type] = value
+    console.log(data[this.state.activeContextItem][type])
 
     this.setState({
-      [type]: data
+      [storedDataKey]: data
     },
-      localStorage.setItem(type, JSON.stringify(data))
+      localStorage.setItem(storedDataKey, JSON.stringify(data))
     )
   }
 

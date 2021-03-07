@@ -2,24 +2,17 @@ import {onDragEnd} from "../../functions/dragLogic"
 import {ContextType, useState} from 'react'
 import '../../App.css';
 
-// interface ContextMenuInterface {
-//     x: number;
-//     y: number;
-//     itemId: string;
-//     labels: object;
-//     items: object;
-// }
-
 const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
         left: x + 15 + 'px',
     }
 
-    const rawContent = items[itemId].content
+    const rawData = items[itemId]
+    const rawContent = rawData.content
     const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : "blank"
     const currentTicketTitle = currentTicketLabel != "blank" ? rawContent.split(":")[1].trim() : rawContent
-    const currentTicketUrl = rawContent.url ? rawContent.url : ''
+    const currentTicketUrl = rawData.url ? rawData.url : ''
 
     // states for current ticket values
     const [ticketTitle, updateTicketTitle] = useState(currentTicketTitle);
@@ -60,17 +53,21 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     [type]: false
                 })
 
-                const dataType = type == 'label' ? 'colors' : 'items'
+                // prevent labels from being overwritten
+                if (type == 'content') {
+                    value = ticketLabel + ": " + value
+                }
 
-                updateSpecificData(dataType, value)
+                const storedDataKey = type == 'label' ? 'colors' : 'items'
+
+                console.log(storedDataKey, type, value)
+                updateSpecificData(storedDataKey, type, value)
                 toggleContextMenu()
             }
         }
     }
 
-    // style input boxes properly
     // style contextBox correctly
-    // create function to handle input enter and save values
     // make pencil clickable and not highlightable
     // function to close context menu 
 
@@ -79,7 +76,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Title <EditPencil type="title"/></p>
                 {editStates.title
-                    ? <form onKeyDown={(e) => keyDownHandler(e, "title")} autoComplete="off">
+                    ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketTitle(e.target.value)} value={ticketTitle}/></div>
                     </form>
                     : <p>{ticketTitle}</p>
@@ -90,7 +87,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
             <div className="contextMenu-section">
                 <p className="contextMenu-title">URL <EditPencil type="URL"/></p>
                 {editStates.URL 
-                    ? <form onKeyDown={(e) => keyDownHandler(e, "URL")} autoComplete="off">
+                    ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketUrl(e.target.value)} value={ticketUrl}/></div>
                     </form>
                     : <a href={ticketUrl}>{ticketUrl ? ticketUrl : "blank"}</a>
