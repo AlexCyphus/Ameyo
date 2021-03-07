@@ -94,7 +94,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                 }
             </div>
 
-            <div className="contextMenu-section">
+            {/* <div className="contextMenu-section">
                 <p className="contextMenu-title">Label <EditPencil type="label"/></p>
                 {editStates.label
                     ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
@@ -102,8 +102,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     </form>
                     : <p>{ticketLabel}</p>
                 }
-            <span>{labelColor}</span>
-            </div>
+                <span>{labelColor}</span>
+            </div> */}
         </div>
     )
 }
