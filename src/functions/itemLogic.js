@@ -50,7 +50,7 @@ export function addItem(e) { // dont let page refresh on submit
             ...this.state
         }
 
-        // i think this is where the bug is coming from but idk why
+        
         for (var x = 1; x < itemsLen + 1; x++) {
             let searchVal = "item-" + x;
             if (!this.state.items[searchVal]) {
@@ -64,6 +64,7 @@ export function addItem(e) { // dont let page refresh on submit
             todaysDate.getMonth() + 1,
             todaysDate.getDate()
         ]
+        
         let columnsItemIds = this.state.columns[columnId].itemIds
 
         columnsItemIds.unshift(itemId)
@@ -85,15 +86,6 @@ export function addItem(e) { // dont let page refresh on submit
 }
 
 export function checkItem(e) {
-    if (e.type == "contextmenu"){
-        console.log('hi')
-    }
-
-
-    console.log(e)
-
-
-
     const newState = {
         ...this.state
     }

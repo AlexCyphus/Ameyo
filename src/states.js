@@ -76,7 +76,8 @@ const states = {
   endOfDay: "00:00",
   showContextMenu: false,
   contextMenuX: 0,
-  contextMenuY: 0
+  contextMenuY: 0,
+  activeContextItem: null
 }
 
 export default states

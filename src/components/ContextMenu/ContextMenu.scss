@@ -2,16 +2,36 @@
     position: absolute;
     z-index: 15;
     background-color: white; 
-    padding: 0;
+    padding: 10px;
+    min-width: 200px;
     border: black 1px solid;
     border-radius: 5px;
+    box-shadow: 2px 2px 5px rgb(158, 158, 158);
+    font-size: 13px;
 
-    p {
-        border-bottom: 1px grey solid;
-        padding: 7px 20px;
+    .contextMenu-title {
+        font-weight: bolder;
+        font-size: 18px;
+    }
+
+    
+    textarea {
+        border: none;
+        background: none;
+        text-align: left !important;
+        border-bottom: grey 1px solid;
+        height: fit-content;
+    }
+
+    .contextMenu-section {
+        padding-bottom: 10px;
     }
 
     :last-child {
-        border-bottom: 0;
+        padding-bottom: 0px;
     }
+}
+
+.editPencil {
+    font-size: 13px;
 }

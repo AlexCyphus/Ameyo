@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './App.css';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -52,7 +51,8 @@ export default class App extends Component {
     this.changeEndOfDay = this.changeEndOfDay.bind(this)
     this.updateClock = this.updateClock.bind(this)
     this.getTimeDifference = this.getTimeDifference.bind(this)
-    this.showContextMenu = this.showContextMenu.bind(this)
+    this.toggleContextMenu = this.toggleContextMenu.bind(this)
+    this.updateSpecificData = this.updateSpecificData.bind(this)
   }
 
   // i dont know why i didnt just write one toggle function
@@ -217,13 +217,38 @@ export default class App extends Component {
     })
   }
 
-  showContextMenu(e){
+  toggleContextMenu(e){
+    if (!e){
+      console.log(this.state.showContextMenu)
+      this.setState({
+        showContextMenu: false,
+        activeContextItem: null
+      }, () => console.log(this.state.showContextMenu, this.state.activeContextItem))
+      return
+    }
+    
     e.preventDefault()
+    const itemNum = e.target.id
+    console.log(itemNum)
     this.setState({
       contextMenuX: e.pageX,
       contextMenuY: e.pageY,
-      showContextMenu: !this.state.showContextMenu
+      showContextMenu: !this.state.showContextMenu,
+      activeContextItem: e.target.id
     })
+  }
+
+  updateSpecificData(type, value){
+    const data = JSON.parse(localStorage.getItem(type))
+    console.log(data)
+    data[this.state.activeContextItem].content = value
+    console.log(data)
+
+    this.setState({
+      [type]: data
+    },
+      localStorage.setItem(type, JSON.stringify(data))
+    )
   }
 
   render() {
@@ -274,6 +299,11 @@ export default class App extends Component {
           this.state.showContextMenu && <ContextMenu
             x={this.state.contextMenuX}
             y={this.state.contextMenuY}
+            itemId={this.state.activeContextItem}
+            items={this.state.items}
+            labels={this.state.colors}
+            updateSpecificData={this.updateSpecificData}
+            toggleContextMenu={this.toggleContextMenu}
           />
         }
 
@@ -296,7 +326,7 @@ export default class App extends Component {
                         hover={this.state.hover}
                         colors={this.state.colors}
                         claimColor={this.claimColor}
-                        showContextMenu={this.showContextMenu}
+                        showContextMenu={this.toggleContextMenu}
                       />
             })}
             </div>

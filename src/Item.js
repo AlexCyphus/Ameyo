@@ -1,7 +1,6 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import Label from './Label.tsx'
-import ContextMenu from './components/ContextMenu/ContextMenu'
 
 export default class Item extends React.Component {
   constructor(props){
@@ -34,7 +33,6 @@ export default class Item extends React.Component {
 
     return (
       <>
-        {/* {this.state.showContextMenu && <ContextMenu x={this.state.contextMenuX} y={this.state.contextMenuY}/>} */}
         <Draggable draggableId={itemId} index={this.props.index} id={itemId}>
           {(provided, snapshot) => (
             <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} onContextMenu={this.props.showContextMenu} id={itemId}>
