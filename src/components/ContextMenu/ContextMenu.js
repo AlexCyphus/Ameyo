@@ -2,7 +2,7 @@ import {onDragEnd} from "../../functions/dragLogic"
 import {ContextType, useState} from 'react'
 import '../../App.css';
 
-const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu}) => {
+const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, updateAppState, contextMenuEditables}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
         left: x + 15 + 'px',
@@ -15,29 +15,24 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     const currentTicketUrl = rawData.url ? rawData.url : ''
 
     // states for current ticket values
+    // this doesnt work when changing inputs
+    // needs to be done instate and added to callback
     const [ticketTitle, updateTicketTitle] = useState(currentTicketTitle);
     const [ticketUrl, updateTicketUrl] = useState(currentTicketUrl);
     const [ticketLabel, updateTicketLabel] = useState(currentTicketLabel);
     const [labelColor, updateLabelColor] = useState(labels[ticketLabel] ? labels[ticketLabel] : false)
 
     // state for showing or hiding input boxes
-    const defaultEditableStates = {
-        title: false,
-        URL: false,
-        label: false
-    }
-
-    const [editStates, updateEditStates] = useState(defaultEditableStates)
 
     // edit pencil component
     const EditPencil = ({type}) => {
         const newState = {
-            ...editStates,
-            [type]: !editStates[[type]]
+            ...contextMenuEditables,
+            [type]: !contextMenuEditables[[type]]
         }
 
         return (
-            <span className="editPencil" onClick={() => updateEditStates(newState)}>
+            <span className="editPencil" onClick={() => updateAppState("contextMenuEditables", newState)}>
                 ✏️
             </span>
         )
@@ -48,8 +43,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         if (e.keyCode == 13) {
             e.preventDefault()
             if (value != "") {
-                updateEditStates({
-                    ...editStates,
+                updateAppState('contextMenuEditables', {
+                    ...contextMenuEditables,
                     [type]: false
                 })
 
@@ -60,7 +55,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
                 const storedDataKey = type == 'label' ? 'colors' : 'items'
 
-                console.log(storedDataKey, type, value)
                 updateSpecificData(storedDataKey, type, value)
                 toggleContextMenu()
             }
@@ -68,29 +62,31 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     }
 
     // style contextBox correctly
-    // make pencil clickable and not highlightable
     // function to close context menu 
+    // if urls dont have http they need to 
+    // if no label adds "blank" label
 
     return (
+        
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
-                <p className="contextMenu-title">Title <EditPencil type="title"/></p>
-                {editStates.title
+                <p className="contextMenu-title">Title<EditPencil type="title"/></p>
+                {contextMenuEditables.title
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketTitle(e.target.value)} value={ticketTitle}/></div>
                     </form>
-                    : <p>{ticketTitle}</p>
+                    : <p>{currentTicketTitle}</p>
                 }            
             </div>
 
 
             <div className="contextMenu-section">
-                <p className="contextMenu-title">URL <EditPencil type="URL"/></p>
-                {editStates.URL 
+                <p className="contextMenu-title">URL<EditPencil type="URL"/></p>
+                {contextMenuEditables.URL 
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketUrl(e.target.value)} value={ticketUrl}/></div>
                     </form>
-                    : <a href={ticketUrl}>{ticketUrl ? ticketUrl : "blank"}</a>
+                    : <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : "blank"}</a>
                 }
             </div>
 

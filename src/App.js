@@ -53,6 +53,7 @@ export default class App extends Component {
     this.getTimeDifference = this.getTimeDifference.bind(this)
     this.toggleContextMenu = this.toggleContextMenu.bind(this)
     this.updateSpecificData = this.updateSpecificData.bind(this)
+    this.updateAppState = this.updateAppState.bind(this)
   }
 
   // i dont know why i didnt just write one toggle function
@@ -218,24 +219,22 @@ export default class App extends Component {
   }
 
   toggleContextMenu(e){
-    if (!e){
-      console.log(this.state.showContextMenu)
-      this.setState({
+    if (!e || e.target["dataset"].rbdDroppableId || e.button == 0){
+      return this.setState({
         showContextMenu: false,
-        activeContextItem: null
-      }, () => console.log(this.state.showContextMenu, this.state.activeContextItem))
-      return
+        activeContextItem: null,
+        contextMenuEditables: {title: false, URL: false, label: false}
+      })
     }
-    
+
     e.preventDefault()
-    const itemNum = e.target.id
-    console.log(itemNum)
     this.setState({
+      showContextMenu: e.button == 2 ? true : !this.state.showContextMenu,
+      activeContextItem: e.target.id ? e.target.id : null,
       contextMenuX: e.pageX,
       contextMenuY: e.pageY,
-      showContextMenu: !this.state.showContextMenu,
-      activeContextItem: e.target.id
-    })
+      contextMenuEditables: {title: false, URL: false, label: false}
+    }, () => console.log(this.state.activeContextItem))
   }
 
   updateSpecificData(storedDataKey, type, value){
@@ -248,6 +247,12 @@ export default class App extends Component {
     },
       localStorage.setItem(storedDataKey, JSON.stringify(data))
     )
+  }
+
+  updateAppState(key, value){
+    this.setState({
+      [key]: value
+    })
   }
 
   render() {
@@ -294,21 +299,9 @@ export default class App extends Component {
           />
         }
 
-        { // conditionally render contextMenu 
-          this.state.showContextMenu && <ContextMenu
-            x={this.state.contextMenuX}
-            y={this.state.contextMenuY}
-            itemId={this.state.activeContextItem}
-            items={this.state.items}
-            labels={this.state.colors}
-            updateSpecificData={this.updateSpecificData}
-            toggleContextMenu={this.toggleContextMenu}
-          />
-        }
-
         <DragDropContext onDragEnd={this.onDragEnd} onBeforeCapture={this.onDragStart}>
           <div className={"columns " + columnVisibility}>
-            <div className="inner-container">
+            <div className="inner-container" onClick={this.toggleContextMenu}>
             {this.state.columnOrder.map((columnId) => {
               const column = this.state.columns[columnId];
               const items = column.itemIds.map(itemId => this.state.items[itemId])
@@ -336,6 +329,23 @@ export default class App extends Component {
           <div className="col-auto m-auto" id="countdown"><p>{this.state.hoursLeft} {"hour" + plurals[0]} {this.state.minutesLeft} {"minute" + plurals[1]} remaining</p></div>
           <div className="col footer-item clickable" onClick={this.statisticsOpen}><p><span role="img" aria-label="chart">📈</span> Statistics</p></div>
         </div>
+        { // conditionally render contextMenu 
+          this.state.showContextMenu && 
+          <>
+            <div className="contextMenu-Wrapper" onClick={this.toggleContextMenu} contextMenu={this.toggleContextMenu}></div>
+            <ContextMenu
+              x={this.state.contextMenuX}
+              y={this.state.contextMenuY}
+              itemId={this.state.activeContextItem}
+              items={this.state.items}
+              labels={this.state.colors}
+              updateSpecificData={this.updateSpecificData}
+              toggleContextMenu={this.toggleContextMenu}
+              updateAppState={this.updateAppState}
+              contextMenuEditables={this.state.contextMenuEditables}
+            />
+          </>
+        }
       </>
     );
   }
