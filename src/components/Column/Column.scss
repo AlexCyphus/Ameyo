@@ -87,6 +87,7 @@ $border-radius: 5px;
 
   .columns {
     height: calc(100vh - 70px);
+    position: relative;
   }
   
   .item-p {
@@ -111,6 +112,7 @@ $border-radius: 5px;
     margin-right: 50px;
     margin-top: min(4vh, 35px);
     justify-content: center;
+    z-index: 5;
   }
 
   @media (max-width: 1050px){
