@@ -1,8 +1,8 @@
 import {onDragEnd} from "../../functions/dragLogic"
-import {ContextType, useState} from 'react'
+import {ContextType, useEffect, useState} from 'react'
 import '../../App.css';
 
-const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu}) => {
+const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, contextMenuEditables, updateEditStates}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
         left: x + 15 + 'px',
@@ -14,26 +14,23 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     const currentTicketTitle = currentTicketLabel != "blank" ? rawContent.split(":")[1].trim() : rawContent
     const currentTicketUrl = rawData.url ? rawData.url : ''
 
-    // states for current ticket values
-    const [ticketTitle, updateTicketTitle] = useState(currentTicketTitle);
-    const [ticketUrl, updateTicketUrl] = useState(currentTicketUrl);
-    const [ticketLabel, updateTicketLabel] = useState(currentTicketLabel);
-    const [labelColor, updateLabelColor] = useState(labels[ticketLabel] ? labels[ticketLabel] : false)
-
-    // state for showing or hiding input boxes
-    const defaultEditableStates = {
-        title: false,
-        URL: false,
-        label: false
+    const currentTicket = {
+        title: currentTicketTitle,
+        url: currentTicketUrl,
+        label: currentTicketLabel
     }
 
-    const [editStates, updateEditStates] = useState(defaultEditableStates)
+    // WHY ISNT THIS WORKING...
+    // just save the state in states and update via callbacks its dumb but W/E
+    const ticketTitle = contextMenuEditables.title
+    const ticketUrl = contextMenuEditables.url
+    const ticketLabel = contextMenuEditables.label
 
     // edit pencil component
     const EditPencil = ({type}) => {
         const newState = {
-            ...editStates,
-            [type]: !editStates[[type]]
+            ...contextMenuEditables,
+            [type]: contextMenuEditables[type] != false ? false : currentTicket[type]
         }
 
         return (
@@ -67,6 +64,13 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         }
     }
 
+    const textChangeHandler = (key, value) => {
+        const newContextMenuEditables = JSON.parse(JSON.stringify(contextMenuEditables))
+        newContextMenuEditables[key] = value
+        console.log(value.value)
+        updateAppState('contextMenuEditables', newContextMenuEditables)
+    }
+
     // style contextBox correctly
     // make pencil clickable and not highlightable
     // function to close context menu 
@@ -74,10 +78,10 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     return (
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
-                <p className="contextMenu-title">Title <EditPencil type="title"/></p>
-                {editStates.title
+                <p className="contextMenu-title">Title<EditPencil type="title"/></p>
+                {ticketTitle
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
-                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketTitle(e.target.value)} value={ticketTitle}/></div>
+                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
                     </form>
                     : <p>{ticketTitle}</p>
                 }            
@@ -85,25 +89,25 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
 
             <div className="contextMenu-section">
-                <p className="contextMenu-title">URL <EditPencil type="URL"/></p>
-                {editStates.URL 
+                <p className="contextMenu-title">URL<EditPencil type="URL"/></p>
+                {ticketUrl
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
-                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketUrl(e.target.value)} value={ticketUrl}/></div>
+                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
                     : <a href={ticketUrl}>{ticketUrl ? ticketUrl : "blank"}</a>
                 }
             </div>
 
-            {/* <div className="contextMenu-section">
+            <div className="contextMenu-section">
                 <p className="contextMenu-title">Label <EditPencil type="label"/></p>
-                {editStates.label
+                {ticketLabel
                     ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
-                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => updateTicketLabel(e.target.value)} value={ticketLabel}/></div>
+                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("label", e.target.value)} value={contextMenuEditables.label}/></div>
                     </form>
                     : <p>{ticketLabel}</p>
                 }
-                <span>{labelColor}</span>
-            </div> */}
+                <span>{'blue'}</span>
+            </div>
         </div>
     )
 }

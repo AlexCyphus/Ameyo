@@ -217,25 +217,33 @@ export default class App extends Component {
     })
   }
 
-  toggleContextMenu(e){
-    if (!e){
-      console.log(this.state.showContextMenu)
-      this.setState({
-        showContextMenu: false,
-        activeContextItem: null
-      }, () => console.log(this.state.showContextMenu, this.state.activeContextItem))
-      return
+  toggleContextMenu(e, callback){
+    if (callback) {
+      console.log('two')
+      if (!e || e.target["dataset"].rbdDroppableId || e.button == 0){
+        return this.setState({
+          activeContextItem: null,
+          contextMenuEditables: {title: false, URL: false, label: false}
+        })
+      }
+  
+      e.preventDefault()
+      return this.setState({
+        showContextMenu: e.button == 2 ? true : !this.state.showContextMenu,
+        activeContextItem: e.target.id ? e.target.id : null,
+        contextMenuX: e.pageX,
+        contextMenuY: e.pageY,
+        contextMenuEditables: {title: false, URL: false, label: false}
+      }, () => console.log(this.state.activeContextItem))
     }
     
-    e.preventDefault()
-    const itemNum = e.target.id
-    console.log(itemNum)
+
     this.setState({
-      contextMenuX: e.pageX,
-      contextMenuY: e.pageY,
-      showContextMenu: !this.state.showContextMenu,
-      activeContextItem: e.target.id
+      showContextMenu: false,
+      activeContextItem: null,
+      contextMenuEditables: {title: false, URL: false, label: false}
     })
+    return this.toggleContextMenu(e, true)
   }
 
   updateSpecificData(storedDataKey, type, value){
