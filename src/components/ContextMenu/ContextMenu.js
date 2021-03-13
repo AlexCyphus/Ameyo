@@ -10,10 +10,10 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
     const rawData = items[itemId]
     const rawContent = rawData.content
-    const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : "blank"
+    const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : ""
 
     // currently splits at all :
-    const currentTicketTitle = currentTicketLabel != "blank" ? rawContent.split(":")[1].trim() : rawContent
+    const currentTicketTitle = currentTicketLabel != "" ? rawContent.split(":")[1].trim() : rawContent
     const currentTicketUrl = rawData.url ? rawData.url : '' 
     const httpRegex = new RegExp("^https?://")
 
@@ -56,7 +56,10 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         if (e.keyCode == 13) {
             e.preventDefault()
             if (type == 'url'){
-                value = !value.startsWith("http://") || !value.startsWith("https://") ? "http://" + value : value
+                console.log()
+                value = !(value.startsWith("http://") || value.startsWith("https://"))
+                    ? "http://" + value 
+                    : value
             }
             if (value != "") {
                 updateAppState('contextMenuEditables', {
@@ -83,7 +86,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         updateAppState('contextMenuEditables', newContextMenuEditables)
     }
 
-    // style contextBox correctly
     // if no label adds "blank" label
 
     return (
@@ -107,12 +109,12 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
                     : validUrl(currentTicketUrl) 
-                        ? <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : "blank"}</a>
+                        ? <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : ""}</a>
                         : <p>{currentTicketUrl}</p>
                 }
             </div>
 
-            <div className="contextMenu-section">
+            {/* <div className="contextMenu-section">
                 <p className="contextMenu-title">Label <EditPencil type="label"/></p>
                 {ticketLabel !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
@@ -120,8 +122,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     </form>
                     : <p>{ticketLabel}</p>
                 }
-                {/* <span>{'blue'}</span> */}
-            </div>
+                <span>{'blue'}</span>
+            </div> */}
         </div>
     )
 }
