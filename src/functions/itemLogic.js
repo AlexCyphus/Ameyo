@@ -86,8 +86,10 @@ export function addItem(e) { // dont let page refresh on submit
 }
 
 export function checkItem(e) {
+    console.log('hi')
     const newState = {
-        ...this.state
+        ...this.state,
+        showContextMenu: false
     }
 
     // find the column its in

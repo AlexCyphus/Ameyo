@@ -77,7 +77,8 @@ const states = {
   showContextMenu: false,
   contextMenuX: 0,
   contextMenuY: 0,
-  activeContextItem: null
+  activeContextItem: null,
+  contextMenuEditables: {title: false, URL: false, label: false}
 }
 
 export default states

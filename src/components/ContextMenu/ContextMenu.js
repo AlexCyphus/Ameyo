@@ -2,7 +2,7 @@ import {onDragEnd} from "../../functions/dragLogic"
 import {ContextType, useEffect, useState} from 'react'
 import '../../App.css';
 
-const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, contextMenuEditables, updateEditStates}) => {
+const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, updateAppState, contextMenuEditables}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
         left: x + 15 + 'px',
@@ -34,7 +34,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         }
 
         return (
-            <span className="editPencil" onClick={() => updateEditStates(newState)}>
+            <span className="editPencil" onClick={() => updateAppState("contextMenuEditables", newState)}>
                 ✏️
             </span>
         )
@@ -45,8 +45,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         if (e.keyCode == 13) {
             e.preventDefault()
             if (value != "") {
-                updateEditStates({
-                    ...editStates,
+                updateAppState('contextMenuEditables', {
+                    ...contextMenuEditables,
                     [type]: false
                 })
 
@@ -57,7 +57,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
                 const storedDataKey = type == 'label' ? 'colors' : 'items'
 
-                console.log(storedDataKey, type, value)
                 updateSpecificData(storedDataKey, type, value)
                 toggleContextMenu()
             }
@@ -72,29 +71,31 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     }
 
     // style contextBox correctly
-    // make pencil clickable and not highlightable
     // function to close context menu 
+    // if urls dont have http they need to 
+    // if no label adds "blank" label
 
     return (
+        
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Title<EditPencil type="title"/></p>
-                {ticketTitle
+                {contextMenuEditables.title
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
                     </form>
-                    : <p>{ticketTitle}</p>
+                    : <p>{currentTicketTitle}</p>
                 }            
             </div>
 
 
             <div className="contextMenu-section">
                 <p className="contextMenu-title">URL<EditPencil type="URL"/></p>
-                {ticketUrl
+                {contextMenuEditables.URL 
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
-                    : <a href={ticketUrl}>{ticketUrl ? ticketUrl : "blank"}</a>
+                    : <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : "blank"}</a>
                 }
             </div>
 
