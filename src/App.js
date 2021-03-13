@@ -223,7 +223,7 @@ export default class App extends Component {
       return this.setState({
         showContextMenu: false,
         activeContextItem: null,
-        contextMenuEditables: {title: false, URL: false, label: false}
+        contextMenuEditables: {title: false, url: false, label: false}
       })
     }
 
@@ -233,7 +233,7 @@ export default class App extends Component {
       activeContextItem: e.target.id ? e.target.id : null,
       contextMenuX: e.pageX,
       contextMenuY: e.pageY,
-      contextMenuEditables: {title: false, URL: false, label: false}
+      contextMenuEditables: {title: false, url: false, label: false}
     }, () => console.log(this.state.activeContextItem))
   }
 

@@ -13,6 +13,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : "blank"
     const currentTicketTitle = currentTicketLabel != "blank" ? rawContent.split(":")[1].trim() : rawContent
     const currentTicketUrl = rawData.url ? rawData.url : ''
+    const httpRegex = new RegExp("^https?://")
+    console.log('is it a url?', httpRegex.test(currentTicketUrl))
 
     const currentTicket = {
         title: currentTicketTitle,
@@ -24,6 +26,9 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     // just save the state in states and update via callbacks its dumb but W/E
     const ticketTitle = contextMenuEditables.title
     const ticketUrl = contextMenuEditables.url
+    const isValidUrl = ticketUrl
+
+    
     const ticketLabel = contextMenuEditables.label
 
     // edit pencil component
@@ -50,9 +55,9 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     [type]: false
                 })
 
-                // prevent labels from being overwritten
+                // prevent labels from being overwritten // still overwriting "false" but whatever
                 if (type == 'content') {
-                    value = ticketLabel + ": " + value
+                    value = ticketLabel !== false ? ticketLabel + ": " + value : value
                 }
 
                 const storedDataKey = type == 'label' ? 'colors' : 'items'
@@ -66,7 +71,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     const textChangeHandler = (key, value) => {
         const newContextMenuEditables = JSON.parse(JSON.stringify(contextMenuEditables))
         newContextMenuEditables[key] = value
-        console.log(value.value)
         updateAppState('contextMenuEditables', newContextMenuEditables)
     }
 
@@ -80,7 +84,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Title<EditPencil type="title"/></p>
-                {contextMenuEditables.title
+                {ticketTitle !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
                     </form>
@@ -90,18 +94,20 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
 
             <div className="contextMenu-section">
-                <p className="contextMenu-title">URL<EditPencil type="URL"/></p>
-                {contextMenuEditables.URL 
+                <p className="contextMenu-title">URL<EditPencil type="url"/></p>
+                {ticketUrl !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
-                    : <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : "blank"}</a>
+                    : httpRegex.test(currentTicketUrl) 
+                        ? <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : "blank"}</a>
+                        : <p>{currentTicketUrl}</p>
                 }
             </div>
 
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Label <EditPencil type="label"/></p>
-                {ticketLabel
+                {ticketLabel !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
                         <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("label", e.target.value)} value={contextMenuEditables.label}/></div>
                     </form>
