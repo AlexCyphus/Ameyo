@@ -8,6 +8,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         left: x + 15 + 'px',
     }
 
+    
+
     const rawData = items[itemId]
     const rawContent = rawData.content
     const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : ""
@@ -39,13 +41,31 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
     // edit pencil component
     const EditPencil = ({type}) => {
-        const newState = {
-            ...contextMenuEditables,
-            [type]: contextMenuEditables[type] != false ? false : currentTicket[type]
+
+        const editPencilHandler = async () => {
+            const newState = {
+                ...contextMenuEditables,
+                [type]: contextMenuEditables[type] !== false ? false : currentTicket[type]
+            }
+
+            console.log(newState)
+
+            let previousWidth;
+
+            if (document.getElementById('currentTicketTitle')){
+                previousWidth = document.getElementById('currentTicketTitle').clientWidth
+            }
+
+            await updateAppState("contextMenuEditables", newState)
+
+            if (document.getElementById('currentTicketTitleTextArea')){
+                document.getElementById('currentTicketTitleTextArea').style.width = previousWidth + "px "
+            }
+            
         }
 
         return (
-            <span className="editPencil" onClick={() => updateAppState("contextMenuEditables", newState)}>
+            <span className="editPencil" onClick={editPencilHandler}>
                 ✏️
             </span>
         )
@@ -95,9 +115,9 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                 <p className="contextMenu-title">Title<EditPencil type="title"/></p>
                 {ticketTitle !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
-                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
+                        <div><textarea id="currentTicketTitleTextArea"className="h-100 text-center" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
                     </form>
-                    : <p>{currentTicketTitle}</p>
+                    : <p id="currentTicketTitle">{currentTicketTitle}</p>
                 }            
             </div>
 
