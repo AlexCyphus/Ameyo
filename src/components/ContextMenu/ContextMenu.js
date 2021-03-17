@@ -2,6 +2,11 @@ import {onDragEnd} from "../../functions/dragLogic"
 import {ContextType, useEffect, useState} from 'react'
 import '../../App.css';
 
+const validUrl = str => {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
+    return !!pattern.test(str);
+}
+
 const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, updateAppState, contextMenuEditables}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
@@ -17,13 +22,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         url: rawData.url ? rawData.url : '' , 
         description: rawData.description ? rawData.description : '' 
     }
-
     currentTicket.title = currentTicket.label != "" ? rawContent.split(":")[1].trim() : rawContent
-
-    const validUrl = str => {
-        var pattern = new RegExp('^(https?:\\/\\/)?'+ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
-        return !!pattern.test(str);
-    }
 
     // edit pencil component
     const EditPencil = ({type}) => {
@@ -92,8 +91,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         updateAppState('contextMenuEditables', newContextMenuEditables)
     }
 
-    return (
-        
+    return (   
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Title<EditPencil type="title"/></p>
@@ -104,8 +102,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     : <p id="currentTicketTitle">{currentTicket.title}</p>
                 }            
             </div>
-
-
             <div className="contextMenu-section">
                 <p className="contextMenu-title">URL<EditPencil type="url"/></p>
                 {contextMenuEditables.url !== false
@@ -117,7 +113,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                         : <p>{currentTicket.url}</p>
                 }
             </div>
-
             <div className="contextMenu-section">
                 {console.log(contextMenuEditables.description)}
                 <p className="contextMenu-title">Description<EditPencil type="description"/></p>
@@ -128,7 +123,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     :  <p>{currentTicket.description}</p>
                 }
             </div>
-
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Label <EditPencil type="label"/></p>
                 {contextMenuEditables.label !== false
