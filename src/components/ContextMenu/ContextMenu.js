@@ -8,36 +8,21 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         left: x + 15 + 'px',
     }
 
-    
-
     const rawData = items[itemId]
     const rawContent = rawData.content
-    const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : ""
 
     // currently splits at all :
+    const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : ""
     const currentTicketTitle = currentTicketLabel != "" ? rawContent.split(":")[1].trim() : rawContent
     const currentTicketUrl = rawData.url ? rawData.url : '' 
-    const httpRegex = new RegExp("^https?://")
+    const currentTicketDescription = rawData.description ? rawData.description : '' 
 
-    const currentTicket = {
-        title: currentTicketTitle,
-        url: currentTicketUrl,
-        label: currentTicketLabel
-    }
+    const currentTicket = {title: currentTicketTitle, url: currentTicketUrl, label: currentTicketLabel, description: currentTicketDescription}
 
     const validUrl = str => {
-        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-            '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+        var pattern = new RegExp('^(https?:\\/\\/)?'+ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
         return !!pattern.test(str);
     }
-
-    const ticketTitle = contextMenuEditables.title
-    const ticketUrl = contextMenuEditables.url    
-    const ticketLabel = contextMenuEditables.label
 
     // edit pencil component
     const EditPencil = ({type}) => {
@@ -48,55 +33,55 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                 [type]: contextMenuEditables[type] !== false ? false : currentTicket[type]
             }
 
-            console.log(newState)
-
-            let previousWidth;
-
-            if (document.getElementById('currentTicketTitle')){
-                previousWidth = document.getElementById('currentTicketTitle').clientWidth
-            }
+            // figure out maximum size of textarea
+            const contextMenuOuter = document.getElementsByClassName('contextMenu-outer')[0]
+            let previousWidth = contextMenuOuter.clientWidth
+            let padding = document.defaultView.getComputedStyle(contextMenuOuter, "").getPropertyValue('padding').split("px")[0];
 
             await updateAppState("contextMenuEditables", newState)
 
-            if (document.getElementById('currentTicketTitleTextArea')){
-                document.getElementById('currentTicketTitleTextArea').style.width = previousWidth + "px "
+            if (document.getElementsByClassName('openEditableTextArea').length > 0){
+                const textAreaArray = Array.from(document.getElementsByClassName('openEditableTextArea'))
+                for (let textarea of textAreaArray){
+                    textarea.style.width = previousWidth - (padding * 2) + "px"
+                }
             }
-            
         }
 
-        return (
-            <span className="editPencil" onClick={editPencilHandler}>
-                ✏️
-            </span>
-        )
+        return <span className="editPencil" onClick={editPencilHandler}>✏️</span>
     }
 
     const keyDownHandler = (e, type) => { 
         let value = e.target.value
+        // if enter key
         if (e.keyCode == 13) {
             e.preventDefault()
-            if (type == 'url'){
-                console.log()
-                value = !(value.startsWith("http://") || value.startsWith("https://"))
-                    ? "http://" + value 
-                    : value
-            }
-            if (value != "") {
-                updateAppState('contextMenuEditables', {
-                    ...contextMenuEditables,
-                    [type]: false
-                })
+
+            if (value != "") {              
+
+                if (type == 'url'){ value = !(value.startsWith("http://") || value.startsWith("https://")) ? "http://" + value : value }
 
                 // prevent labels from being overwritten // still overwriting "false" but whatever
-                if (type == 'content') {
-                    value = ticketLabel !== false ? ticketLabel + ": " + value : value
+                if (type == 'content') { value = currentTicketLabel != "" ? currentTicketLabel + ": " + value : value }
+
+                // update labels as content
+                if (type == 'label') {
+                    type = 'content'
+                    value = value + ": " + currentTicketTitle
                 }
-
-                const storedDataKey = type == 'label' ? 'colors' : 'items'
-
-                updateSpecificData(storedDataKey, type, value)
-                toggleContextMenu()
             }
+
+            // needs to support label colors in future
+            const storedDataKey = 'items'
+
+            updateSpecificData(storedDataKey, type, value)
+
+            updateAppState('contextMenuEditables', {
+                ...contextMenuEditables,
+                [type]: false
+            })
+
+            toggleContextMenu()
         }
     }
 
@@ -106,16 +91,14 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         updateAppState('contextMenuEditables', newContextMenuEditables)
     }
 
-    // if no label adds "blank" label
-
     return (
         
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
                 <p className="contextMenu-title">Title<EditPencil type="title"/></p>
-                {ticketTitle !== false
+                {contextMenuEditables.title !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
-                        <div><textarea id="currentTicketTitleTextArea"className="h-100 text-center" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
+                        <div><textarea id="currentTicketTitleTextArea" className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
                     </form>
                     : <p id="currentTicketTitle">{currentTicketTitle}</p>
                 }            
@@ -124,26 +107,36 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
             <div className="contextMenu-section">
                 <p className="contextMenu-title">URL<EditPencil type="url"/></p>
-                {ticketUrl !== false
+                {contextMenuEditables.url !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
-                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
+                        <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
                     : validUrl(currentTicketUrl) 
-                        ? <a href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : ""}</a>
+                        ? <a style={{overflowWrap: 'anywhere'}}href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : ""}</a>
                         : <p>{currentTicketUrl}</p>
                 }
             </div>
 
-            {/* <div className="contextMenu-section">
-                <p className="contextMenu-title">Label <EditPencil type="label"/></p>
-                {ticketLabel !== false
-                    ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
-                        <div><textarea className="w-100 h-100 text-center" type="textArea" onChange={e => textChangeHandler("label", e.target.value)} value={contextMenuEditables.label}/></div>
+            <div className="contextMenu-section">
+                {console.log(contextMenuEditables.description)}
+                <p className="contextMenu-title">Description<EditPencil type="description"/></p>
+                {contextMenuEditables.description !== false
+                    ? <form onKeyDown={(e) => keyDownHandler(e, "description")} autoComplete="off">
+                        <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("description", e.target.value)} value={contextMenuEditables.description}/></div>
                     </form>
-                    : <p>{ticketLabel}</p>
+                    :  <p>{currentTicketDescription}</p>
                 }
-                <span>{'blue'}</span>
-            </div> */}
+            </div>
+
+            <div className="contextMenu-section">
+                <p className="contextMenu-title">Label <EditPencil type="label"/></p>
+                {contextMenuEditables.label !== false
+                    ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
+                        <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("label", e.target.value)} value={contextMenuEditables.label}/></div>
+                    </form>
+                    : <p>{currentTicketLabel}</p>
+                }
+            </div>
         </div>
     )
 }

@@ -233,7 +233,7 @@ export default class App extends Component {
       activeContextItem: e.target.id ? e.target.id : null,
       contextMenuX: e.pageX,
       contextMenuY: e.pageY,
-      contextMenuEditables: {title: false, url: false, label: false}
+      contextMenuEditables: {title: false, url: false, label: false, description: false}
     }, () => console.log(this.state.activeContextItem))
   }
 
