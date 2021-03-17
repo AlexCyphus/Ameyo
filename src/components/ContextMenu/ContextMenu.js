@@ -12,12 +12,13 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     const rawContent = rawData.content
 
     // currently splits at all :
-    const currentTicketLabel = rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : ""
-    const currentTicketTitle = currentTicketLabel != "" ? rawContent.split(":")[1].trim() : rawContent
-    const currentTicketUrl = rawData.url ? rawData.url : '' 
-    const currentTicketDescription = rawData.description ? rawData.description : '' 
+    const currentTicket = {
+        label: rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : "", 
+        url: rawData.url ? rawData.url : '' , 
+        description: rawData.description ? rawData.description : '' 
+    }
 
-    const currentTicket = {title: currentTicketTitle, url: currentTicketUrl, label: currentTicketLabel, description: currentTicketDescription}
+    currentTicket.title = currentTicket.label != "" ? rawContent.split(":")[1].trim() : rawContent
 
     const validUrl = str => {
         var pattern = new RegExp('^(https?:\\/\\/)?'+ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
@@ -62,12 +63,12 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                 if (type == 'url'){ value = !(value.startsWith("http://") || value.startsWith("https://")) ? "http://" + value : value }
 
                 // prevent labels from being overwritten // still overwriting "false" but whatever
-                if (type == 'content') { value = currentTicketLabel != "" ? currentTicketLabel + ": " + value : value }
+                if (type == 'content') { value = currentTicket.label != "" ? currentTicket.label + ": " + value : value }
 
                 // update labels as content
                 if (type == 'label') {
                     type = 'content'
-                    value = value + ": " + currentTicketTitle
+                    value = value + ": " + currentTicket.title
                 }
             }
 
@@ -100,7 +101,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
                         <div><textarea id="currentTicketTitleTextArea" className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
                     </form>
-                    : <p id="currentTicketTitle">{currentTicketTitle}</p>
+                    : <p id="currentTicketTitle">{currentTicket.title}</p>
                 }            
             </div>
 
@@ -111,9 +112,9 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
                         <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
-                    : validUrl(currentTicketUrl) 
-                        ? <a style={{overflowWrap: 'anywhere'}}href={currentTicketUrl}>{currentTicketUrl ? currentTicketUrl : ""}</a>
-                        : <p>{currentTicketUrl}</p>
+                    : validUrl(currentTicket.url) 
+                        ? <a style={{overflowWrap: 'anywhere'}}href={currentTicket.url}>{currentTicket.url ? currentTicket.url : ""}</a>
+                        : <p>{currentTicket.url}</p>
                 }
             </div>
 
@@ -124,7 +125,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     ? <form onKeyDown={(e) => keyDownHandler(e, "description")} autoComplete="off">
                         <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("description", e.target.value)} value={contextMenuEditables.description}/></div>
                     </form>
-                    :  <p>{currentTicketDescription}</p>
+                    :  <p>{currentTicket.description}</p>
                 }
             </div>
 
@@ -134,7 +135,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
                         <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("label", e.target.value)} value={contextMenuEditables.label}/></div>
                     </form>
-                    : <p>{currentTicketLabel}</p>
+                    : <p>{currentTicket.label}</p>
                 }
             </div>
         </div>
