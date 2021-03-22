@@ -21,7 +21,6 @@ export default class Item extends React.Component {
   }
 
   checkAndUpdateColor(){
-    console.log('chekdandupdated')
     const labelColorsObject = this.props.colors
     const labels = Object.keys(labelColorsObject)
     const activeLabel = this.state.label

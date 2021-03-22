@@ -42,7 +42,7 @@
     "test": "jest",
     "eject": "react-scripts eject",
     "testWatch": "jest --watchAll",
-    "watchCurrent": "jest App.test.js --watchAll"
+    "watchCurrent": "jest Item.test.js --watchAll"
   },
   "eslintConfig": {
     "extends": "react-app"
