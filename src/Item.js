@@ -7,23 +7,57 @@ export default class Item extends React.Component {
     super(props)
     this.state = {
       label: this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : false,
-      color: 'none'
+      color: null
+    }
+  }
+
+  generateRandomColor() {
+    let letters = '0123456789ABCDEF'; 
+    let color = '#';
+    for (let i = 0; i < 6; i++) { 
+      color += letters[Math.floor(Math.random() * 16)]; 
+    }
+    return color; 
+  }
+
+  checkAndUpdateColor(){
+    console.log('chekdandupdated')
+    const labelColorsObject = this.props.colors
+    const labels = Object.keys(labelColorsObject)
+    const activeLabel = this.state.label
+
+    // if saved labels and colors already exist
+    if (labelColorsObject){
+
+      // if the current label doesn't exist yet
+      if (!labels.includes(this.state.label)){
+        const newColor = this.generateRandomColor()
+        this.setState({
+          color: newColor
+        })
+        this.props.claimColor(activeLabel, newColor)
+      }
+
+      // if the current label already exists
+      else {
+        this.setState({
+          color: labelColorsObject[activeLabel]
+        })
+      }
     }
   }
 
   componentDidMount(){
-    // if saved labels and colors already exist
-    if (this.props.colors && Object.values(this.props.colors)){
+    this.checkAndUpdateColor()
+  }
 
-      // if the current label doesn't exist yet
-      if (!Object.values(this.props.colors).includes(this.state.label)){
-        const emptyColor = Object.keys(this.props.colors).find((key) => this.props.colors[key] === false)
-        this.setState({color: emptyColor})
-        this.props.claimColor(emptyColor, this.state.label)
-      }
-
-      // if the current label already exists
-      else {this.setState({color: Object.keys(this.props.colors).find(key => this.props.colors[key] === this.state.label)})}
+  componentDidUpdate(){
+    const newLabel = this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : false
+    if (this.state.label != newLabel){
+      this.setState({
+        label: newLabel
+      }, this.checkAndUpdateColor
+      )
     }
   }
   
@@ -46,7 +80,7 @@ export default class Item extends React.Component {
               <div className={"item-name"} id={itemId}>
                 <p className={"item-p " + (this.props.type !== 'none' ? 'px-3' : '')} id={itemId}>{this.props.item.content}</p>
               </div>
-              <Label display={this.state.label} color={String(this.state.color)}/>
+              <Label display={this.state.label} color={this.state.color}/>
             </div>
           )}
         </Draggable>

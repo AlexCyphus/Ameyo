@@ -114,7 +114,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                 }
             </div>
             <div className="contextMenu-section">
-                {console.log(contextMenuEditables.description)}
                 <p className="contextMenu-title">Description<EditPencil type="description"/></p>
                 {contextMenuEditables.description !== false
                     ? <form onKeyDown={(e) => keyDownHandler(e, "description")} autoComplete="off">
