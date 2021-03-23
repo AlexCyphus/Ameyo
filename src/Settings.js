@@ -7,20 +7,6 @@ import DogecoinDonationMessage from './components/DogecoinDonationMessage'
 import TimePicker from "./components/Timepicker/Timepicker.js"
 import HistoryFeed from "./components/HistoryFeed/HistoryFeed.js"
 
-const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-const nth = (date) => {
-    if (date > 3 && date < 21) return 'th';
-    date = date % 10
-    switch (date){
-        case 1: return "st"
-        case 2: return "nd"
-        case 3: return "rd"
-        default: return "th"
-    }
-}
-
 export default class Settings extends React.Component {
     constructor(props){
         super(props);
@@ -122,26 +108,7 @@ export default class Settings extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-4 d-flex chart-holder'>
-                            <div className="w-100 chart-title">
-                                <div className='history'>
-                                        {history.map((item, index) => {
-                                            var date = new Date(item[1])
-                                            date = new Date(date.getTime() - 24*60*60*1000)
-                                            var ordinal = nth(date.getDate())
-                                            return (
-                                                <div className="row white history-row" key={index}>
-                                                    <div className="col-sm-8 history-item pr-2"><p>{item[0]}</p></div>
-                                                    <div className="col-sm-4 text-center m-auto pl-0 pr-0"><p>{weekday[date.getDay()]}, {months[date.getMonth()]} {date.getDate() + ordinal}</p></div>
-                                                </div>
-                                            )
-                                            })
-                                        }
-                                    </div>
-                                <h2 className='text-center pt-3 pb-0 white chart-title mb-0'>History</h2>
-                                <p className='text-center pt-1 white'>Total completed: {history.length}</p>
-                            </div>
-                        </div>
+                        <HistoryFeed history={history}/>
                         {!this.state.hideFeedback && <div className="col-md-5 d-none d-lg-block" id='typeform'>
                             <ReactTypeformEmbed url="https://alexjcyphus.typeform.com/to/Ns596HzQ" />
                             <h2 className='text-center pt-3 white chart-title'><span className="font-italic clickable" onClick={this.toggleFeedback}>(Hide feedback?)</span></h2>

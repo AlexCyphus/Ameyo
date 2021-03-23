@@ -139,7 +139,6 @@ export default class App extends Component {
         [label]: color,
       }
     }
-    console.log(this.state.colors)
     this.setState(newState, localStorage.setItem("colors", JSON.stringify(newState.colors)))
   }
 
@@ -244,7 +243,7 @@ export default class App extends Component {
   updateSpecificData(storedDataKey, type, value){
     const data = JSON.parse(localStorage.getItem(storedDataKey))
     data[this.state.activeContextItem][type] = value
-    console.log(data[this.state.activeContextItem][type])
+
 
     this.setState({
       [storedDataKey]: data
@@ -260,7 +259,7 @@ export default class App extends Component {
   }
 
   componentWillUpdate(){
-    console.log('app', this.state.colors)
+
   }
 
   render() {

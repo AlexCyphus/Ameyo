@@ -56,7 +56,19 @@ export default function checkTime() {
           let itemId = this.state.columns['yesterday'].itemIds[itemIndex]
           if (this.state.items[itemId].checked === 'checked'){
             let itemLocation = newYesterdayItemIds.indexOf(itemId);
-            newHistory.push([this.state.items[newYesterdayItemIds[itemLocation]].content, yesterday]);
+            let item = this.state.items[newYesterdayItemIds[itemLocation]]
+
+            // OLD pushing arrays to history array 
+            // newHistory.push([this.state.items[newYesterdayItemIds[itemLocation]].content, yesterday]);
+
+            // NEW pushing objects to history array 
+            newHistory.push({
+              content: item.content,
+              description: item.description ? item.description : null,
+              url: item.url ? item.url : null,
+              date: yesterday
+            })
+
             delete newState.items[itemId]
             newYesterdayItemIds.splice(itemLocation, 1)
           }

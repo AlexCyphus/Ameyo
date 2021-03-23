@@ -40,8 +40,8 @@ export function addItem(e) { // dont let page refresh on submit
 
     this.queryLocalStorage(() => {
 
-        var value = this.state.inputs[columnId];
         // the value of the input
+        var value = this.state.inputs[columnId];
 
         // find the first unused itemId
         let itemId;
@@ -86,7 +86,6 @@ export function addItem(e) { // dont let page refresh on submit
 }
 
 export function checkItem(e) {
-    console.log('hi')
     const newState = {
         ...this.state,
         showContextMenu: false
