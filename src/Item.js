@@ -6,18 +6,13 @@ export default class Item extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      label: this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : false,
+      label: this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : null,
       color: null
     }
   }
 
   generateRandomColor() {
-    let letters = '0123456789ABCDEF'; 
-    let color = '#';
-    for (let i = 0; i < 6; i++) { 
-      color += letters[Math.floor(Math.random() * 16)]; 
-    }
-    return color; 
+    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6)
   }
 
   checkAndUpdateColor(){
@@ -25,24 +20,22 @@ export default class Item extends React.Component {
     const labels = Object.keys(labelColorsObject)
     const activeLabel = this.state.label
 
-    // if saved labels and colors already exist
-    if (labelColorsObject){
+    if (activeLabel === null){return}
 
-      // if the current label doesn't exist yet
-      if (!labels.includes(this.state.label)){
-        const newColor = this.generateRandomColor()
-        this.setState({
-          color: newColor
-        })
-        this.props.claimColor(activeLabel, newColor)
-      }
+    // if the current label doesn't exist yet
+    else if (!labels.includes(activeLabel)){
+      const newColor = this.generateRandomColor()
+      this.setState({
+        color: newColor
+      })
+      this.props.claimColor(activeLabel, newColor)
+    }
 
-      // if the current label already exists
-      else {
-        this.setState({
-          color: labelColorsObject[activeLabel]
-        })
-      }
+    // if the current label already exists
+    else {
+      this.setState({
+        color: labelColorsObject[activeLabel]
+      })
     }
   }
 
@@ -51,12 +44,19 @@ export default class Item extends React.Component {
   }
 
   componentDidUpdate(){
-    const newLabel = this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : false
-    if (this.state.label != newLabel){
+    const labelColorsObject = this.props.colors
+    const labels = Object.keys(labelColorsObject)
+    const activeLabel = this.state.label
+    const newLabel = this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : null
+
+    if ((this.state.label != newLabel && newLabel != null)){
       this.setState({
         label: newLabel
-      }, this.checkAndUpdateColor
-      )
+      })
+      this.checkAndUpdateColor()
+    }
+    if (!labels.includes(activeLabel)){
+      this.checkAndUpdateColor()
     }
   }
   

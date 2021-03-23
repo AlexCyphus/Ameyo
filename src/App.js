@@ -131,14 +131,15 @@ export default class App extends Component {
   }
 
   // claim color for specific label
-  claimColor(color, name) {
+  claimColor(label, color) {
     const newState = {
       ...this.state,
       colors: {
         ...this.state.colors,
-        [color]: name,
+        [label]: color,
       }
     }
+    console.log(this.state.colors)
     this.setState(newState, localStorage.setItem("colors", JSON.stringify(newState.colors)))
   }
 
@@ -158,7 +159,10 @@ export default class App extends Component {
       document.activeElement.blur()
       this.setState({
         settings: false,
-        statistics: false
+        statistics: false,
+        showContextMenu: false,
+        activeContextItem: null,
+        contextMenuEditables: {title: false, url: false, label: false, description: false}
       })
     }
     if (document.activeElement.id === 'body'){
@@ -253,6 +257,10 @@ export default class App extends Component {
     this.setState({
       [key]: value
     })
+  }
+
+  componentWillUpdate(){
+    console.log('app', this.state.colors)
   }
 
   render() {

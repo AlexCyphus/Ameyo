@@ -22,7 +22,7 @@ it("renders with item", () => {
   act(() => {
     let items = [{"id":"item-1","content":"this is a test card","checked":"unchecked","date":[12,5]}]
     let column = {"id":"habits","title":"Habits","emoji":"⏰","itemIds":["item-1"],"description":"Daily tasks"}
-    render(<DragDropContext><Column items={items} column={column} inputs=""/></DragDropContext>, container);
+    render(<DragDropContext><Column items={items} column={column} inputs="" colors={{}} claimColor={() => {}}/></DragDropContext>, container);
   })
   expect(container.textContent).toBe("Habits⏰this is a test card");
 });
@@ -31,7 +31,7 @@ it("renders without any items", () => {
   act(() => {
     let items = []
     let column = {"id":"habits","title":"Habits","emoji":"⏰","itemIds":["item-1", "item-3"],"description":"Daily tasks"}
-    render(<DragDropContext><Column items={items} column={column} inputs=""/></DragDropContext>, container);
+    render(<DragDropContext><Column items={items} column={column} inputs="" colors={{}} claimColor={() => {}}/></DragDropContext>, container);
   })
   expect(container.textContent).toBe("Habits⏰");
 });

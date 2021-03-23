@@ -55,7 +55,8 @@ afterEach(() => {
 
 it("renders a label when it should", () => {
     act(() => {
-        render(<Item item={itemWithLabel} colors={colors} claimColor={() => {}}/>, container);
+        let colors = {}
+        render(<Item item={itemWithLabel} colors={colors} claimColor={claimColorMock}/>, container);
     })
     expect(container.children[0].children[1].classList).toContain("dot");
 });

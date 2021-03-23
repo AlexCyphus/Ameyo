@@ -39,6 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "jest && react-scripts build",
+    "buildWithoutTesting": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "testWatch": "jest --watchAll",
