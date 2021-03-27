@@ -37,6 +37,8 @@ const itemWithoutLabel =  {
     "date": [1,22]
 }
 
+const claimColorMock = () => {}
+
 let colors = {}
 
 beforeEach(() => {
