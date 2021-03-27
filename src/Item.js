@@ -11,11 +11,26 @@ export default class Item extends React.Component {
     }
   }
 
-  generateRandomColor() {
-    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6)
+  componentDidMount(){
+    this.checkAndUpdateColor()
+  }
+
+  componentDidUpdate(){
+    const labelColorsObject = this.props.colors
+    const activeLabel = this.state.label
+    const newLabel = this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : null
+
+    // if the label is different to the active label then update the active label
+    if ((activeLabel != newLabel && newLabel != null)){
+      this.setState({
+        label: newLabel
+      }, this.checkAndUpdateColor
+      )
+    }
   }
 
   checkAndUpdateColor(){
+    const generateRandomColor = () => '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6)
     const labelColorsObject = this.props.colors
     const labels = Object.keys(labelColorsObject)
     const activeLabel = this.state.label
@@ -24,7 +39,7 @@ export default class Item extends React.Component {
 
     // if the current label doesn't exist yet
     else if (!labels.includes(activeLabel)){
-      const newColor = this.generateRandomColor()
+      const newColor = generateRandomColor()
       this.setState({
         color: newColor
       })
@@ -33,30 +48,10 @@ export default class Item extends React.Component {
 
     // if the current label already exists
     else {
+      console.log(activeLabel, labelColorsObject[activeLabel])
       this.setState({
         color: labelColorsObject[activeLabel]
       })
-    }
-  }
-
-  componentDidMount(){
-    this.checkAndUpdateColor()
-  }
-
-  componentDidUpdate(){
-    const labelColorsObject = this.props.colors
-    const labels = Object.keys(labelColorsObject)
-    const activeLabel = this.state.label
-    const newLabel = this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : null
-
-    if ((this.state.label != newLabel && newLabel != null)){
-      this.setState({
-        label: newLabel
-      })
-      this.checkAndUpdateColor()
-    }
-    if (!labels.includes(activeLabel)){
-      this.checkAndUpdateColor()
     }
   }
   
