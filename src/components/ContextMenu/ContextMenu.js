@@ -22,7 +22,9 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         url: rawData.url ? rawData.url : '' , 
         description: rawData.description ? rawData.description : '' 
     }
-    currentTicket.title = currentTicket.label != "" ? rawContent.split(":")[1].trim() : rawContent
+    currentTicket.title = currentTicket.label != "" 
+        ? rawContent.substr(rawContent.indexOf(": ") + 2, rawContent.length)
+        : rawContent
 
     // edit pencil component
     const EditPencil = ({type}) => {

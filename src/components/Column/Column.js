@@ -30,7 +30,6 @@ export default class Column extends React.Component {
         <div className="outer-column">
           <div className="d-flex">
             <div className="col-auto pl-2"><p className="column-header text-left">{this.props.column.title}</p></div>
-            <div className="col pr-2"><p className="column-header text-right emoji">{this.props.column.emoji}</p></div>
           </div>
           <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
