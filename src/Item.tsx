@@ -1,13 +1,38 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
-import Label from './Label.tsx'
+import Label from './Label'
 
-export default class Item extends React.Component {
-  constructor(props){
+interface IndividualItem {
+  content: string,
+  id: string
+}
+
+interface ItemProps {
+  item: IndividualItem,
+  colors: ColorObject,
+  claimColor: Function,
+  checked: string,
+  type: string
+  index: number
+  checkItem(): void,
+  showContextMenu(): void
+}
+
+interface ColorObject {
+  [key: string]: string 
+}
+
+interface ItemState {
+  label: string | null,
+  color: string
+}
+
+export default class Item extends React.Component<ItemProps, ItemState> {
+  constructor(props: ItemProps){
     super(props)
     this.state = {
       label: this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : null,
-      color: null
+      color: ''
     }
   }
 
@@ -50,10 +75,7 @@ export default class Item extends React.Component {
 
     // if the current label already exists
     else {
-      console.log(activeLabel, labelColorsObject[activeLabel])
-      this.setState({
-        color: labelColorsObject[activeLabel]
-      })
+      this.setState({color: labelColorsObject[activeLabel]})
     }
   }
   
@@ -63,7 +85,7 @@ export default class Item extends React.Component {
 
     return (
       <>
-        <Draggable draggableId={itemId} index={this.props.index} id={itemId}>
+        <Draggable draggableId={itemId} index={this.props.index}>
           {(provided, snapshot) => (
             <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} onContextMenu={this.props.showContextMenu} id={itemId}>
               {this.props.type === 'none' && 
