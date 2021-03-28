@@ -224,6 +224,7 @@ export default class App extends Component {
   toggleContextMenu(e){
     console.log('toggleContextMenu')
     if (e){
+      console.log(e)
       e.preventDefault()
     }
 
