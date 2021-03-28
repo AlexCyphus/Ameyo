@@ -222,15 +222,20 @@ export default class App extends Component {
   }
 
   toggleContextMenu(e){
+    console.log('toggleContextMenu')
+    if (e){
+      e.preventDefault()
+    }
+
+    // if clicking on column, no data, or left click
     if (!e || e.target["dataset"].rbdDroppableId || e.button == 0){
       return this.setState({
         showContextMenu: false,
         activeContextItem: null,
         contextMenuEditables: {title: false, url: false, label: false}
-      })
+      }, () => console.log('clicking on column, no data, or left click'))
     }
 
-    e.preventDefault()
     this.setState({
       showContextMenu: e.button == 2 ? true : !this.state.showContextMenu,
       activeContextItem: e.target.id ? e.target.id : null,
@@ -256,10 +261,6 @@ export default class App extends Component {
     this.setState({
       [key]: value
     })
-  }
-
-  componentWillUpdate(){
-
   }
 
   render() {
@@ -339,18 +340,18 @@ export default class App extends Component {
         { // conditionally render contextMenu 
           this.state.showContextMenu && 
           <>
-            <div className="contextMenu-Wrapper" onClick={this.toggleContextMenu} contextMenu={this.toggleContextMenu}></div>
-            <ContextMenu
-              x={this.state.contextMenuX}
-              y={this.state.contextMenuY}
-              itemId={this.state.activeContextItem}
-              items={this.state.items}
-              labels={this.state.colors}
-              updateSpecificData={this.updateSpecificData}
-              toggleContextMenu={this.toggleContextMenu}
-              updateAppState={this.updateAppState}
-              contextMenuEditables={this.state.contextMenuEditables}
-            />
+            <div className="contextMenu-Wrapper" onClick={this.toggleContextMenu}></div>
+              <ContextMenu
+                x={this.state.contextMenuX}
+                y={this.state.contextMenuY}
+                itemId={this.state.activeContextItem}
+                items={this.state.items}
+                labels={this.state.colors}
+                updateSpecificData={this.updateSpecificData}
+                toggleContextMenu={this.toggleContextMenu}
+                updateAppState={this.updateAppState}
+                contextMenuEditables={this.state.contextMenuEditables}
+              />
           </>
         }
       </>
