@@ -62,11 +62,12 @@ class HabitChart extends Component {
 
         // filtering for only the ones in the last thirty days
         let thirtyDaysAgo = new Date().getTime() - 2592000000
-        historyArr = historyArr.filter(item => new Date(item[1]) > thirtyDaysAgo);
+        historyArr = historyArr.filter(item => ((new Date(item[1]) > thirtyDaysAgo) || (new Date(item.date) > thirtyDaysAgo)));
 
         // pushing the daily counts to individual counts
         historyArr = historyArr.forEach(item => {
-            let daysSince = Math.floor((new Date() - new Date(item[1])) / 1000 / 60 / 60 / 24) - 1
+            let itemDate = item.date ? item.date : item[1]
+            let daysSince = Math.floor((new Date() - new Date(itemDate)) / 1000 / 60 / 60 / 24) - 1
             individualCounts[daysSince] = individualCounts[daysSince] + 1
         })
 
