@@ -333,7 +333,7 @@ export default class App extends Component {
             </div>
           </div>
         </DragDropContext>
-        <div className="outer-footer d-flex text-center">
+        <div className={`outer-footer text-center ${columnVisibility}`}>
           <div className="col footer-item clickable" onClick={this.settingsOpen}><p><span role="img" aria-label="gear">⚙️</span> Settings</p></div>
           <div className="col-auto m-auto" id="countdown"><p>{this.state.hoursLeft} {"hour" + plurals[0]} {this.state.minutesLeft} {"minute" + plurals[1]} remaining</p></div>
           <div className="col footer-item clickable" onClick={this.statisticsOpen}><p><span role="img" aria-label="chart">📈</span> Statistics</p></div>
