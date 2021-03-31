@@ -41,11 +41,8 @@ export default class Item extends React.Component<ItemProps, ItemState> {
   }
 
   componentDidUpdate(){
-    const labelColorsObject = this.props.colors
     const activeLabel = this.state.label
     const newLabel = this.props.item.content.indexOf(": ") ? this.props.item.content.substr(0, this.props.item.content.indexOf(": ")) : null
-    
-    // this.props.item.content.split(" ")[0].includes(":") ? this.props.item.content.split(":")[0] : null
 
     // if the label is different to the active label then update the active label
     if ((activeLabel != newLabel && newLabel != null)){

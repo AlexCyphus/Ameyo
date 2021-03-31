@@ -45,7 +45,6 @@ const HistoryFeed = ({history}) => {
 
                         // new history object 
                         else {
-                            console.log('not array')
                             date = new Date(item.date)
                             content = item.content
                             description = item.description

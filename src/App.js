@@ -224,7 +224,6 @@ export default class App extends Component {
   toggleContextMenu(e){
     console.log('toggleContextMenu')
     if (e){
-      console.log(e)
       e.preventDefault()
     }
 
@@ -249,7 +248,6 @@ export default class App extends Component {
   updateSpecificData(storedDataKey, type, value){
     const data = JSON.parse(localStorage.getItem(storedDataKey))
     data[this.state.activeContextItem][type] = value
-
 
     this.setState({
       [storedDataKey]: data

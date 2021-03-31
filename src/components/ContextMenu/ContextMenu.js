@@ -57,32 +57,32 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         let value = e.target.value
         // if enter key
         if (e.keyCode == 13) {
+            // in the future some validation that label is one word
             e.preventDefault()
 
-            if (value != "") {              
-
-                if (type == 'url'){ value = !(value.startsWith("http://") || value.startsWith("https://")) ? "http://" + value : value }
-
-                // prevent labels from being overwritten // still overwriting "false" but whatever
-                if (type == 'content') { value = currentTicket.label != "" ? currentTicket.label + ": " + value : value }
-
-                // update labels as content
-                if (type == 'label') {
-                    type = 'content'
-                    value = value + ": " + currentTicket.title
-                }
+            if (type == 'url'){ 
+                value = value == "" ? "" : !(value.startsWith("http://") || value.startsWith("https://")) ? "http://" + value : value 
             }
 
-            // needs to support label colors in future
-            const storedDataKey = 'items'
+            if (type == 'content') { 
+                value = currentTicket.label != "" ? currentTicket.label + ": " + value : value 
+            }
 
-            updateSpecificData(storedDataKey, type, value)
+            if (type == "label") {
+                type = "content"
+                value = value == "" ? currentTicket.title : value + ": " + currentTicket.title
+            } 
 
+            // update localStorage
+            updateSpecificData('items', type, value)
+
+            // update state
             updateAppState('contextMenuEditables', {
                 ...contextMenuEditables,
                 [type]: false
             })
 
+            // close the context menu and reset values
             toggleContextMenu()
         }
     }

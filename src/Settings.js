@@ -61,7 +61,6 @@ export default class Settings extends React.Component {
         // if submitted
         if (e === 'submit') {
             let timeValue = document.getElementById('time-value').value
-            console.log(timeValue)
             this.props.changeEndOfDay(timeValue)
         }
 
