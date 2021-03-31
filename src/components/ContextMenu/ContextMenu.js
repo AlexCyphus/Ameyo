@@ -2,11 +2,6 @@ import {onDragEnd} from "../../functions/dragLogic"
 import {ContextType, useEffect, useState} from 'react'
 import '../../App.css';
 
-const validUrl = str => {
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
-    return !!pattern.test(str);
-}
-
 const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, updateAppState, contextMenuEditables}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
@@ -110,9 +105,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
                         <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
                     </form>
-                    : validUrl(currentTicket.url) 
-                        ? <a style={{overflowWrap: 'anywhere'}}href={currentTicket.url}>{currentTicket.url ? currentTicket.url : ""}</a>
-                        : <p>{currentTicket.url}</p>
+                    : <a style={{overflowWrap: 'anywhere'}}href={currentTicket.url}>{currentTicket.url ? currentTicket.url : ""}</a>
+                        
                 }
             </div>
             <div className="contextMenu-section">
