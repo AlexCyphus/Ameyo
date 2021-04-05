@@ -51,9 +51,9 @@ class HabitChart extends Component {
                 {
                     label: 'x',
                     fill: true,
-                    backgroundColor: 'green',
+                    backgroundColor: 'rgba(0,255,0,1)',
                     lineTension: 0.1,
-                    borderColor: 'green',                
+                    borderColor: 'rgba(0,255,0,1)',                
                     pointRadius: 0,
                     data: []
                 }

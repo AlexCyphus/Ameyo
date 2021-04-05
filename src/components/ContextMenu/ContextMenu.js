@@ -13,7 +13,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
     const rawData = items[itemId]
     const rawContent = rawData.content
 
-    // currently splits at all :
     const currentTicket = {
         label: rawContent.indexOf(": ") ? rawContent.substr(0, rawContent.indexOf(": ")) : "",
         url: rawData.url ? rawData.url : '' , 
