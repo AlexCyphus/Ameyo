@@ -15,7 +15,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
 
     // currently splits at all :
     const currentTicket = {
-        label: rawContent.split(" ")[0].includes(":") ? rawContent.split(":")[0] : "", 
+        label: rawContent.indexOf(": ") ? rawContent.substr(0, rawContent.indexOf(": ")) : "",
         url: rawData.url ? rawData.url : '' , 
         description: rawData.description ? rawData.description : '' 
     }
@@ -111,7 +111,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     && <div className="contextMenu-section">
                             <p className="contextMenu-title">{type == 'url' ? 'URL' : capitalizedType}<EditPencil type={type}/></p>
                             {contextMenuEditables[type] !== false
-                                ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
+                                ? <form onKeyDown={(e) => keyDownHandler(e, type)} autoComplete="off">
                                     <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler(type, e.target.value)} value={contextMenuEditables[type]}/></div>
                                 </form>
                                 : type == "url" 
@@ -119,7 +119,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                                     : <p>{currentTicket[type]}</p>
                             }
                         </div>
-                        }
+            }
             )}
 
             {optionalInputTypes.map(type => {
@@ -129,29 +129,8 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     && <p onClick={() => setInputToEditable(type)}>➕ {type == 'url' ? 'URL' : capitalizedType}</p>     
                 }
             )}
-
         </div>
-        
-
     )
-
-    // return (   
-    //     <div className="contextMenu-outer" style={contextMenuOuterStyles}>
-    //         <div className="contextMenu-section">
-    //             <p className="contextMenu-title">Title<EditPencil type="title"/></p>
-    //             {contextMenuEditables.title !== false
-    //                 ? <form onKeyDown={(e) => keyDownHandler(e, "content")} autoComplete="off">
-    //                     <div><textarea id="currentTicketTitleTextArea" className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("title", e.target.value)} value={contextMenuEditables.title}/></div>
-    //                 </form>
-    //                 : <p id="currentTicketTitle">{currentTicket.title}</p>
-    //             }            
-    //         </div>
-    //         <ContextMenuSection type="url" key="url"/>
-    //         <ContextMenuSection type="description"/>
-    //         <ContextMenuSection type="label"/>
-            
-    //     </div>
-    // )
 }
 
 export default ContextMenu
