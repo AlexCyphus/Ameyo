@@ -2,6 +2,8 @@ import {onDragEnd} from "../../functions/dragLogic"
 import {ContextType, useEffect, useState} from 'react'
 import '../../App.css';
 
+const optionalInputTypes = ['url', 'description', 'label']
+
 const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleContextMenu, updateAppState, contextMenuEditables}) => {
     const contextMenuOuterStyles = {
         top: y + 'px',
@@ -22,30 +24,29 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         : rawContent
 
     // edit pencil component
-    const EditPencil = ({type}) => {
-
-        const editPencilHandler = async () => {
-            const newState = {
-                ...contextMenuEditables,
-                [type]: contextMenuEditables[type] !== false ? false : currentTicket[type]
-            }
-
-            // figure out maximum size of textarea
-            const contextMenuOuter = document.getElementsByClassName('contextMenu-outer')[0]
-            let previousWidth = contextMenuOuter.clientWidth
-            let padding = document.defaultView.getComputedStyle(contextMenuOuter, "").getPropertyValue('padding').split("px")[0];
-
-            await updateAppState("contextMenuEditables", newState)
-
-            if (document.getElementsByClassName('openEditableTextArea').length > 0){
-                const textAreaArray = Array.from(document.getElementsByClassName('openEditableTextArea'))
-                for (let textarea of textAreaArray){
-                    textarea.style.width = previousWidth - (padding * 2) + "px"
-                }
-            }
+    const setInputToEditable = async (type) => {
+        const newState = {
+            ...contextMenuEditables,
+            [type]: contextMenuEditables[type] !== false ? false : currentTicket[type]
         }
 
-        return <span className="editPencil" onClick={editPencilHandler}>✏️</span>
+        // figure out maximum size of textarea
+        const contextMenuOuter = document.getElementsByClassName('contextMenu-outer')[0]
+        let previousWidth = contextMenuOuter.clientWidth
+        let padding = document.defaultView.getComputedStyle(contextMenuOuter, "").getPropertyValue('padding').split("px")[0];
+
+        await updateAppState("contextMenuEditables", newState)
+
+        if (document.getElementsByClassName('openEditableTextArea').length > 0){
+            const textAreaArray = Array.from(document.getElementsByClassName('openEditableTextArea'))
+            for (let textarea of textAreaArray){
+                textarea.style.width = previousWidth - (padding * 2) + "px"
+            }
+        }
+    }
+    
+    const EditPencil = ({type}) => {
+        return <span className="editPencil" onClick={() => setInputToEditable(type)}>✏️</span>
     }
 
     const keyDownHandler = (e, type) => { 
@@ -88,6 +89,25 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         updateAppState('contextMenuEditables', newContextMenuEditables)
     }
 
+    const ContextMenuSection = ({type}) => {
+        return (
+            (currentTicket[type] !== "" || contextMenuEditables[type] !== false)
+                ? <div className="contextMenu-section">
+                    <p className="contextMenu-title">{type == 'url' ? 'URL' : type}<EditPencil type={type}/></p>
+                    {contextMenuEditables[type] !== false
+                        ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
+                            <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler(type, e.target.value)} value={contextMenuEditables[type]}/></div>
+                        </form>
+                        : type == "url" 
+                            ? <a style={{overflowWrap: 'anywhere'}}href={currentTicket[type]}>{currentTicket[type] ? currentTicket[type] : ""}</a>  
+                            : <p>{currentTicket[type]}</p>
+                    }
+                </div>
+                : <p onClick={() => setInputToEditable(type)}>➕ {type == 'url' ? 'URL' : type}</p>
+            
+        )
+    }
+
     return (   
         <div className="contextMenu-outer" style={contextMenuOuterStyles}>
             <div className="contextMenu-section">
@@ -99,34 +119,10 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                     : <p id="currentTicketTitle">{currentTicket.title}</p>
                 }            
             </div>
-            <div className="contextMenu-section">
-                <p className="contextMenu-title">URL<EditPencil type="url"/></p>
-                {contextMenuEditables.url !== false
-                    ? <form onKeyDown={(e) => keyDownHandler(e, "url")} autoComplete="off">
-                        <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("url", e.target.value)} value={contextMenuEditables.url}/></div>
-                    </form>
-                    : <a style={{overflowWrap: 'anywhere'}}href={currentTicket.url}>{currentTicket.url ? currentTicket.url : ""}</a>
-                        
-                }
-            </div>
-            <div className="contextMenu-section">
-                <p className="contextMenu-title">Description<EditPencil type="description"/></p>
-                {contextMenuEditables.description !== false
-                    ? <form onKeyDown={(e) => keyDownHandler(e, "description")} autoComplete="off">
-                        <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("description", e.target.value)} value={contextMenuEditables.description}/></div>
-                    </form>
-                    :  <p>{currentTicket.description}</p>
-                }
-            </div>
-            <div className="contextMenu-section">
-                <p className="contextMenu-title">Label <EditPencil type="label"/></p>
-                {contextMenuEditables.label !== false
-                    ? <form onKeyDown={(e) => keyDownHandler(e, "label")} autoComplete="off">
-                        <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler("label", e.target.value)} value={contextMenuEditables.label}/></div>
-                    </form>
-                    : <p>{currentTicket.label}</p>
-                }
-            </div>
+            { optionalInputTypes.map((type) => {
+                console.log(type)
+                return <ContextMenuSection type={type} key={type}/> 
+            })}
         </div>
     )
 }
