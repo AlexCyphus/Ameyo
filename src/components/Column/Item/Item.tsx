@@ -55,13 +55,13 @@ export default class Item extends React.Component<ItemProps, ItemState> {
 
           if (habitHistory[0] == 0){
             this.setState({
-              streak: habitHistory.indexOf(1) != -1 ? -(habitHistory.indexOf(1)) : -30
+              streak: habitHistory.indexOf(1) != -1 ? -(habitHistory.indexOf(1)) : -(habitHistory.length)
             })
           }
 
           else if (habitHistory[0] == 1) {
             this.setState({
-              streak: habitHistory.indexOf(0) != -1 ? habitHistory.indexOf(0) : 30
+              streak: habitHistory.indexOf(0) != -1 ? habitHistory.indexOf(0) : habitHistory.length
             })   
           }
         } else {
