@@ -18,9 +18,6 @@ export function uncheckHabits() {
         let habitHistory = newState.monthlyHabitsCount[itemName]
 
         if (habitHistory) {
-            if (habitHistory.length > 29) {
-                newState.monthlyHabitsCount[itemName].pop()
-            }
             newState.monthlyHabitsCount[itemName].unshift(status)
         } else {
             newState.monthlyHabitsCount[itemName] = [status]
@@ -34,7 +31,7 @@ export function uncheckHabits() {
     })
 }
 
-export function addItem(e) { // dont let page refresh on submit
+export function addItem(e) {
     e.preventDefault();
     var columnId = e.target.id.split('-')[0];
 

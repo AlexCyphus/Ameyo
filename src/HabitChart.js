@@ -52,7 +52,7 @@ class HabitChart extends Component {
         var newState = {...this.state}
 
         for (var habit in newState.monthlyHabitsCount){
-            var sumArr = this.summateArr(newState.monthlyHabitsCount[habit])
+            var sumArr = this.summateArr(newState.monthlyHabitsCount[habit].slice(0,29))
             newState.monthlyHabitsSum[habit.toString()] = sumArr;
         }
 
@@ -73,7 +73,7 @@ class HabitChart extends Component {
         let orderedKeys = []
 
         for (var key in monthlyHabitsSumCopy) {
-           orderedKeys.push([ key, monthlyHabitsSumCopy[key][29]]);
+           orderedKeys.push([key, monthlyHabitsSumCopy[key][29]]);
         }
 
         orderedKeys.sort((a, b) => a[1] - b[1])

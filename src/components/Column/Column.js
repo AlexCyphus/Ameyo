@@ -2,7 +2,7 @@ import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import '../../App.css';
 import './Column.scss'
-import Item from '../../Item'
+import Item from './Item/Item'
 
 export default class Column extends React.Component {
   constructor() {
@@ -35,7 +35,19 @@ export default class Column extends React.Component {
           {(provided, snapshot) => (
             <div className={"items" + hover + display} ref={provided.innerRef} {...provided.droppableProps}>
               {this.props.items.map((item, index) => 
-                <Item key={item.id} item={item} index={index} checkItem={this.props.checkItem} checked={item.checked} type={this.props.type} colors={this.props.colors} claimColor={this.props.claimColor} showContextMenu={this.props.showContextMenu}/>
+                <Item 
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  checkItem={this.props.checkItem}
+                  checked={item.checked}
+                  type={this.props.type}
+                  colors={this.props.colors}
+                  claimColor={this.props.claimColor}
+                  showContextMenu={this.props.showContextMenu}
+                  monthlyHabitsCount={this.props.monthlyHabitsCount}
+                  columnTitle={this.props.column.title}
+                />
               )}
               {provided.placeholder}
             </div>

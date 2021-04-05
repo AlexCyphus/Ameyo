@@ -326,6 +326,7 @@ export default class App extends Component {
                         colors={this.state.colors}
                         claimColor={this.claimColor}
                         showContextMenu={this.toggleContextMenu}
+                        monthlyHabitsCount={this.state.monthlyHabitsCount}
                       />
             })}
             </div>
