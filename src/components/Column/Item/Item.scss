@@ -1,40 +1,49 @@
 .streak-holder {
     position: absolute;
     right: 5px;
+    .streak-number {font-size: 12px}
 }
 
-.streak-number {
-    font-size: 12px;
-}
-
-.streak-negative-1 {
-    background-color: rgb(255, 235, 235);
-}
-
-.streak-negative-2 {
-    background-color: rgb(253, 220, 220);
-}
-
-.streak-negative-3 {
-    background-color: rgb(252, 205, 205);
+// .streak-negative-1 {
+//     color: rgb(70, 0, 0);
     
-}
+// }
 
-.streak-negative-4 {
-    background-color: rgb(247, 190, 190);
-    
-}
+// .streak-negative-2 {
+//     color: rgb(90, 0, 0);
+//     font-weight: bold;
+// }
 
-.streak-negative-5 {
-    background-color: rgb(255, 175, 175);
+// .streak-negative-3 {
+//     color: rgb(110, 0, 0);
+//     font-weight: bold;
     
-}
+// }
 
-.streak-negative-6 {
-    background-color: rgb(248, 160, 160);
+// .streak-negative-4 {
+//     color: rgb(130, 0, 0);
+//     font-weight: bold;
     
-}
+// }
+
+// .streak-negative-5 {
+//     color: rgb(150, 0, 0);
+//     font-weight: bold;
+    
+// }
+
+// .streak-negative-6 {
+//     color: rgb(170, 0, 0);
+//     font-weight: bold;
+// }
 
 .streak-negative-7 {
-    background-color: rgb(248, 145, 145);
+    color: rgb(255, 0, 0);
+    // font-weight: bold;
+}
+
+.streak-positive-7 {
+    color: rgb(0, 189, 25);
+    // font-weight: bold;
+
 }

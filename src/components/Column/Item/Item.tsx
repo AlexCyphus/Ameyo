@@ -118,7 +118,7 @@ export default class Item extends React.Component<ItemProps, ItemState> {
         ? (this.state.streak > -7 && this.state.streak < 0) 
           ? `streak-negative${this.state.streak}`
           : this.state.streak >= 0 
-            ? ''
+            ? this.state.streak > 6 ? `streak-positive-7` : ''
             : `streak-negative-7`
         : ''
 
@@ -126,9 +126,9 @@ export default class Item extends React.Component<ItemProps, ItemState> {
       <>
         <Draggable draggableId={itemId} index={this.props.index}>
           {(provided, snapshot) => (
-            <div className={"item-row d-flex " + checkedClass + ' ' + streakBackground} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} onContextMenu={this.props.showContextMenu} id={itemId}>
+            <div className={"item-row d-flex " + checkedClass} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} onClick={this.props.checkItem} onContextMenu={this.props.showContextMenu} id={itemId}>
               {(typeof this.state.streak === 'string' || typeof this.state.streak === 'number')
-                && <div className="streak-holder">
+                && <div className={"streak-holder"  + ' ' + streakBackground}> 
                     <p className="streak-number">{this.state.streak}</p>
                   </div>
               }
