@@ -84,12 +84,7 @@ export default class Settings extends React.Component {
                         <div className={"align-middle p-0 d-none settings-outer d-md-block " + (this.state.hideFeedback ?  "col-md-5" : "col-md-3")}>
                             <div id="settings-outer">
                                 <h4 className="mb-3 mt-0 text-center">Settings</h4>
-                                <FormControlLabel
-                                    control={<Switch checked={this.state.preventChangeBackground} onChange={this.toggleAllowedBackgroundChanges} name="gilad" />}
-                                    label="Freeze on today's image"
-                                    inputprops={{ 'aria-label': 'primary checkbox' }}
-                                    className="mx-1"
-                                />
+                                <Button variant="contained" color="primary" onClick={this.toggleAllowedBackgroundChanges}>{this.state.preventChangeBackground ? '▶️ Resume random backgrounds' : "⏸ Pause on today's image"}</Button>
                                 <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground("last")}>Last background image</Button>
                                 <Button variant="contained" color="primary" onClick={() => this.handleChangeBackground("next")}>Next background image</Button>
                                 <Button variant="contained" color="primary" onClick={() => this.props.toggleInformation()}>See information screen</Button>
