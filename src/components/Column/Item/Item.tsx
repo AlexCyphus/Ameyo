@@ -47,34 +47,33 @@ export default class Item extends React.Component<ItemProps, ItemState> {
   componentDidMount(){
     // check number of days without doing a habit only goes to 30+ 
     // if we are in the habits column 
-      if (this.props.columnTitle === 'Habits') {
-        const monthlyHabitsCount = this.props.monthlyHabitsCount
-        // if we have a history of completing this habit 
-        if (this.props.monthlyHabitsCount[this.props.item.content]) {
-          const habitHistory = this.props.monthlyHabitsCount[this.props.item.content]
-
-          if (habitHistory[0] == 0){
-            this.setState({
-              streak: habitHistory.indexOf(1) != -1 ? -(habitHistory.indexOf(1)) : -(habitHistory.length)
-            })
-          }
-
-          else if (habitHistory[0] == 1) {
-            this.setState({
-              streak: habitHistory.indexOf(0) != -1 ? habitHistory.indexOf(0) : habitHistory.length
-            })   
-          }
-        } else {
-          this.setState({
-            streak: 0 
-          })
-        }       
-      }
-
+    this.updateStreak()
     this.checkAndUpdateColor()
   }
 
+  updateStreak() {
+    if (this.props.columnTitle === 'Habits') {
+      let streak = null
+      // if we have a history of completing this habit 
+      if (this.props.monthlyHabitsCount[this.props.item.content]) {
+        const habitHistory = this.props.monthlyHabitsCount[this.props.item.content]
+        if (habitHistory[0] == 0){
+          streak = habitHistory.indexOf(1) != -1 ? -(habitHistory.indexOf(1)) : -(habitHistory.length)
+        }
+        else if (habitHistory[0] == 1) {
+          streak = habitHistory.indexOf(0) != -1 ? habitHistory.indexOf(0) : habitHistory.length
+        }
+      } else {streak = 0}
+      
+      // if the streak has changed
+      if (this.state.streak != streak) {
+        this.setState({streak: streak})
+      }
+    }
+  }
+
   componentDidUpdate(){
+    // make sure label is up to date
     const activeLabel = this.state.label
     const newLabel = this.props.item.content.indexOf(": ") ? this.props.item.content.substr(0, this.props.item.content.indexOf(": ")) : null
 
@@ -85,6 +84,10 @@ export default class Item extends React.Component<ItemProps, ItemState> {
       }, this.checkAndUpdateColor
       )
     }
+
+    // make sure streak is up to date
+    this.updateStreak()
+
   }
 
   checkAndUpdateColor(){
