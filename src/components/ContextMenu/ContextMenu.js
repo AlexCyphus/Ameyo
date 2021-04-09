@@ -10,6 +10,10 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
         left: x + 15 + 'px',
     }
 
+    if (!items[itemId]){
+        return null
+    }
+
     const rawData = items[itemId]
     const rawContent = rawData.content
 

@@ -90,6 +90,10 @@ export function checkItem(e) {
 
     // find the column its in
     let column = ''
+
+    // prevent crashing if a label is clicked
+    if (!e.target.id){return null}
+
     let itemId = e.target.id
 
     for (var col in this.state.columns) {
