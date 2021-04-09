@@ -138,7 +138,7 @@ $border-radius: 5px;
 
   .checked {
     background-color: black;
-    color: white;
+    color: white !important;
     .checkbox {
       border: 1px solid white;
       p {
@@ -150,6 +150,11 @@ $border-radius: 5px;
         vertical-align: center;
         bottom: 7.52px;
         position: relative;
+      }
+    }
+    .streak-holder {
+      .streak-number {
+        color: white !important;
       }
     }
   }

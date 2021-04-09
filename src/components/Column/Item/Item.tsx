@@ -115,10 +115,10 @@ export default class Item extends React.Component<ItemProps, ItemState> {
     const checkedClass = this.props.checked;
     const streakBackground = 
       this.state.streak !== null 
-        ? (this.state.streak > -7 && this.state.streak < 0) 
+        ? (this.state.streak > -3 && this.state.streak < 0) 
           ? `streak-negative${this.state.streak}`
           : this.state.streak >= 0 
-            ? this.state.streak > 6 ? `streak-positive-7` : ''
+            ? this.state.streak > 3 ? `streak-positive-7` : ''
             : `streak-negative-7`
         : ''
 
