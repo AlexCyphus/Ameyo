@@ -33,8 +33,6 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
             [type]: contextMenuEditables[type] !== false ? false : currentTicket[type]
         }
 
-        console.log(newState)
-
         // figure out maximum size of textarea
         const contextMenuOuter = document.getElementsByClassName('contextMenu-outer')[0]
         let previousWidth = contextMenuOuter.clientWidth
@@ -48,6 +46,10 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                 textarea.style.width = previousWidth - (padding * 2) + "px"
             }
         }
+
+        // set focus on input
+        document.getElementById(type).focus()
+
     }
     
     const EditPencil = ({type}) => {
@@ -115,7 +117,7 @@ const ContextMenu = ({x, y, itemId, labels, items, updateSpecificData, toggleCon
                             <p className="contextMenu-title">{type == 'url' ? 'URL' : capitalizedType}<EditPencil type={type}/></p>
                             {contextMenuEditables[type] !== false
                                 ? <form onKeyDown={(e) => keyDownHandler(e, type)} autoComplete="off">
-                                    <div><textarea className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler(type, e.target.value)} value={contextMenuEditables[type]}/></div>
+                                    <div><textarea id={type} className="h-100 text-center openEditableTextArea" type="textArea" onChange={e => textChangeHandler(type, e.target.value)} value={contextMenuEditables[type]}/></div>
                                 </form>
                                 : type == "url" 
                                     ? <a style={{overflowWrap: 'anywhere'}}href={currentTicket[type]}>{currentTicket[type] ? currentTicket[type] : ""}</a>  
