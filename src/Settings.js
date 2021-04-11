@@ -91,7 +91,7 @@ export default class Settings extends React.Component {
                                 <Button variant="contained" color="primary" onClick={this.toggleFeedback}>Give feedback</Button>
                                 <Button variant="contained" color="primary" target="_blank" href="https://bit.ly/AmeyoRate">Rate Ameyo 5 stars</Button>
                                 <Button variant="contained" color="primary" onClick={this.handleChangeTime}>Change end-of-day time</Button>
-                                <Button variant="contained" color="primary" onClick={() => this.setState({donate: !this.state.donate})}>Donate to Ameyo</Button>
+                                {/* <Button variant="contained" color="primary" onClick={() => this.setState({donate: !this.state.donate})}>Donate to Ameyo</Button> */}
                                 {this.state.donate && <DogecoinDonationMessage/>}
                                 <div className="d-block" id="danger-zone">
                                     <div className="text-center"><h5><span role="img" aria-label="warning">⚠️</span> Danger Zone <span role="img" aria-label="warning">⚠️</span></h5></div>
