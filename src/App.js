@@ -233,7 +233,7 @@ export default class App extends Component {
         showContextMenu: false,
         activeContextItem: null,
         contextMenuEditables: {title: false, url: false, label: false}
-      }, () => console.log('clicking on column, no data, or left click'))
+      }, () => console.log(e))
     }
 
     this.setState({
