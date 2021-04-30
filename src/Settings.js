@@ -6,6 +6,8 @@ import {handleChangeBackground, toggleAllowedBackgroundChanges} from './function
 import DogecoinDonationMessage from './components/DogecoinDonationMessage'
 import TimePicker from "./components/Timepicker/Timepicker.js"
 import HistoryFeed from "./components/HistoryFeed/HistoryFeed.js"
+import axios from 'axios'
+import regeneratorRuntime from "regenerator-runtime";
 
 export default class Settings extends React.Component {
     constructor(props){
@@ -16,13 +18,24 @@ export default class Settings extends React.Component {
         this.deleteHistory = this.deleteHistory.bind(this)
         this.deleteHabits = this.deleteHabits.bind(this)
         this.handleChangeTime = this.handleChangeTime.bind(this)
+        this.logOut = this.logOut.bind(this)
+        this.sync = this.sync.bind(this)
         this.state = {
             history: JSON.parse(localStorage.getItem('history')) ? JSON.parse(localStorage.getItem('history')) : [],
             hideFeedback: JSON.parse(localStorage.getItem('hideFeedback')) ? JSON.parse(localStorage.getItem('hideFeedback')) : true, 
             preventChangeBackground: JSON.parse(localStorage.getItem('preventChangeBackground')) ? JSON.parse(localStorage.getItem('preventChangeBackground')) : false, 
             timePopup: false,
-            donate: false
+            donate: false,
+            activeUser: false
         }
+    }
+
+    componentDidMount(){
+        // listen for changes in user authentication
+        this.props.auth.onAuthStateChanged(activeUser => {
+            if (activeUser){this.setState({activeUser: activeUser})}
+            else {this.setState({activeUser: false})}
+        });
     }
 
     handleChangeBackground = handleChangeBackground;
@@ -66,6 +79,45 @@ export default class Settings extends React.Component {
 
         return this.setState({timePopup: !this.state.timePopup})
     }
+
+    logOut(){
+        this.props.signOut()
+        this.setState({
+            activeUser: false
+        })
+    }
+    
+    async sync(type){
+        if(window.confirm(`Are you sure you want to ${type == "pull" ? "pull from": "push to"} remote data? This can't be undone.`)){
+            if (type == 'push'){
+                const response = await axios.post("http://www.alexcyph.us/api/ameyo/push", {
+                    "email": this.state.activeUser.email,
+                    "data": {
+                        "items": localStorage.getItem('items'),
+                        "columns": localStorage.getItem('columns'),
+                        "colors": localStorage.getItem('colors'),
+                        "history": localStorage.getItem('history'),
+                        "monthlyHabitsCount": localStorage.getItem('monthlyHabitsCount')
+                    }
+                })
+            }
+    
+            // pull
+            else if (type == 'pull') {
+                const response = await axios.post("http://www.alexcyph.us/api/ameyo/pull", {"email": this.state.activeUser.email})
+    
+                if (response.data){
+                    // update localstorage
+                    await localStorage.setItem('items', response.data.items)
+                    await localStorage.setItem('columns', response.data.columns)
+                    await localStorage.setItem('colors', response.data.colors)
+                    await localStorage.setItem('history', response.data.history)
+                    await localStorage.setItem('monthlyHabitsCount', response.data.monthlyHabitsCount)
+                    this.props.queryLocalStorage()
+                }   
+            }
+        }
+    }
     
     render(){
         let history = {...this.state.history}
@@ -91,6 +143,14 @@ export default class Settings extends React.Component {
                                 <Button variant="contained" color="primary" onClick={this.toggleFeedback}>Give feedback</Button>
                                 <Button variant="contained" color="primary" target="_blank" href="https://bit.ly/AmeyoRate">Rate Ameyo 5 stars</Button>
                                 <Button variant="contained" color="primary" onClick={this.handleChangeTime}>Change end-of-day time</Button>
+                                {!this.state.activeUser 
+                                    ? <Button variant="contained" color="primary" onClick={this.props.signInWithGoogle}>Login with Google</Button> 
+                                    : <Button variant="contained" color="primary" onClick={this.props.signOut}>Logout of {this.state.activeUser.displayName.split(" ")[0]}</Button>}
+                                {this.state.activeUser 
+                                    && <>
+                                        <Button variant="contained" color="primary" onClick={() => this.sync('push')}>⬆️ Push</Button>
+                                        <Button variant="contained" color="primary" onClick={() => this.sync('pull')}>⬇️ Pull</Button> 
+                                    </>}
                                 {/* <Button variant="contained" color="primary" onClick={() => this.setState({donate: !this.state.donate})}>Donate to Ameyo</Button> */}
                                 {this.state.donate && <DogecoinDonationMessage/>}
                                 <div className="d-block" id="danger-zone">
@@ -114,6 +174,3 @@ export default class Settings extends React.Component {
         )
     }
 }
-
-
-//

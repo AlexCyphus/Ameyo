@@ -4,6 +4,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { DragDropContext } from 'react-beautiful-dnd';
 import states from './states';
 import moment from 'moment'
+import firebase from 'firebase/app';
+import 'firebase/auth'
+import { DB_CONFIG } from '././config/Firebase/db_config';
+
 
 // components
 import Settings from './Settings';
@@ -54,6 +58,24 @@ export default class App extends Component {
     this.toggleContextMenu = this.toggleContextMenu.bind(this)
     this.updateSpecificData = this.updateSpecificData.bind(this)
     this.updateAppState = this.updateAppState.bind(this)
+    this.signOut = this.signOut.bind(this)
+    this.signInWithGoogle = this.signInWithGoogle.bind(this)
+
+    // initialize connection 
+    if (!firebase.apps.length) {
+      firebase.initializeApp(DB_CONFIG);
+  }
+
+  this.auth = firebase.auth();
+  }
+
+  componentDidMount(){
+    // listen for changes in user authentication
+    this.auth.onAuthStateChanged(activeUser => {
+      console.log('auth change in app')
+      if (activeUser){this.setState({activeUser: activeUser})}
+      else {this.setState({activeUser: null})}
+    });
   }
 
   // i dont know why i didnt just write one toggle function
@@ -76,6 +98,17 @@ export default class App extends Component {
       settings: false,
       informationPage: 1
     })
+  }
+
+  signInWithGoogle() {
+    console.log('sign in triggered')
+    const provider = new firebase.auth.GoogleAuthProvider()
+    console.log(provider)
+    this.auth.signInWithPopup(provider)
+  }
+
+  signOut(){
+    this.auth.signOut()
   }
 
   getTimeDifference(type, endOfDay, date=new Date()){
@@ -285,6 +318,11 @@ export default class App extends Component {
             toggleInformation={this.toggleInformation}
             endOfDay={this.state.endOfDay}
             changeEndOfDay={this.changeEndOfDay}
+            activeUser={this.state.activeUser}
+            signInWithGoogle={this.signInWithGoogle}
+            signOut={this.signOut}
+            auth={this.auth}
+            queryLocalStorage={this.queryLocalStorage}
             />
         } 
         

@@ -9,6 +9,6 @@
   "browser_action": {
       "default_icon": "favicon.png"
   },
-  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
-  "permissions": []
+  "content_security_policy": "script-src 'self' https://apis.google.com http://alexcyph.us; object-src 'self'",
+  "permissions": ["http://www.alexcyph.us/"]
 }

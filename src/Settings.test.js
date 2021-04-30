@@ -20,7 +20,7 @@ afterEach(() => {
 
 it("renders", () => {
   act(() => {
-    render(<Settings/>, container);
+    render(<Settings auth={{onAuthStateChanged: () => null}}/>, container);
   })
   expect(container.textContent).toContain("Settings");
   expect(container.textContent).toContain("History");
